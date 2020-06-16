@@ -23,14 +23,14 @@ import ru.boomearo.langhelper.objects.Translate;
 public class LangManager {
 
 	private static ConcurrentMap<LangVersion, LangData> language = new ConcurrentHashMap<LangVersion, LangData>();
-	
+
 	public static void load() {
 		try {
 			File folders = new File(LangHelper.getInstance().getDataFolder(), "languages" + File.separator);
 			if (!folders.exists()) {
 				folders.getParentFile().mkdirs();
 			}
-			
+
 			if (!folders.isDirectory()) {
 				return;
 			}
@@ -66,7 +66,7 @@ public class LangManager {
 													if (line.isEmpty()) {
 														continue;
 													}
-													
+
 													String[] args = line.split("=");
 													if (args.length >= 2) {
 														translates.put(args[0].toLowerCase(), args[1]);
@@ -75,25 +75,25 @@ public class LangManager {
 											}
 											else {
 												JSONParser jsonParser = new JSONParser();
-										        try (FileReader reader = new FileReader(t)) {
+												try (FileReader reader = new FileReader(t)) {
 
-										            Object obj = jsonParser.parse(reader);
-										 
-										            if (obj instanceof JSONObject) {
-										            	JSONObject o = (JSONObject) obj;
-										            	
-										            	
+													Object obj = jsonParser.parse(reader);
+
+													if (obj instanceof JSONObject) {
+														JSONObject o = (JSONObject) obj;
+
+
 														@SuppressWarnings("unchecked")
 														Set<Entry<Object, Object>> s = (Set<Entry<Object, Object>>) o.entrySet();
-										            	for (Entry<Object, Object> f : s) {
-										            		translates.put(f.getKey().toString(), f.getValue().toString());
-										            	}
-										            }
-										 
-										        } 
-										        catch (Exception e) {
-										        	e.printStackTrace();
-										        }
+														for (Entry<Object, Object> f : s) {
+															translates.put(f.getKey().toString(), f.getValue().toString());
+														}
+													}
+
+												} 
+												catch (Exception e) {
+													e.printStackTrace();
+												}
 											}
 											types.put(lt, new Translate(translates));
 											LangHelper.getInstance().getLogger().info("Загружено " + translates.size() + " строк языка '" + lt.getName() + "' версии '" + lv.getName() + "'");
@@ -114,38 +114,38 @@ public class LangManager {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static String getItemName(ItemStack item, LangVersion version, LangType type) {
 		net.minecraft.server.v1_12_R1.ItemStack itemStack = org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack.asNMSCopy(item);
-        
-        String name = itemStack.getItem().a(itemStack) + ".name";
-        return getTranslate(name, version, type);
+
+		String name = itemStack.getItem().a(itemStack) + ".name";
+		return getTranslate(name, version, type);
 	}
-	
+
 	public static String getEntityName(EntityType entity, LangVersion version, LangType type) {
-        String name = "entity." + entity.name() + ".name";
-        return getTranslate(name, version, type);
+		String name = "entity." + entity.name() + ".name";
+		return getTranslate(name, version, type);
 	}
-	
+
 	//Похоже что на 1.12 название в файле и на сервере отличаются, поэтому до 1.13 не рекомендуется юзать
 	public static String getEnchantName(Enchantment enchant, LangVersion version, LangType type) {
-        String name = "enchantment." + enchant.getName();
-        return getTranslate(name, version, type);
+		String name = "enchantment." + enchant.getName();
+		return getTranslate(name, version, type);
 	}
-	
+
 	public static String getEnchantLevelName(int level, LangVersion version, LangType type) {
-        String name = "enchantment.level." + level;
-        return getTranslate(name, version, type);
+		String name = "enchantment.level." + level;
+		return getTranslate(name, version, type);
 	}
-	
+
 	private static String getTranslate(String name, LangVersion version, LangType type) {
-        LangData data = language.get(version);
-        if (data != null) {
-        	Translate tr = data.getTranslate(type);
-        	if (tr != null) {
-        		return tr.getTranstale(name.toLowerCase().replace("_", ""));
-        	}
-        }
-        return null;
+		LangData data = language.get(version);
+		if (data != null) {
+			Translate tr = data.getTranslate(type);
+			if (tr != null) {
+				return tr.getTranstale(name.toLowerCase().replace("_", ""));
+			}
+		}
+		return null;
 	}
 }
