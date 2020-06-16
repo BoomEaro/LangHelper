@@ -1,0 +1,100 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>ru.boomearo.langhelper</groupId>
+	<artifactId>LangHelper</artifactId>
+	<version>0.1</version>
+	<packaging>jar</packaging>
+
+	<name>LangHelper</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<resources>
+			<resource>
+				<directory>src</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.2.1</version>
+				<configuration>
+					<finalName>${project.finalNameBase}</finalName>
+				</configuration>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.2.1</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<!-- Don't create the reduced pom file, as we don't deploy the shaded 
+						jar -->
+					<createDependencyReducedPom>false</createDependencyReducedPom>
+					<!-- Deploy the non shaded jar as main artifact -->
+					<shadedArtifactAttached>true</shadedArtifactAttached>
+					<!-- Use the base jar name, to help server owners download the right 
+						jar -->
+					<finalName>LangHelper</finalName>
+					<filters>
+						<!-- Ignore manifest signatures for shading the project into an uber-jar 
+							to fix -->
+						<!-- "Invalid signature file digest for Manifest main attributes" -->
+						<filter>
+							<artifact>*:*</artifact>
+							<excludes>
+								<exclude>META-INF/*.SF</exclude>
+								<exclude>META-INF/*.DSA</exclude>
+								<exclude>META-INF/*.RSA</exclude>
+							</excludes>
+						</filter>
+					</filters>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>spigot</groupId>
+			<artifactId>spigot</artifactId>
+			<version>1</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}\libs\spigot-1.12.2.jar</systemPath>
+		</dependency>
+	</dependencies>
+</project>
