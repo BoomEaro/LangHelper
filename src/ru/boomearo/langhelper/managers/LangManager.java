@@ -116,10 +116,9 @@ public class LangManager {
 	}
 
 	public static String getItemName(ItemStack item, LangVersion version, LangType type) {
-		net.minecraft.server.v1_12_R1.ItemStack itemStack = org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack.asNMSCopy(item);
+		net.minecraft.server.v1_15_R1.ItemStack itemStack = org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack.asNMSCopy(item);
 
-		String name = itemStack.getItem().a(itemStack) + ".name";
-		return getTranslate(name, version, type);
+		return getTranslate(itemStack.getItem().getName(), version, type);
 	}
 
 	public static String getEntityName(EntityType entity, LangVersion version, LangType type) {
@@ -127,9 +126,8 @@ public class LangManager {
 		return getTranslate(name, version, type);
 	}
 
-	//Похоже что на 1.12 название в файле и на сервере отличаются, поэтому до 1.13 не рекомендуется юзать
 	public static String getEnchantName(Enchantment enchant, LangVersion version, LangType type) {
-		String name = "enchantment." + enchant.getName();
+		String name = "enchantment." + enchant.getKey().getKey();
 		return getTranslate(name, version, type);
 	}
 

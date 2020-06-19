@@ -94,7 +94,7 @@
 			<artifactId>spigot</artifactId>
 			<version>1</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}\libs\spigot-1.12.2.jar</systemPath>
+			<systemPath>${project.basedir}\libs\paper-1.15.2.jar</systemPath>
 		</dependency>
 	</dependencies>
 </project>
