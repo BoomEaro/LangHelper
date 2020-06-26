@@ -133,6 +133,7 @@ public class LangManager {
 
 	public static String getEnchantLevelName(int level, LangVersion version, LangType type) {
 		String name = "enchantment.level." + level;
+		//testtestetst
 		return getTranslate(name, version, type);
 	}
 
