@@ -2,6 +2,7 @@ package ru.boomearo.langhelper.versions;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 
 import org.bukkit.enchantments.Enchantment;
@@ -32,6 +33,10 @@ public abstract class AbstractTranslateManager {
         return this.types.values();
     }
 
+    public Set<LangType> getAllTranslateLang() {
+        return this.types.keySet();
+    }
+    
     public abstract String getItemName(ItemStack item, LangType type);
     public abstract String getEntityName(EntityType entity, LangType type);
     public abstract String getEnchantName(Enchantment enchant, LangType type);

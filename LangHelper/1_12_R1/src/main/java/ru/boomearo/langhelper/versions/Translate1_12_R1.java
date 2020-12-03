@@ -110,7 +110,7 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
                                         translates.put(args[0].toLowerCase().replace("_", ""), args[1]);
                                     }
                                 }
-                                types.put(lt, new Translate(translates));
+                                types.put(lt, new Translate(lt, translates));
                             }
                         }
                     }

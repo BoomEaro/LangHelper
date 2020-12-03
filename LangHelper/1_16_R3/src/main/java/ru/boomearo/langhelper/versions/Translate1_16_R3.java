@@ -92,7 +92,7 @@ public class Translate1_16_R3 extends AbstractTranslateManager {
                                 catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                types.put(lt, new Translate(translates));
+                                types.put(lt, new Translate(lt, translates));
                             }
                         }
                     }

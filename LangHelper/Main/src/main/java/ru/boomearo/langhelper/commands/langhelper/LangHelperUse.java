@@ -1,7 +1,5 @@
 package ru.boomearo.langhelper.commands.langhelper;
 
-import java.io.File;
-
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -18,9 +16,7 @@ public class LangHelperUse {
             return false;
         }
 
-        File folders = new File(LangHelper.getInstance().getDataFolder(), "languages" + File.separator);
-
-        LangHelper.getInstance().getAbstractTranslateManager().loadTranslateFromDisk(folders);
+        LangHelper.getInstance().getAbstractTranslateManager().loadTranslateFromDisk(LangHelper.getLanguageFolder());
 
         cs.sendMessage("Конфигурация успешно перезагружена!");
 
