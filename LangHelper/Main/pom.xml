@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>LangHelper</groupId>
+	<artifactId>Main</artifactId>
+	<version>0.1</version>
+	<name>Main</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>LangHelper</groupId>
+			<artifactId>Abstraction</artifactId>
+			<version>0.1</version>
+			<type>jar</type>
+			<scope>compile</scope> <!-- The 'compile' scope will get shaded in -->
+			<optional>true</optional> <!-- Set all of these to optional, to ensure plugins building against yours 
+				don't look for them -->
+		</dependency>
+		<dependency>
+			<groupId>LangHelper</groupId>
+			<artifactId>1_12_R1</artifactId>
+			<version>0.1</version>
+			<type>jar</type>
+			<scope>compile</scope> <!-- The 'compile' scope will get shaded in -->
+			<optional>true</optional> <!-- Set all of these to optional, to ensure plugins building against yours 
+				don't look for them -->
+		</dependency>
+		<dependency>
+			<groupId>LangHelper</groupId>
+			<artifactId>1_16_R3</artifactId>
+			<version>0.1</version>
+			<type>jar</type>
+			<scope>compile</scope> <!-- The 'compile' scope will get shaded in -->
+			<optional>true</optional> <!-- Set all of these to optional, to ensure plugins building against yours 
+				don't look for them -->
+		</dependency>
+		<dependency>
+			<groupId>org.spigotmc</groupId>
+			<artifactId>spigot</artifactId>
+			<version>1.12.2-R0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
+
+
+	<build>
+		<directory>../target</directory>
+		<finalName>LangHelper</finalName>
+		<resources>
+			<resource>
+				<targetPath>.</targetPath>
+				<filtering>true</filtering>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>plugin.yml</include>
+				</includes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.4.3</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
