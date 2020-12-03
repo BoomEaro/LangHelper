@@ -3,6 +3,7 @@ main: ru.boomearo.langhelper.LangHelper
 version: 0.1
 author: BoomEaro
 description: LangHelper
+api-version: 1.13
 commands:
   langhelper:
     usage: /langhelper
