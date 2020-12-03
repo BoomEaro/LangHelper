@@ -53,7 +53,7 @@
 
 
 	<build>
-		<directory>../target</directory>
+		<directory>target</directory>
 		<finalName>LangHelper</finalName>
 		<resources>
 			<resource>
