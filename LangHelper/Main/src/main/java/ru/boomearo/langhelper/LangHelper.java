@@ -28,7 +28,7 @@ public class LangHelper extends JavaPlugin {
 		
 		if (this.version != null) {
 		    for (Translate tra : this.version.getAllTranslate()) {
-		        this.getLogger().info("Язык " + tra.getLangType().name() + " успешно загружен. Количество строк: " + tra.getAllTranslate().size());
+		        this.getLogger().info("Язык '" + tra.getLangType().name() + "' успешно загружен. Количество строк: " + tra.getAllTranslate().size());
 		    }
 		}
 		

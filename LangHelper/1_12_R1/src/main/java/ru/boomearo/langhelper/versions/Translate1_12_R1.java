@@ -85,7 +85,7 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
             }
 
             if (!folders.isDirectory()) {
-                return null;
+                return types;
             }
             File ver = new File(folders, "1_12_R1");
             if (ver.isDirectory()) {
