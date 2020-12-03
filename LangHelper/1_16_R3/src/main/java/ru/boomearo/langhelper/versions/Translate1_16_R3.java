@@ -32,33 +32,31 @@ public class Translate1_16_R3 extends AbstractTranslateManager {
         String name;
         Item i = itemStack.getItem();
         if (i instanceof ItemSplashPotion) {
-            name = "item.minecraft" + PotionUtil.d(itemStack).b("splash_potion.effect.");
+            name = "item.minecraft." + PotionUtil.d(itemStack).b("splash_potion.effect.");
         }
         else if (i instanceof ItemLingeringPotion) {
-            name = "item.minecraft" + PotionUtil.d(itemStack).b("lingering_potion.effect.");
+            name = "item.minecraft." + PotionUtil.d(itemStack).b("lingering_potion.effect.");
         }
         else if (i instanceof ItemPotion) {
-            name = "item.minecraft" + PotionUtil.d(itemStack).b("potion.effect.");
+            name = "item.minecraft." + PotionUtil.d(itemStack).b("potion.effect.");
         }
         else {
             name = itemStack.getItem().getName();
         }
-        
-        System.out.println("testLangtt " + name);
-        
+
         return getTranslate(name, type);
     }
     
     @Override
     public String getEntityName(EntityType entity, LangType type) {
-        String name = "entity." + entity.name() + ".name";
+        String name = "entity.minecraft." + entity.name();
         return getTranslate(name,  type);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public String getEnchantName(Enchantment enchant,  LangType type) {
-        String name = "enchantment." + enchant.getName();
+        
+        String name = "enchantment.minecraft." + enchant.getKey().getKey();
         return getTranslate(name, type);
     }
 
