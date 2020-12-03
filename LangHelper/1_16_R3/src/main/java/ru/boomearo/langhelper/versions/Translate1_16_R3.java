@@ -13,6 +13,12 @@ import org.bukkit.inventory.ItemStack;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import net.minecraft.server.v1_16_R3.Item;
+import net.minecraft.server.v1_16_R3.ItemLingeringPotion;
+import net.minecraft.server.v1_16_R3.ItemPotion;
+import net.minecraft.server.v1_16_R3.ItemSplashPotion;
+import net.minecraft.server.v1_16_R3.PotionUtil;
+
 public class Translate1_16_R3 extends AbstractTranslateManager {
 
     public Translate1_16_R3(File file) {
@@ -23,7 +29,24 @@ public class Translate1_16_R3 extends AbstractTranslateManager {
     public String getItemName(ItemStack item, LangType type) {
         net.minecraft.server.v1_16_R3.ItemStack itemStack = org.bukkit.craftbukkit.v1_16_R3.inventory.CraftItemStack.asNMSCopy(item);
 
-        return getTranslate(itemStack.getItem().getName(), type);
+        String name;
+        Item i = itemStack.getItem();
+        if (i instanceof ItemSplashPotion) {
+            name = "item.minecraft" + PotionUtil.d(itemStack).b("splash_potion.effect.");
+        }
+        else if (i instanceof ItemLingeringPotion) {
+            name = "item.minecraft" + PotionUtil.d(itemStack).b("lingering_potion.effect.");
+        }
+        else if (i instanceof ItemPotion) {
+            name = "item.minecraft" + PotionUtil.d(itemStack).b("potion.effect.");
+        }
+        else {
+            name = itemStack.getItem().getName();
+        }
+        
+        System.out.println("testLangtt " + name);
+        
+        return getTranslate(name, type);
     }
     
     @Override
@@ -32,9 +55,9 @@ public class Translate1_16_R3 extends AbstractTranslateManager {
         return getTranslate(name,  type);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public String getEnchantName(Enchantment enchant,  LangType type) {
-        @SuppressWarnings("deprecation")
         String name = "enchantment." + enchant.getName();
         return getTranslate(name, type);
     }
@@ -84,7 +107,7 @@ public class Translate1_16_R3 extends AbstractTranslateManager {
                                         @SuppressWarnings("unchecked")
                                         Set<Entry<Object, Object>> s = (Set<Entry<Object, Object>>) o.entrySet();
                                         for (Entry<Object, Object> f : s) {
-                                            translates.put(f.getKey().toString(), f.getValue().toString());
+                                            translates.put(f.getKey().toString().toLowerCase().replace("_", ""), f.getValue().toString());
                                         }
                                     }
 
