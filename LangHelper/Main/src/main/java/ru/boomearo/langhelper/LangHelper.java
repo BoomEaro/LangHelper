@@ -20,57 +20,57 @@ import ru.boomearo.langhelper.versions.Translate1_16_R3;
 public class LangHelper extends JavaPlugin {
 
     private AbstractTranslateManager version = null;
-    
-    private static LangHelper instance = null;
-    
-    private final String serverVersion = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3].substring(1);
-    
-    @Override
-	public void onEnable() {
-		instance = this;
 
-		this.version = matchVersion(getLanguageFolder());
-		
-		if (this.version != null) {
-		    for (Translate tra : this.version.getAllTranslate()) {
-		        this.getLogger().info("Язык '" + tra.getLangType().name() + "' успешно загружен. Количество строк: " + tra.getAllTranslate().size());
-		    }
-		}
-		
-		getCommand("langhelper").setExecutor(new CmdExecutorLangHelper());
-		
-		this.getLogger().info("Плагин успешно запущен!");
-	}
-	
+    private static LangHelper instance = null;
+
+    private final String serverVersion = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3].substring(1);
+
     @Override
-	public void onDisable() {
-		this.getLogger().info("Плагин успешно выключен!");
-	}
+    public void onEnable() {
+        instance = this;
+
+        this.version = matchVersion(getLanguageFolder());
+
+        if (this.version != null) {
+            for (Translate tra : this.version.getAllTranslate()) {
+                this.getLogger().info("Язык '" + tra.getLangType().name() + "' успешно загружен. Количество строк: " + tra.getAllTranslate().size());
+            }
+        }
+
+        getCommand("langhelper").setExecutor(new CmdExecutorLangHelper());
+
+        this.getLogger().info("Плагин успешно запущен!");
+    }
+
+    @Override
+    public void onDisable() {
+        this.getLogger().info("Плагин успешно выключен!");
+    }
 
     public AbstractTranslateManager getAbstractTranslateManager() {
         return this.version;
     }
-    
+
     private static String capitalize(String name) {
         String material = name.replace("_", " ").toLowerCase();
-        
+
         StringBuilder sb = new StringBuilder();
         String[] arrayOfString;
         int j = (arrayOfString = material.split(" ")).length;
         for (int i = 0; i < j; i++) {
-           String word = arrayOfString[i];
-           sb.append(" ");
-           if (i == 0) {
-              sb.append(word.toUpperCase().charAt(0));
-              sb.append(word.substring(1));
-           }
-           else {
-               sb.append(word.substring(0));  
-           }
+            String word = arrayOfString[i];
+            sb.append(" ");
+            if (i == 0) {
+                sb.append(word.toUpperCase().charAt(0));
+                sb.append(word.substring(1));
+            }
+            else {
+                sb.append(word.substring(0));  
+            }
         }
-       return sb.toString().substring(1);
+        return sb.toString().substring(1);
     }
-    
+
     public String getEnchantmentName(Enchantment enc, LangType lang) {
         String name = this.version.getEnchantName(enc, lang);
         if (name == null) {
@@ -87,7 +87,7 @@ public class LangHelper extends JavaPlugin {
         }
         return name;
     }
-    
+
     public String getEnchantLevelTranslate(int level, LangType lang) {
         String name = this.version.getEnchantLevelName(level, lang);
         if (name == null) {
@@ -95,7 +95,7 @@ public class LangHelper extends JavaPlugin {
         }
         return name;
     }
-    
+
     public String getEntityTranslate(EntityType entity, LangType lang) {
         String name = this.version.getEntityName(entity, lang);
         if (name == null) {
@@ -103,20 +103,20 @@ public class LangHelper extends JavaPlugin {
         }
         return name;
     }
-    
-	public static LangHelper getInstance() { 
-		return instance;
-	}
-	
-	public static File getLanguageFolder() {
-	    return new File(LangHelper.getInstance().getDataFolder(), "languages" + File.separator);
-	}
-	
+
+    public static LangHelper getInstance() { 
+        return instance;
+    }
+
+    public static File getLanguageFolder() {
+        return new File(LangHelper.getInstance().getDataFolder(), "languages" + File.separator);
+    }
+
     private final List<Class<? extends AbstractTranslateManager>> versions = Arrays.asList(
             Translate1_12_R1.class,
             Translate1_16_R3.class
-    );
-    
+            );
+
     public AbstractTranslateManager matchVersion(File file) {
         try {
             return this.versions.stream()

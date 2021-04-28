@@ -12,47 +12,47 @@ import ru.boomearo.langhelper.commands.CmdList;
 
 public class CmdExecutorLangHelper extends AbstractExecutor {
 
-	public CmdExecutorLangHelper() {
-		super(new LangHelperUse());
-	}
+    public CmdExecutorLangHelper() {
+        super(new LangHelperUse());
+    }
 
-	@Override
-	public boolean zeroArgument(CommandSender sender, CmdList cmds) {
-		cmds.sendUsageCmds(sender);
-		return true;
-	}
+    @Override
+    public boolean zeroArgument(CommandSender sender, CmdList cmds) {
+        cmds.sendUsageCmds(sender);
+        return true;
+    }
 
-	private static final List<String> empty = new ArrayList<>();
+    private static final List<String> empty = new ArrayList<>();
 
-	@Override
-	public List<String> onTabComplete(CommandSender cs, Command arg1, String arg2, String[] arg3) {
-		if (!cs.hasPermission("langhelper.admin")) {
-			return empty;
-		}
-		if (arg3.length == 1) {
-			List<String> matches = new ArrayList<>();
-			String search = arg3[0].toLowerCase();
-			for (String se : Arrays.asList("reload", "testitem", "testentity", "testenchant", "testenchantlevel"))
-			{
-				if (se.toLowerCase().startsWith(search))
-				{
-					matches.add(se);
-				}
-			}
-			return matches;
-		}
-		return empty;
-	}
+    @Override
+    public List<String> onTabComplete(CommandSender cs, Command arg1, String arg2, String[] arg3) {
+        if (!cs.hasPermission("langhelper.admin")) {
+            return empty;
+        }
+        if (arg3.length == 1) {
+            List<String> matches = new ArrayList<>();
+            String search = arg3[0].toLowerCase();
+            for (String se : Arrays.asList("reload", "testitem", "testentity", "testenchant", "testenchantlevel"))
+            {
+                if (se.toLowerCase().startsWith(search))
+                {
+                    matches.add(se);
+                }
+            }
+            return matches;
+        }
+        return empty;
+    }
 
-	@Override
-	public String getPrefix() {
-		return "§f ";
-	}
+    @Override
+    public String getPrefix() {
+        return "§f ";
+    }
 
-	@Override
-	public String getSuffix() {
-		return " §8-§6 ";
-	}
+    @Override
+    public String getSuffix() {
+        return " §8-§6 ";
+    }
 
 }
 

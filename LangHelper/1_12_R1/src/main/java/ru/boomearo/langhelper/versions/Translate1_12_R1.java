@@ -53,7 +53,7 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
 
         return getTranslate(name, type);
     }
-    
+
     @Override
     public String getEntityName(EntityType entity, LangType type) {
         String name = "entity." + entity.name() + ".name";
@@ -73,8 +73,8 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
         return getTranslate(name, type);
     }
 
-    
-    
+
+
     @Override
     public ConcurrentMap<LangType, Translate> loadTranslateFromDisk(File file) {
         ConcurrentMap<LangType, Translate> types = new ConcurrentHashMap<LangType, Translate>();
@@ -120,7 +120,7 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
         catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return types;
     }
 }

@@ -10,9 +10,9 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 
 public abstract class AbstractTranslateManager {
-    
+
     private final ConcurrentMap<LangType, Translate> types;
-    
+
     public AbstractTranslateManager(File file) {
         this.types = loadTranslateFromDisk(file);
     }
@@ -20,7 +20,7 @@ public abstract class AbstractTranslateManager {
     public Translate getTranslate(LangType type) {
         return this.types.get(type);
     }
-    
+
     public String getTranslate(String name, LangType type) {
         Translate tr = this.types.get(type);
         if (tr != null) {
@@ -28,7 +28,7 @@ public abstract class AbstractTranslateManager {
         }
         return null;
     }
-    
+
     public Collection<Translate> getAllTranslate() {
         return this.types.values();
     }
@@ -36,11 +36,11 @@ public abstract class AbstractTranslateManager {
     public Set<LangType> getAllTranslateLang() {
         return this.types.keySet();
     }
-    
+
     public abstract String getItemName(ItemStack item, LangType type);
     public abstract String getEntityName(EntityType entity, LangType type);
     public abstract String getEnchantName(Enchantment enchant, LangType type);
     public abstract String getEnchantLevelName(int level, LangType type);
-   
+
     public abstract ConcurrentMap<LangType, Translate> loadTranslateFromDisk(File file);
 }

@@ -9,9 +9,9 @@ import java.lang.annotation.Target;
 @Retention(RUNTIME)
 @Target(METHOD)
 public @interface CmdInfo {
-	String name();
-	String description() default "";
-	String usage() default "";
-	String permission() default "";
-	String[] aliases() default {""};
+    String name();
+    String description() default "";
+    String usage() default "";
+    String permission() default "";
+    String[] aliases() default {""};
 }

@@ -46,7 +46,7 @@ public class Translate1_16_R3 extends AbstractTranslateManager {
 
         return getTranslate(name, type);
     }
-    
+
     @Override
     public String getEntityName(EntityType entity, LangType type) {
         String name = "entity.minecraft." + entity.name();
@@ -55,7 +55,7 @@ public class Translate1_16_R3 extends AbstractTranslateManager {
 
     @Override
     public String getEnchantName(Enchantment enchant,  LangType type) {
-        
+
         String name = "enchantment.minecraft." + enchant.getKey().getKey();
         return getTranslate(name, type);
     }
@@ -66,8 +66,8 @@ public class Translate1_16_R3 extends AbstractTranslateManager {
         return getTranslate(name, type);
     }
 
-    
-    
+
+
     @Override
     public ConcurrentMap<LangType, Translate> loadTranslateFromDisk(File file) {
         ConcurrentMap<LangType, Translate> types = new ConcurrentHashMap<LangType, Translate>();
@@ -123,7 +123,7 @@ public class Translate1_16_R3 extends AbstractTranslateManager {
         catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return types;
     }
 }

@@ -36,25 +36,25 @@ public class LangHelperUse {
         }
 
         Player pl = (Player) cs;
-        
+
         ItemStack item = pl.getInventory().getItemInMainHand();
         if (item == null) {
             cs.sendMessage("В основной руке нет предметов!");
             return true;
         }
-        
+
         cs.sendMessage("Предмет: " + LangHelper.getInstance().getAbstractTranslateManager().getItemName(item, LangType.RU));
         return true;
     }
-    
+
     @CmdInfo(name = "testentity", description = "Протестировать название сущности.", usage = "/langhelper testentity <сущность>", permission = "langhelper.admin")
     public boolean testentity(CommandSender cs, String[] args) {
         if (args.length < 1 || args.length > 1) {
             return false;
         }
-        
+
         String arg = args[0].toUpperCase();
-        
+
         EntityType type = null;
         try {
             type = EntityType.valueOf(arg);
@@ -64,7 +64,7 @@ public class LangHelperUse {
             cs.sendMessage("Указанная сущность не найдена!");
             return true;
         }
-        
+
         cs.sendMessage("Сущность: " + LangHelper.getInstance().getAbstractTranslateManager().getEntityName(type, LangType.RU));
         return true;
     }
@@ -74,9 +74,9 @@ public class LangHelperUse {
         if (args.length < 1 || args.length > 1) {
             return false;
         }
-        
+
         String arg = args[0].toUpperCase();
-        
+
         Enchantment type = null;
         try {
             type = Enchantment.getByName(arg);
@@ -86,19 +86,19 @@ public class LangHelperUse {
             cs.sendMessage("Указанное зачарование не найдено!");
             return true;
         }
-        
+
         cs.sendMessage("Зачарование: " + LangHelper.getInstance().getAbstractTranslateManager().getEnchantName(type, LangType.RU));
         return true;
     }
-    
+
     @CmdInfo(name = "testenchantlevel", description = "Протестировать название уровней зачарования.", usage = "/langhelper testenchantlevel <уровни>", permission = "langhelper.admin")
     public boolean testenchantlevel(CommandSender cs, String[] args) {
         if (args.length < 1 || args.length > 1) {
             return false;
         }
-        
+
         String arg = args[0].toUpperCase();
-        
+
         Integer type = null;
         try {
             type = Integer.parseInt(arg);
@@ -108,7 +108,7 @@ public class LangHelperUse {
             cs.sendMessage("Указанный уровень зачарования не найден!");
             return true;
         }
-        
+
         cs.sendMessage("Зачарование: " + LangHelper.getInstance().getAbstractTranslateManager().getEnchantLevelName(type, LangType.RU));
         return true;
     }
