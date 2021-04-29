@@ -13,21 +13,21 @@ import org.bukkit.inventory.ItemStack;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import net.minecraft.server.v1_16_R3.Item;
-import net.minecraft.server.v1_16_R3.ItemLingeringPotion;
-import net.minecraft.server.v1_16_R3.ItemPotion;
-import net.minecraft.server.v1_16_R3.ItemSplashPotion;
-import net.minecraft.server.v1_16_R3.PotionUtil;
+import net.minecraft.server.v1_15_R1.Item;
+import net.minecraft.server.v1_15_R1.ItemLingeringPotion;
+import net.minecraft.server.v1_15_R1.ItemPotion;
+import net.minecraft.server.v1_15_R1.ItemSplashPotion;
+import net.minecraft.server.v1_15_R1.PotionUtil;
 
-public class Translate1_16_R3 extends AbstractTranslateManager {
+public class Translate1_15_R1 extends AbstractTranslateManager {
 
-    public Translate1_16_R3(File file) {
+    public Translate1_15_R1(File file) {
         super(file);
     }
 
     @Override
     public String getItemName(ItemStack item, LangType type) {
-        net.minecraft.server.v1_16_R3.ItemStack itemStack = org.bukkit.craftbukkit.v1_16_R3.inventory.CraftItemStack.asNMSCopy(item);
+        net.minecraft.server.v1_15_R1.ItemStack itemStack = org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack.asNMSCopy(item);
 
         String name;
         Item i = itemStack.getItem();
@@ -78,7 +78,7 @@ public class Translate1_16_R3 extends AbstractTranslateManager {
             if (!folders.isDirectory()) {
                 return types;
             }
-            File ver = new File(folders, "1_16_R3");
+            File ver = new File(folders, "1_15_R1");
             if (ver.isDirectory()) {
                 File[] type = ver.listFiles();
                 if (type != null) {

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>LangHelper</groupId>
 	<artifactId>LangHelper</artifactId>
@@ -11,8 +13,10 @@
 		<module>1_12_R1</module>
 		<module>1_16_R3</module>
 		<module>Main</module>
-    <module>1_13_R1</module>
-  </modules>
+		<module>1_13_R1</module>
+		<module>1_14_R3</module>
+		<module>1_15_R2</module>
+	</modules>
 
 	<repositories>
 		<repository>

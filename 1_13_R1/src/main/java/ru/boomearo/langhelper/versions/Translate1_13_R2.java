@@ -17,7 +17,6 @@ import net.minecraft.server.v1_13_R2.Item;
 import net.minecraft.server.v1_13_R2.ItemLingeringPotion;
 import net.minecraft.server.v1_13_R2.ItemPotion;
 import net.minecraft.server.v1_13_R2.ItemSplashPotion;
-import net.minecraft.server.v1_13_R2.ItemTippedArrow;
 import net.minecraft.server.v1_13_R2.PotionUtil;
 
 public class Translate1_13_R2 extends AbstractTranslateManager {
@@ -32,22 +31,17 @@ public class Translate1_13_R2 extends AbstractTranslateManager {
 
         String name;
         Item i = itemStack.getItem();
-
-        //Неизвестно, работате ли тут банеры, если нет то мб пофикшу
         if (i instanceof ItemSplashPotion) {
-            name = PotionUtil.d(itemStack).b("splash_potion.effect.");
+            name = "item.minecraft." + PotionUtil.d(itemStack).b("splash_potion.effect.");
         }
         else if (i instanceof ItemLingeringPotion) {
-            name = PotionUtil.d(itemStack).b("lingering_potion.effect.");
+            name = "item.minecraft." + PotionUtil.d(itemStack).b("lingering_potion.effect.");
         }
         else if (i instanceof ItemPotion) {
-            name = PotionUtil.d(itemStack).b("potion.effect.");
-        }
-        else if (i instanceof ItemTippedArrow) {
-            name = PotionUtil.d(itemStack).b("tipped_arrow.effect.");
+            name = "item.minecraft." + PotionUtil.d(itemStack).b("potion.effect.");
         }
         else {
-            name = itemStack.getItem().a(itemStack) + ".name";
+            name = itemStack.getItem().getName();
         }
 
         return getTranslate(name, type);
@@ -55,14 +49,14 @@ public class Translate1_13_R2 extends AbstractTranslateManager {
 
     @Override
     public String getEntityName(EntityType entity, LangType type) {
-        String name = "entity." + entity.name() + ".name";
+        String name = "entity.minecraft." + entity.name();
         return getTranslate(name,  type);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public String getEnchantName(Enchantment enchant,  LangType type) {
-        String name = "enchantment." + enchant.getName();
+
+        String name = "enchantment.minecraft." + enchant.getKey().getKey();
         return getTranslate(name, type);
     }
 
@@ -71,7 +65,7 @@ public class Translate1_13_R2 extends AbstractTranslateManager {
         String name = "enchantment.level." + level;
         return getTranslate(name, type);
     }
-
+    
     @Override
     public ConcurrentMap<LangType, Translate> loadTranslateFromDisk(File file) {
         ConcurrentMap<LangType, Translate> types = new ConcurrentHashMap<LangType, Translate>();
