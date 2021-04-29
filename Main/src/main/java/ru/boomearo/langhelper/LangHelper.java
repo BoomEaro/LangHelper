@@ -1,6 +1,7 @@
 package ru.boomearo.langhelper;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import ru.boomearo.langhelper.versions.Translate1_13_R2;
 import ru.boomearo.langhelper.versions.Translate1_14_R1;
 import ru.boomearo.langhelper.versions.Translate1_15_R1;
 import ru.boomearo.langhelper.versions.Translate1_16_R3;
+import ru.boomearo.langhelper.versions.exceptions.LangException;
 
 public class LangHelper extends JavaPlugin {
 
@@ -28,16 +30,37 @@ public class LangHelper extends JavaPlugin {
 
     private final String serverVersion = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3].substring(1);
 
+    private final List<Class<? extends AbstractTranslateManager>> versions = Arrays.asList(
+            Translate1_12_R1.class,
+            Translate1_13_R2.class,
+            Translate1_14_R1.class,
+            Translate1_15_R1.class,
+            Translate1_16_R3.class
+            );
+
+    
     @Override
     public void onEnable() {
         instance = this;
 
-        this.version = matchVersion(getLanguageFolder());
+        try {
+            //Вычисляем версию сервера и создаем соответсвующий экземпляр
+            this.version = matchVersion();
 
-        if (this.version != null) {
-            for (Translate tra : this.version.getAllTranslate()) {
-                this.getLogger().info("Язык '" + tra.getLangType().name() + "' успешно загружен. Количество строк: " + tra.getAllTranslate().size());
+            //Проверяем, существует ли дефолтная папка (первый раз включается плагин?)
+            checkDefaultTranslate(this.serverVersion);
+
+            //Подгружаем языки с диска
+            this.version.loadLanguages(getLanguageFolder());
+            
+            if (this.version != null) {
+                for (Translate tra : this.version.getAllTranslate()) {
+                    this.getLogger().info("Язык '" + tra.getLangType().name() + "' успешно загружен. Количество строк: " + tra.getAllTranslate().size());
+                }
             }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
 
         getCommand("langhelper").setExecutor(new CmdExecutorLangHelper());
@@ -48,6 +71,24 @@ public class LangHelper extends JavaPlugin {
     @Override
     public void onDisable() {
         this.getLogger().info("Плагин успешно выключен!");
+    }
+    
+    private void checkDefaultTranslate(String version) {
+        //Убеждаемся что папки этой версии нет
+        File currentTranFolder = new File(this.getDataFolder(), "languages" + File.separator + version + File.separator);
+        if (currentTranFolder.exists()) {
+            return;
+        }
+
+        //Выгружаем все языки по умолчанию которые есть в плагине
+        for (LangType type : LangType.values()) {
+            String res = ("languages" + File.separator + version + File.separator + type.name()).replace('\\', '/'); // Кто знал что надо заменять символ пути..
+            InputStream is = this.getResource(res);
+            //Сохраняем только те что есть
+            if (is != null) {
+                saveResource(res, false);
+            }
+        }
     }
 
     public AbstractTranslateManager getAbstractTranslateManager() {
@@ -107,6 +148,20 @@ public class LangHelper extends JavaPlugin {
         return name;
     }
 
+    private AbstractTranslateManager matchVersion() throws LangException {
+        try {
+            return this.versions.stream()
+                    .filter(version -> version.getSimpleName().substring(9).equals(this.serverVersion))
+                    .findFirst().orElseThrow(() -> new LangException("Плагин не поддерживает данную версию сервера!")).
+                    getConstructor().
+                    newInstance();
+        } 
+        catch (Exception e) {
+            //Вызываем новое но свое
+            throw new LangException(e.getMessage());
+        } 
+    }
+    
     public static LangHelper getInstance() { 
         return instance;
     }
@@ -115,25 +170,4 @@ public class LangHelper extends JavaPlugin {
         return new File(LangHelper.getInstance().getDataFolder(), "languages" + File.separator);
     }
 
-    private final List<Class<? extends AbstractTranslateManager>> versions = Arrays.asList(
-            Translate1_12_R1.class,
-            Translate1_13_R2.class,
-            Translate1_14_R1.class,
-            Translate1_15_R1.class,
-            Translate1_16_R3.class
-            );
-
-    public AbstractTranslateManager matchVersion(File file) {
-        try {
-            return this.versions.stream()
-                    .filter(version -> version.getSimpleName().substring(9).equals(this.serverVersion))
-                    .findFirst().orElseThrow(() -> new Exception("Плагин не поддерживает данную версию сервера!")).
-                    getConstructor(File.class).
-                    newInstance(file);
-        } 
-        catch (Exception ex) {
-            this.getLogger().severe(ex.getMessage());
-        }
-        return null;
-    }
 }

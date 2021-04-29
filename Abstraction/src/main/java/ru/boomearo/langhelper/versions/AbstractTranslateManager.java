@@ -11,12 +11,12 @@ import org.bukkit.inventory.ItemStack;
 
 public abstract class AbstractTranslateManager {
 
-    private final ConcurrentMap<LangType, Translate> types;
+    private ConcurrentMap<LangType, Translate> types;
 
-    public AbstractTranslateManager(File file) {
+    public void loadLanguages(File file) {
         this.types = loadTranslateFromDisk(file);
     }
-
+    
     public Translate getTranslate(LangType type) {
         return this.types.get(type);
     }

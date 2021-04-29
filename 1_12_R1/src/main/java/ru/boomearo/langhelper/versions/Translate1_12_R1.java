@@ -20,10 +20,6 @@ import net.minecraft.server.v1_12_R1.PotionUtil;
 
 public class Translate1_12_R1 extends AbstractTranslateManager {
 
-    public Translate1_12_R1(File file) {
-        super(file);
-    }
-
     @Override
     public String getItemName(ItemStack item, LangType type) {
         net.minecraft.server.v1_12_R1.ItemStack itemStack = org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack.asNMSCopy(item);

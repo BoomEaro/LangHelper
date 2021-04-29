@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <project
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>LangHelper</groupId>
@@ -20,15 +21,15 @@
 			<artifactId>Abstraction</artifactId>
 			<version>0.1</version>
 			<type>jar</type>
-			<scope>compile</scope> 
-			<optional>true</optional> 
+			<scope>compile</scope>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>LangHelper</groupId>
 			<artifactId>1_12_R1</artifactId>
 			<version>0.1</version>
 			<type>jar</type>
-			<scope>compile</scope> 
+			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
@@ -36,7 +37,7 @@
 			<artifactId>1_13_R2</artifactId>
 			<version>0.1</version>
 			<type>jar</type>
-			<scope>compile</scope> 
+			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
@@ -44,7 +45,7 @@
 			<artifactId>1_14_R1</artifactId>
 			<version>0.1</version>
 			<type>jar</type>
-			<scope>compile</scope> 
+			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
@@ -52,7 +53,7 @@
 			<artifactId>1_15_R1</artifactId>
 			<version>0.1</version>
 			<type>jar</type>
-			<scope>compile</scope> 
+			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
@@ -79,11 +80,7 @@
 		<resources>
 			<resource>
 				<targetPath>.</targetPath>
-				<filtering>true</filtering>
 				<directory>src/main/resources</directory>
-				<includes>
-					<include>plugin.yml</include>
-				</includes>
 			</resource>
 		</resources>
 		<plugins>
