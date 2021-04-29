@@ -15,6 +15,7 @@ import ru.boomearo.langhelper.versions.AbstractTranslateManager;
 import ru.boomearo.langhelper.versions.LangType;
 import ru.boomearo.langhelper.versions.Translate;
 import ru.boomearo.langhelper.versions.Translate1_12_R1;
+import ru.boomearo.langhelper.versions.Translate1_13_R2;
 import ru.boomearo.langhelper.versions.Translate1_16_R3;
 
 public class LangHelper extends JavaPlugin {
@@ -114,6 +115,7 @@ public class LangHelper extends JavaPlugin {
 
     private final List<Class<? extends AbstractTranslateManager>> versions = Arrays.asList(
             Translate1_12_R1.class,
+            Translate1_13_R2.class,
             Translate1_16_R3.class
             );
 

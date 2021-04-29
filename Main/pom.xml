@@ -20,27 +20,32 @@
 			<artifactId>Abstraction</artifactId>
 			<version>0.1</version>
 			<type>jar</type>
-			<scope>compile</scope> <!-- The 'compile' scope will get shaded in -->
-			<optional>true</optional> <!-- Set all of these to optional, to ensure plugins building against yours 
-				don't look for them -->
+			<scope>compile</scope> 
+			<optional>true</optional> 
 		</dependency>
 		<dependency>
 			<groupId>LangHelper</groupId>
 			<artifactId>1_12_R1</artifactId>
 			<version>0.1</version>
 			<type>jar</type>
-			<scope>compile</scope> <!-- The 'compile' scope will get shaded in -->
-			<optional>true</optional> <!-- Set all of these to optional, to ensure plugins building against yours 
-				don't look for them -->
+			<scope>compile</scope> 
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>LangHelper</groupId>
+			<artifactId>1_13_R2</artifactId>
+			<version>0.1</version>
+			<type>jar</type>
+			<scope>compile</scope> 
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>LangHelper</groupId>
 			<artifactId>1_16_R3</artifactId>
 			<version>0.1</version>
 			<type>jar</type>
-			<scope>compile</scope> <!-- The 'compile' scope will get shaded in -->
-			<optional>true</optional> <!-- Set all of these to optional, to ensure plugins building against yours 
-				don't look for them -->
+			<scope>compile</scope>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.spigotmc</groupId>
