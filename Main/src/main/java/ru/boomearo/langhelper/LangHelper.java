@@ -170,4 +170,5 @@ public class LangHelper extends JavaPlugin {
         return new File(LangHelper.getInstance().getDataFolder(), "languages" + File.separator);
     }
 
+    //TEST commits 45
 }
