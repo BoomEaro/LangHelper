@@ -165,10 +165,6 @@ public class LangHelper extends JavaPlugin {
     public static LangHelper getInstance() { 
         return instance;
     }
-
-    //TEST
-    //TEST
-    //TODO
     
     public static File getLanguageFolder() {
         return new File(LangHelper.getInstance().getDataFolder(), "languages" + File.separator);
