@@ -30,7 +30,7 @@ public class LangHelper extends JavaPlugin {
 
     private final String serverVersion = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3].substring(1);
 
-    private final List<Class<? extends AbstractTranslateManager>> versions = Arrays.asList(
+    private static final List<Class<? extends AbstractTranslateManager>> versions = Arrays.asList(
             Translate1_12_R1.class,
             Translate1_13_R2.class,
             Translate1_14_R1.class,
@@ -38,13 +38,13 @@ public class LangHelper extends JavaPlugin {
             Translate1_16_R3.class
             );
 
-    
     @Override
     public void onEnable() {
         instance = this;
 
         try {
             //Вычисляем версию сервера и создаем соответсвующий экземпляр
+            //Любая ошибка не позволит дальше выполнить действия
             this.version = matchVersion();
 
             //Проверяем, существует ли дефолтная папка (первый раз включается плагин?)
@@ -53,10 +53,9 @@ public class LangHelper extends JavaPlugin {
             //Подгружаем языки с диска
             this.version.loadLanguages(getLanguageFolder());
             
-            if (this.version != null) {
-                for (Translate tra : this.version.getAllTranslate()) {
-                    this.getLogger().info("Язык '" + tra.getLangType().name() + "' успешно загружен. Количество строк: " + tra.getAllTranslate().size());
-                }
+            //Просто оповещаем о том, сколько строк и какие языки были загружены
+            for (Translate tra : this.version.getAllTranslate()) {
+                this.getLogger().info("Язык '" + tra.getLangType().name() + "' успешно загружен. Количество строк: " + tra.getAllTranslate().size());
             }
         }
         catch (Exception e) {
@@ -150,7 +149,7 @@ public class LangHelper extends JavaPlugin {
 
     private AbstractTranslateManager matchVersion() throws LangException {
         try {
-            return this.versions.stream()
+            return versions.stream()
                     .filter(version -> version.getSimpleName().substring(9).equals(this.serverVersion))
                     .findFirst().orElseThrow(() -> new LangException("Плагин не поддерживает данную версию сервера!")).
                     getConstructor().
