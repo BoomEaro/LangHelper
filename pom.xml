@@ -9,13 +9,13 @@
 	<packaging>pom</packaging>
 
 	<modules>
+	   <module>Main</module>
 		<module>Abstraction</module>
 		<module>1_12_R1</module>
-		<module>1_16_R3</module>
-		<module>Main</module>
 		<module>1_13_R1</module>
 		<module>1_14_R3</module>
 		<module>1_15_R2</module>
+		<module>1_16_R3</module>
 	</modules>
 
 	<repositories>
