@@ -168,4 +168,6 @@ public class LangHelper extends JavaPlugin {
     public static File getLanguageFolder() {
         return new File(LangHelper.getInstance().getDataFolder(), "languages" + File.separator);
     }
+	
+	//Test commit 
 }
