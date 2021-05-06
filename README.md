@@ -12,7 +12,7 @@ API достаточно простой, все что нужно сделать
 
 Пример использования:
 ```
-String translateItem = LangHelper.getInstance().getItemTranslate(new ItemStack(Materia.STONE), LangType.ru); // Получить русский перевод каменного блока
+String translateItem = LangHelper.getInstance().getItemTranslate(new ItemStack(Material.STONE), LangType.ru); // Получить русский перевод каменного блока
 String translateEnchant = LangHelper.getInstance().getEnchantmentName(Enchantment.LUCK, LangType.ru); // Получить русский перевод зачарования на удачу
 String translateEntity = LangHelper.getInstance().getEntityTranslate(EntityType.CREEPER, LangType.ru); // Получить русский перевод сущности крипера
 System.out.println("Переводы: " + translateItem + " " + translateEnchant + " " + translateEntity);
