@@ -53,12 +53,12 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
     @Override
     public String getEntityName(EntityType entity, LangType type) {
         String name = "entity." + entity.name() + ".name";
-        return getTranslate(name,  type);
+        return getTranslate(name, type);
     }
 
     //Похоже что на 1.12 название в файле и на сервере отличаются, поэтому до 1.13 не рекомендуется юзать
     @Override
-    public String getEnchantName(Enchantment enchant,  LangType type) {
+    public String getEnchantName(Enchantment enchant, LangType type) {
         String name = "enchantment." + enchant.getName();
         return getTranslate(name, type);
     }
@@ -68,7 +68,6 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
         String name = "enchantment.level." + level;
         return getTranslate(name, type);
     }
-
 
 
     @Override
@@ -93,7 +92,8 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
                             try {
                                 lt = LangType.valueOf(t.getName());
                             }
-                            catch (Exception e) {}
+                            catch (Exception e) {
+                            }
                             if (lt != null) {
                                 ConcurrentMap<String, String> translates = new ConcurrentHashMap<String, String>();
                                 for (String line : com.google.common.io.Files.readLines(t, StandardCharsets.UTF_8)) {

@@ -16,7 +16,7 @@ public abstract class AbstractTranslateManager {
     public void loadLanguages(File file) {
         this.types = loadTranslateFromDisk(file);
     }
-    
+
     public Translate getTranslate(LangType type) {
         return this.types.get(type);
     }
@@ -38,8 +38,11 @@ public abstract class AbstractTranslateManager {
     }
 
     public abstract String getItemName(ItemStack item, LangType type);
+
     public abstract String getEntityName(EntityType entity, LangType type);
+
     public abstract String getEnchantName(Enchantment enchant, LangType type);
+
     public abstract String getEnchantLevelName(int level, LangType type);
 
     public abstract ConcurrentMap<LangType, Translate> loadTranslateFromDisk(File file);

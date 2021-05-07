@@ -36,7 +36,7 @@ public class LangHelper extends JavaPlugin {
             Translate1_14_R1.class,
             Translate1_15_R1.class,
             Translate1_16_R3.class
-            );
+    );
 
     @Override
     public void onEnable() {
@@ -52,7 +52,7 @@ public class LangHelper extends JavaPlugin {
 
             //Подгружаем языки с диска
             this.version.loadLanguages(getLanguageFolder());
-            
+
             //Просто оповещаем о том, сколько строк и какие языки были загружены
             for (Translate tra : this.version.getAllTranslate()) {
                 this.getLogger().info("Язык '" + tra.getLangType().name() + "' успешно загружен. Количество строк: " + tra.getAllTranslate().size());
@@ -71,7 +71,7 @@ public class LangHelper extends JavaPlugin {
     public void onDisable() {
         this.getLogger().info("Плагин успешно выключен!");
     }
-    
+
     private void checkDefaultTranslate(String version) {
         //Убеждаемся что папки этой версии нет
         File currentTranFolder = new File(this.getDataFolder(), "languages" + File.separator + version + File.separator);
@@ -108,7 +108,7 @@ public class LangHelper extends JavaPlugin {
                 sb.append(word.substring(1));
             }
             else {
-                sb.append(word.substring(0));  
+                sb.append(word.substring(0));
             }
         }
         return sb.toString().substring(1);
@@ -152,19 +152,19 @@ public class LangHelper extends JavaPlugin {
             return versions.stream()
                     .filter(version -> version.getSimpleName().substring(9).equals(this.serverVersion))
                     .findFirst().orElseThrow(() -> new LangException("Плагин не поддерживает данную версию сервера!")).
-                    getConstructor().
-                    newInstance();
-        } 
+                            getConstructor().
+                            newInstance();
+        }
         catch (Exception e) {
             //Вызываем новое но свое
             throw new LangException(e.getMessage());
-        } 
+        }
     }
-    
-    public static LangHelper getInstance() { 
+
+    public static LangHelper getInstance() {
         return instance;
     }
-    
+
     public static File getLanguageFolder() {
         return new File(LangHelper.getInstance().getDataFolder(), "languages" + File.separator);
     }

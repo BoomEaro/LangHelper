@@ -42,11 +42,11 @@ public class CmdList {
         return true;
     }
 
-    public Set<String> getListName(){
+    public Set<String> getListName() {
         return this.cmd.keySet();
     }
 
-    public Map<String, Cmd> getListCmd(){
+    public Map<String, Cmd> getListCmd() {
         return this.cmd;
     }
 

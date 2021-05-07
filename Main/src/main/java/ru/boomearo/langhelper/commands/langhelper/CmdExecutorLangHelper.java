@@ -32,10 +32,8 @@ public class CmdExecutorLangHelper extends AbstractExecutor {
         if (arg3.length == 1) {
             List<String> matches = new ArrayList<>();
             String search = arg3[0].toLowerCase();
-            for (String se : Arrays.asList("reload", "testitem", "testentity", "testenchant", "testenchantlevel"))
-            {
-                if (se.toLowerCase().startsWith(search))
-                {
+            for (String se : Arrays.asList("reload", "testitem", "testentity", "testenchant", "testenchantlevel")) {
+                if (se.toLowerCase().startsWith(search)) {
                     matches.add(se);
                 }
             }

@@ -8,10 +8,10 @@ public class Cmd implements Comparable<Cmd> {
     private Object cmdMainObject;
     private Method method;
     private String
-    name,
-    description,
-    usage,
-    permission;
+            name,
+            description,
+            usage,
+            permission;
 
     private String[] aliases;
 
@@ -29,7 +29,7 @@ public class Cmd implements Comparable<Cmd> {
     public boolean execute(CommandSender cs, String[] args) {
         try {
             return (boolean) this.method.invoke(this.cmdMainObject, cs, args);
-        } 
+        }
         catch (Exception e) {
             e.printStackTrace();
         }
@@ -39,15 +39,19 @@ public class Cmd implements Comparable<Cmd> {
     public String getName() {
         return this.name;
     }
+
     public String getDescription() {
         return this.description;
     }
+
     public String getUsage() {
         return this.usage;
     }
+
     public String getPermission() {
         return this.permission;
     }
+
     public String[] getAliases() {
         return this.aliases;
     }

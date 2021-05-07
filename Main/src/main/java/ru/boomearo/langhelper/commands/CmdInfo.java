@@ -10,8 +10,12 @@ import java.lang.annotation.Target;
 @Target(METHOD)
 public @interface CmdInfo {
     String name();
+
     String description() default "";
+
     String usage() default "";
+
     String permission() default "";
+
     String[] aliases() default {""};
 }

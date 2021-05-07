@@ -59,7 +59,8 @@ public class LangHelperUse {
         try {
             type = EntityType.valueOf(arg);
         }
-        catch (Exception e) {}
+        catch (Exception e) {
+        }
         if (type == null) {
             cs.sendMessage("Указанная сущность не найдена!");
             return true;
@@ -81,7 +82,8 @@ public class LangHelperUse {
         try {
             type = Enchantment.getByName(arg);
         }
-        catch (Exception e) {}
+        catch (Exception e) {
+        }
         if (type == null) {
             cs.sendMessage("Указанное зачарование не найдено!");
             return true;
@@ -103,7 +105,8 @@ public class LangHelperUse {
         try {
             type = Integer.parseInt(arg);
         }
-        catch (Exception e) {}
+        catch (Exception e) {
+        }
         if (type == null) {
             cs.sendMessage("Указанный уровень зачарования не найден!");
             return true;

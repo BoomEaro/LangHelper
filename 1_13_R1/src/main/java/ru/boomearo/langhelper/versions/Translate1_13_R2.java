@@ -20,7 +20,7 @@ import net.minecraft.server.v1_13_R2.ItemSplashPotion;
 import net.minecraft.server.v1_13_R2.PotionUtil;
 
 public class Translate1_13_R2 extends AbstractTranslateManager {
-    
+
     @Override
     public String getItemName(ItemStack item, LangType type) {
         net.minecraft.server.v1_13_R2.ItemStack itemStack = org.bukkit.craftbukkit.v1_13_R2.inventory.CraftItemStack.asNMSCopy(item);
@@ -46,11 +46,11 @@ public class Translate1_13_R2 extends AbstractTranslateManager {
     @Override
     public String getEntityName(EntityType entity, LangType type) {
         String name = "entity.minecraft." + entity.name();
-        return getTranslate(name,  type);
+        return getTranslate(name, type);
     }
 
     @Override
-    public String getEnchantName(Enchantment enchant,  LangType type) {
+    public String getEnchantName(Enchantment enchant, LangType type) {
 
         String name = "enchantment.minecraft." + enchant.getKey().getKey();
         return getTranslate(name, type);
@@ -61,7 +61,7 @@ public class Translate1_13_R2 extends AbstractTranslateManager {
         String name = "enchantment.level." + level;
         return getTranslate(name, type);
     }
-    
+
     @Override
     public ConcurrentMap<LangType, Translate> loadTranslateFromDisk(File file) {
         ConcurrentMap<LangType, Translate> types = new ConcurrentHashMap<LangType, Translate>();
@@ -84,7 +84,8 @@ public class Translate1_13_R2 extends AbstractTranslateManager {
                             try {
                                 lt = LangType.valueOf(t.getName());
                             }
-                            catch (Exception e) {}
+                            catch (Exception e) {
+                            }
                             if (lt != null) {
                                 ConcurrentMap<String, String> translates = new ConcurrentHashMap<String, String>();
                                 JSONParser jsonParser = new JSONParser();
@@ -103,7 +104,7 @@ public class Translate1_13_R2 extends AbstractTranslateManager {
                                         }
                                     }
 
-                                } 
+                                }
                                 catch (Exception e) {
                                     e.printStackTrace();
                                 }

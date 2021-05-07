@@ -46,11 +46,11 @@ public class Translate1_15_R1 extends AbstractTranslateManager {
     @Override
     public String getEntityName(EntityType entity, LangType type) {
         String name = "entity.minecraft." + entity.name();
-        return getTranslate(name,  type);
+        return getTranslate(name, type);
     }
 
     @Override
-    public String getEnchantName(Enchantment enchant,  LangType type) {
+    public String getEnchantName(Enchantment enchant, LangType type) {
 
         String name = "enchantment.minecraft." + enchant.getKey().getKey();
         return getTranslate(name, type);
@@ -84,7 +84,8 @@ public class Translate1_15_R1 extends AbstractTranslateManager {
                             try {
                                 lt = LangType.valueOf(t.getName());
                             }
-                            catch (Exception e) {}
+                            catch (Exception e) {
+                            }
                             if (lt != null) {
                                 ConcurrentMap<String, String> translates = new ConcurrentHashMap<String, String>();
                                 JSONParser jsonParser = new JSONParser();
@@ -103,7 +104,7 @@ public class Translate1_15_R1 extends AbstractTranslateManager {
                                         }
                                     }
 
-                                } 
+                                }
                                 catch (Exception e) {
                                     e.printStackTrace();
                                 }

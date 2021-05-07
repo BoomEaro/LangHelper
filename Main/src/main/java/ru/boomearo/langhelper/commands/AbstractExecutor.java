@@ -28,8 +28,8 @@ public abstract class AbstractExecutor implements CommandExecutor, TabCompleter 
         if (len == 0) {
             return zeroArgument(sender, this.cmds);
         }
-        String[] argsCopy = new String[len-1];
-        System.arraycopy(args, 1, argsCopy, 0, len-1);
+        String[] argsCopy = new String[len - 1];
+        System.arraycopy(args, 1, argsCopy, 0, len - 1);
         if (!this.cmds.execute(args[0].toLowerCase(), sender, argsCopy)) {
             this.cmds.sendUsageCmds(sender);
         }
@@ -57,6 +57,7 @@ public abstract class AbstractExecutor implements CommandExecutor, TabCompleter 
     public abstract boolean zeroArgument(CommandSender sender, CmdList cmds);
 
     public abstract String getPrefix();
+
     public abstract String getSuffix();
 
 }
