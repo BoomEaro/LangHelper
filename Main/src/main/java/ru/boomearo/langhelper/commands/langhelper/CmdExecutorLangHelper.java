@@ -12,6 +12,8 @@ import ru.boomearo.langhelper.commands.CmdList;
 
 public class CmdExecutorLangHelper extends AbstractExecutor {
 
+    private static final List<String> empty = new ArrayList<>();
+
     public CmdExecutorLangHelper() {
         super(new LangHelperUse());
     }
@@ -21,8 +23,6 @@ public class CmdExecutorLangHelper extends AbstractExecutor {
         cmds.sendUsageCmds(sender);
         return true;
     }
-
-    private static final List<String> empty = new ArrayList<>();
 
     @Override
     public List<String> onTabComplete(CommandSender cs, Command arg1, String arg2, String[] arg3) {

@@ -5,15 +5,15 @@ import java.lang.reflect.Method;
 import org.bukkit.command.CommandSender;
 
 public class Cmd implements Comparable<Cmd> {
-    private Object cmdMainObject;
-    private Method method;
-    private String
-            name,
-            description,
-            usage,
-            permission;
 
-    private String[] aliases;
+    private final String name;
+    private final String description;
+    private final String usage;
+    private final String permission;
+    private final String[] aliases;
+
+    private final Object cmdMainObject;
+    private final Method method;
 
     public Cmd(Object cmdMainObject, Method method, CmdInfo cmdinfo) {
         this.cmdMainObject = cmdMainObject;
@@ -23,7 +23,6 @@ public class Cmd implements Comparable<Cmd> {
         this.usage = cmdinfo.usage();
         this.permission = cmdinfo.permission();
         this.aliases = cmdinfo.aliases();
-
     }
 
     public boolean execute(CommandSender cs, String[] args) {

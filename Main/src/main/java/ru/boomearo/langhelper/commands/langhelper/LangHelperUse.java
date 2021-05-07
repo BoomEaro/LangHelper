@@ -14,7 +14,7 @@ public class LangHelperUse {
 
     @CmdInfo(name = "reload", description = "Перезагрузить конфигурацию.", usage = "/langhelper reload", permission = "langhelper.admin")
     public boolean reload(CommandSender cs, String[] args) {
-        if (args.length < 0 || args.length > 0) {
+        if (args.length != 0) {
             return false;
         }
 
@@ -25,14 +25,25 @@ public class LangHelperUse {
         return true;
     }
 
-    @CmdInfo(name = "testitem", description = "Протестировать название указанного предмета.", usage = "/langhelper testitem", permission = "langhelper.admin")
+    @CmdInfo(name = "testitem", description = "Протестировать название указанного предмета.", usage = "/langhelper testitem <язык>", permission = "langhelper.admin")
     public boolean testitem(CommandSender cs, String[] args) {
         if (!(cs instanceof Player)) {
             cs.sendMessage("Данная команда только для игроков.");
             return true;
         }
-        if (args.length < 0 || args.length > 0) {
+        if (args.length != 1) {
             return false;
+        }
+
+        LangType type = null;
+        try {
+            type = LangType.valueOf(args[0].toUpperCase());
+        }
+        catch (Exception e) {}
+
+        if (type == null) {
+            cs.sendMessage("Не верный тип языка!");
+            return true;
         }
 
         Player pl = (Player) cs;
@@ -43,76 +54,104 @@ public class LangHelperUse {
             return true;
         }
 
-        cs.sendMessage("Предмет: " + LangHelper.getInstance().getAbstractTranslateManager().getItemName(item, LangType.RU));
+        cs.sendMessage("Предмет: " + LangHelper.getInstance().getAbstractTranslateManager().getItemName(item, type));
         return true;
     }
 
-    @CmdInfo(name = "testentity", description = "Протестировать название сущности.", usage = "/langhelper testentity <сущность>", permission = "langhelper.admin")
+    @CmdInfo(name = "testentity", description = "Протестировать название сущности.", usage = "/langhelper testentity <язык> <сущность>", permission = "langhelper.admin")
     public boolean testentity(CommandSender cs, String[] args) {
-        if (args.length < 1 || args.length > 1) {
+        if (args.length != 2) {
             return false;
         }
 
-        String arg = args[0].toUpperCase();
 
-        EntityType type = null;
+        LangType laType = null;
         try {
-            type = EntityType.valueOf(arg);
+            laType = LangType.valueOf(args[0].toUpperCase());
+        }
+        catch (Exception e) {}
+
+        if (laType == null) {
+            cs.sendMessage("Не верный тип языка!");
+            return true;
+        }
+
+        EntityType enType = null;
+        try {
+            enType = EntityType.valueOf(args[1].toUpperCase());
         }
         catch (Exception e) {
         }
-        if (type == null) {
+        if (enType == null) {
             cs.sendMessage("Указанная сущность не найдена!");
             return true;
         }
 
-        cs.sendMessage("Сущность: " + LangHelper.getInstance().getAbstractTranslateManager().getEntityName(type, LangType.RU));
+        cs.sendMessage("Сущность: " + LangHelper.getInstance().getAbstractTranslateManager().getEntityName(enType, laType));
         return true;
     }
 
-    @CmdInfo(name = "testenchant", description = "Протестировать название зачарования.", usage = "/langhelper testenchant <зачарование>", permission = "langhelper.admin")
+    @CmdInfo(name = "testenchant", description = "Протестировать название зачарования.", usage = "/langhelper testenchant <язык> <зачарование>", permission = "langhelper.admin")
     public boolean testenchant(CommandSender cs, String[] args) {
-        if (args.length < 1 || args.length > 1) {
+        if (args.length != 2) {
             return false;
         }
 
-        String arg = args[0].toUpperCase();
-
-        Enchantment type = null;
+        LangType laType = null;
         try {
-            type = Enchantment.getByName(arg);
+            laType = LangType.valueOf(args[0].toUpperCase());
+        }
+        catch (Exception e) {}
+
+        if (laType == null) {
+            cs.sendMessage("Не верный тип языка!");
+            return true;
+        }
+
+        Enchantment enType = null;
+        try {
+            enType = Enchantment.getByName(args[1].toUpperCase());
         }
         catch (Exception e) {
         }
-        if (type == null) {
+        if (enType == null) {
             cs.sendMessage("Указанное зачарование не найдено!");
             return true;
         }
 
-        cs.sendMessage("Зачарование: " + LangHelper.getInstance().getAbstractTranslateManager().getEnchantName(type, LangType.RU));
+        cs.sendMessage("Зачарование: " + LangHelper.getInstance().getAbstractTranslateManager().getEnchantName(enType, laType));
         return true;
     }
 
-    @CmdInfo(name = "testenchantlevel", description = "Протестировать название уровней зачарования.", usage = "/langhelper testenchantlevel <уровни>", permission = "langhelper.admin")
+    @CmdInfo(name = "testenchantlevel", description = "Протестировать название уровней зачарования.", usage = "/langhelper testenchantlevel <язык> <уровень>", permission = "langhelper.admin")
     public boolean testenchantlevel(CommandSender cs, String[] args) {
-        if (args.length < 1 || args.length > 1) {
+        if (args.length != 2) {
             return false;
         }
 
-        String arg = args[0].toUpperCase();
-
-        Integer type = null;
+        LangType laType = null;
         try {
-            type = Integer.parseInt(arg);
+            laType = LangType.valueOf(args[0].toUpperCase());
+        }
+        catch (Exception e) {}
+
+        if (laType == null) {
+            cs.sendMessage("Не верный тип языка!");
+            return true;
+        }
+
+        Integer enType = null;
+        try {
+            enType = Integer.parseInt(args[1]);
         }
         catch (Exception e) {
         }
-        if (type == null) {
+        if (enType == null) {
             cs.sendMessage("Указанный уровень зачарования не найден!");
             return true;
         }
 
-        cs.sendMessage("Зачарование: " + LangHelper.getInstance().getAbstractTranslateManager().getEnchantLevelName(type, LangType.RU));
+        cs.sendMessage("Зачарование: " + LangHelper.getInstance().getAbstractTranslateManager().getEnchantLevelName(enType, laType));
         return true;
     }
 }
