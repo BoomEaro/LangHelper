@@ -2,8 +2,8 @@ package ru.boomearo.langhelper.versions;
 
 public enum LangType {
 
-    EN("en", "English"),
-    RU("ru", "Русский");
+    //Для поддержки остальных языков стоит просто добавлять еще енумов
+    RU("ru_ru", "Русский");
 
     private final String name;
     private final String displayName;

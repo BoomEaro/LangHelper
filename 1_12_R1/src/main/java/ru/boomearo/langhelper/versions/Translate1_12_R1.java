@@ -20,6 +20,10 @@ import net.minecraft.server.v1_12_R1.PotionUtil;
 
 public class Translate1_12_R1 extends AbstractTranslateManager {
 
+    public Translate1_12_R1() {
+        super("1.12.2");
+    }
+
     @Override
     public String getItemName(ItemStack item, LangType type) {
         net.minecraft.server.v1_12_R1.ItemStack itemStack = org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack.asNMSCopy(item);
@@ -82,7 +86,7 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
             if (!folders.isDirectory()) {
                 return types;
             }
-            File ver = new File(folders, "1_12_R1");
+            File ver = new File(folders, getVersion());
             if (ver.isDirectory()) {
                 File[] type = ver.listFiles();
                 if (type != null) {

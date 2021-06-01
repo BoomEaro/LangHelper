@@ -1,7 +1,10 @@
 package ru.boomearo.langhelper;
 
-import java.io.File;
-import java.io.InputStream;
+import java.io.*;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,7 +14,10 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import ru.boomearo.langhelper.commands.langhelper.CmdExecutorLangHelper;
+import ru.boomearo.langhelper.utils.JsonUtils;
 import ru.boomearo.langhelper.versions.AbstractTranslateManager;
 import ru.boomearo.langhelper.versions.LangType;
 import ru.boomearo.langhelper.versions.Translate;
@@ -21,6 +27,8 @@ import ru.boomearo.langhelper.versions.Translate1_14_R1;
 import ru.boomearo.langhelper.versions.Translate1_15_R1;
 import ru.boomearo.langhelper.versions.Translate1_16_R3;
 import ru.boomearo.langhelper.versions.exceptions.LangException;
+import ru.boomearo.langhelper.versions.exceptions.LangParseException;
+import ru.boomearo.langhelper.versions.exceptions.LangVersionException;
 
 public class LangHelper extends JavaPlugin {
 
@@ -38,17 +46,19 @@ public class LangHelper extends JavaPlugin {
             Translate1_16_R3.class
     );
 
+    private static final String TRANSLATION_FILE_URL = "http://resources.download.minecraft.net/%s/%s";
+    private static final String VERSION_MANIFEST_URL = "https://launchermeta.mojang.com/mc/game/version_manifest.json";
+
     @Override
     public void onEnable() {
         instance = this;
 
         try {
             //Вычисляем версию сервера и создаем соответсвующий экземпляр
-            //Любая ошибка не позволит дальше выполнить действия
             this.version = matchVersion();
 
             //Проверяем, существует ли дефолтная папка (первый раз включается плагин?)
-            checkDefaultTranslate(this.serverVersion);
+            setupTranslates(this.version);
 
             //Подгружаем языки с диска
             this.version.loadLanguages(getLanguageFolder());
@@ -57,6 +67,12 @@ public class LangHelper extends JavaPlugin {
             for (Translate tra : this.version.getAllTranslate()) {
                 this.getLogger().info("Язык '" + tra.getLangType().name() + "' успешно загружен. Количество строк: " + tra.getAllTranslate().size());
             }
+        }
+        catch (LangParseException e) {
+            this.getLogger().warning("Ошибка при получении языков от mojang: " + e.getMessage());
+        }
+        catch (LangVersionException e) {
+            this.getLogger().warning("Ошибка при получении версии сервера: " + e.getMessage());
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -72,20 +88,112 @@ public class LangHelper extends JavaPlugin {
         this.getLogger().info("Плагин успешно выключен!");
     }
 
-    private void checkDefaultTranslate(String version) {
-        //Убеждаемся что папки этой версии нет
-        File currentTranFolder = new File(this.getDataFolder(), "languages" + File.separator + version + File.separator);
+    // Метод проверяет и скачивает с серверов mojang нужный язык для нужной версии.
+    // Сам бы я не узнал как именно скачивать языки. Спасибо автору который реализовал утилиту: https://gist.github.com/Mystiflow/c2b8838688e3215bb5492041046e458e
+    private void setupTranslates(AbstractTranslateManager translate) throws LangParseException {
+        //Если папки текущей версии сервера нет то создаем новую, получая версию сервера..
+        File currentTranFolder = new File(this.getDataFolder(), "languages" + File.separator + translate.getVersion() + File.separator);
         if (currentTranFolder.exists()) {
             return;
         }
 
-        //Выгружаем все языки по умолчанию которые есть в плагине
-        for (LangType type : LangType.values()) {
-            String res = ("languages" + File.separator + version + File.separator + type.name()).replace('\\', '/'); // Кто знал что надо заменять символ пути..
-            InputStream is = this.getResource(res);
-            //Сохраняем только те что есть
-            if (is != null) {
-                saveResource(res, false);
+        //Получаем обьект MANIFEST который имеет список всех существующих версий игры
+        JSONObject jsonManifest = JsonUtils.connectNormal(VERSION_MANIFEST_URL);
+        if (jsonManifest == null) {
+            throw new LangParseException("Не удалось спарсить json обьект для MANIFEST");
+        }
+
+        //Далее ниже все что мы делаем, это убеждаемся что он существует а потом извлекаем из него ссылку на ресурс этой версии
+        JSONArray versionArray = JsonUtils.getJsonArrayObject(jsonManifest.get("versions"));
+        if (versionArray == null) {
+            throw new LangParseException("Не удалось спарсить json array обьект для MANIFEST");
+        }
+
+        String versionUrl = null;
+
+        for (Object arrO : versionArray) {
+            JSONObject versionJson = JsonUtils.getJsonObject(arrO);
+            if (versionJson == null) {
+                continue;
+            }
+
+            String versionId = JsonUtils.getStringObject(versionJson.get("id"));
+            if (versionId == null) {
+                continue;
+            }
+
+            //Ищем только ту версию которая сейчас
+            if (versionId.equals(translate.getVersion())) {
+                versionUrl = JsonUtils.getStringObject(versionJson.get("url"));
+                break;
+            }
+        }
+
+        if (versionUrl == null) {
+            throw new LangParseException("Не удалось найти версию " + translate.getVersion() + " в json обьекте MANIFEST");
+        }
+
+        //Получив успешно обьект ресурсов этой версии, ищем далее в ней требуемый язык
+        JSONObject versionJson = JsonUtils.connectNormal(versionUrl);
+        if (versionJson == null) {
+            throw new LangParseException("Не удалось спарсить json обьект по ссылке '" + versionUrl + "'");
+        }
+
+        JSONObject jsonAssertIndex = JsonUtils.getJsonObject(versionJson.get("assetIndex"));
+        if (jsonAssertIndex == null) {
+            throw new LangParseException("Не удалось спарсить json обьект assetIndex");
+        }
+
+        String langUrl = JsonUtils.getStringObject(jsonAssertIndex.get("url"));
+        if (langUrl == null) {
+            throw new LangParseException("Не удалось найти url строку в assetIndex");
+        }
+
+        JSONObject jsonLang = JsonUtils.connectNormal(langUrl);
+        if (jsonLang == null) {
+            throw new LangParseException("Не удалось спарсить json обьект по ссылке '" + langUrl + "'");
+        }
+
+        JSONObject langObjects = JsonUtils.getJsonObject(jsonLang.get("objects"));
+        if (langObjects == null) {
+            throw new LangParseException("Не удалось найти objects обьект");
+        }
+
+        //Пытаемся для каждого поддерживаемого языка получить файл
+        for (LangType lt : LangType.values()) {
+            //Все языки ниже 1.13 не имеют формата json, поэтому учитываем это ниже.
+            JSONObject langJsonData = JsonUtils.getJsonObject(langObjects.get("minecraft/lang/" + lt.getName() + ".json"));
+            if (langJsonData == null) {
+                langJsonData = JsonUtils.getJsonObject(langObjects.get("minecraft/lang/" + lt.getName() + ".lang"));
+            }
+
+            if (langJsonData == null) {
+                continue;
+            }
+
+            //Получаем наконец то хэш, который используется для скачивания языка
+            String hash = JsonUtils.getStringObject(langJsonData.get("hash"));
+            if (hash == null) {
+                continue;
+            }
+
+            try {
+                //Пытаемся скачать язык, используя хэш
+                URL url = new URL(String.format(TRANSLATION_FILE_URL, hash.substring(0, 2), hash));
+                try (InputStream stream = url.openStream()) {
+                    String pat = currentTranFolder.getAbsolutePath() + File.separator + lt.name();
+                    //Странно что методу copy требуется чтобы директория существовала..
+                    File tmp = new File(pat);
+                    tmp.getParentFile().mkdirs();
+
+                    Path outputPath = Paths.get(pat);
+                    Files.copy(stream, outputPath);
+                    this.getLogger().info("Скачан язык " + lt.getName() + " для версии " + translate.getVersion());
+                }
+            }
+            catch (Exception e) {
+                this.getLogger().severe("Не удалось скачать язык " + lt.getName() + " для версии " + translate.getVersion());
+                e.printStackTrace();
             }
         }
     }
@@ -147,7 +255,7 @@ public class LangHelper extends JavaPlugin {
         return name;
     }
 
-    private AbstractTranslateManager matchVersion() throws LangException {
+    private AbstractTranslateManager matchVersion() throws LangVersionException {
         try {
             return versions.stream()
                     .filter(version -> version.getSimpleName().substring(9).equals(this.serverVersion))
@@ -157,7 +265,7 @@ public class LangHelper extends JavaPlugin {
         }
         catch (Exception e) {
             //Вызываем новое но свое
-            throw new LangException(e.getMessage());
+            throw new LangVersionException(e.getMessage());
         }
     }
 
@@ -168,4 +276,5 @@ public class LangHelper extends JavaPlugin {
     public static File getLanguageFolder() {
         return new File(LangHelper.getInstance().getDataFolder(), "languages" + File.separator);
     }
+
 }
