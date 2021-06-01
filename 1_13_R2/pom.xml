@@ -10,7 +10,6 @@
         <version>1.0</version>
     </parent>
 
-    <groupId>LangHelper</groupId>
     <artifactId>1_13_R2</artifactId>
     <version>1.0</version>
     <name>1_13_R2</name>

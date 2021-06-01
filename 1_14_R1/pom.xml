@@ -10,10 +10,9 @@
         <version>1.0</version>
     </parent>
 
-    <groupId>LangHelper</groupId>
-    <artifactId>1_15_R1</artifactId>
+    <artifactId>1_14_R1</artifactId>
     <version>1.0</version>
-    <name>1_15_R1</name>
+    <name>1_14_R1</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -28,7 +27,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.15.2-R0.1-SNAPSHOT</version>
+            <version>1.14.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
