@@ -16,16 +16,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
 import ru.boomearo.langhelper.commands.langhelper.CmdExecutorLangHelper;
 import ru.boomearo.langhelper.utils.JsonUtils;
-import ru.boomearo.langhelper.versions.AbstractTranslateManager;
-import ru.boomearo.langhelper.versions.LangType;
-import ru.boomearo.langhelper.versions.Translate;
-import ru.boomearo.langhelper.versions.Translate1_12_R1;
-import ru.boomearo.langhelper.versions.Translate1_13_R2;
-import ru.boomearo.langhelper.versions.Translate1_14_R1;
-import ru.boomearo.langhelper.versions.Translate1_15_R1;
-import ru.boomearo.langhelper.versions.Translate1_16_R3;
+import ru.boomearo.langhelper.versions.*;
 import ru.boomearo.langhelper.versions.exceptions.LangException;
 import ru.boomearo.langhelper.versions.exceptions.LangParseException;
 import ru.boomearo.langhelper.versions.exceptions.LangVersionException;
@@ -43,7 +37,8 @@ public class LangHelper extends JavaPlugin {
             Translate1_13_R2.class,
             Translate1_14_R1.class,
             Translate1_15_R1.class,
-            Translate1_16_R3.class
+            Translate1_16_R3.class,
+            Translate1_17_R1.class
     );
 
     private static final String TRANSLATION_FILE_URL = "http://resources.download.minecraft.net/%s/%s";
@@ -54,7 +49,7 @@ public class LangHelper extends JavaPlugin {
         instance = this;
 
         try {
-            //Вычисляем версию сервера и создаем соответсвующий экземпляр
+            //Вычисляем версию сервера и создаем соответствующий экземпляр
             this.version = matchVersion();
 
             //Проверяем, существует ли дефолтная папка (первый раз включается плагин?)

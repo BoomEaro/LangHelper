@@ -58,6 +58,13 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>LangHelper</groupId>
+            <artifactId>1_17_R1</artifactId>
+            <version>1.0</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
             <version>1.12.2-R0.1-SNAPSHOT</version>
