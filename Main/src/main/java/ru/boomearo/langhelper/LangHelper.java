@@ -60,7 +60,15 @@ public class LangHelper extends JavaPlugin {
 
             //Просто оповещаем о том, сколько строк и какие языки были загружены
             for (Translate tra : this.version.getAllTranslate()) {
-                this.getLogger().info("Язык '" + tra.getLangType().name() + "' успешно загружен. Количество строк: " + tra.getAllTranslate().size());
+                String languageName = tra.getTranstale("language.name");
+                if (languageName == null) {
+                    languageName = "Unknown-name";
+                }
+                String languageRegion = tra.getTranstale("language.region");
+                if (languageRegion == null) {
+                    languageRegion = "Unknown-region";
+                }
+                this.getLogger().info("Язык '" + tra.getLangType().getName() + " [" + languageName + "-" + languageRegion + "]' успешно загружен. Количество строк: " + tra.getAllTranslate().size());
             }
         }
         catch (LangParseException e) {
