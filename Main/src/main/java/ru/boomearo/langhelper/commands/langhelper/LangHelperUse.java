@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import ru.boomearo.langhelper.LangHelper;
 import ru.boomearo.langhelper.commands.CmdInfo;
 import ru.boomearo.langhelper.versions.LangType;
+import ru.boomearo.langhelper.versions.exceptions.LangException;
 
 public class LangHelperUse {
 
@@ -18,12 +19,18 @@ public class LangHelperUse {
             return false;
         }
 
-        LangHelper lh = LangHelper.getInstance();
-        lh.loadConfigData();
+        try {
+            LangHelper lh = LangHelper.getInstance();
+            lh.loadConfigData();
+            lh.checkAndDownloadLanguages();
 
-        lh.getAbstractTranslateManager().loadLanguages(LangHelper.getLanguageFolder(), lh.getEnabledLanguages());
+            lh.getAbstractTranslateManager().loadLanguages(LangHelper.getLanguageFolder(), lh.getEnabledLanguages());
 
-        cs.sendMessage("Конфигурация успешно перезагружена!");
+            cs.sendMessage("Конфигурация успешно перезагружена!");
+        }
+        catch (LangException e) {
+            cs.sendMessage("Ошибка: " + e.getMessage());
+        }
 
         return true;
     }

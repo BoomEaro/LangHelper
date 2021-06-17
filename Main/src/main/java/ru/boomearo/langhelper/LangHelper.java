@@ -64,8 +64,8 @@ public class LangHelper extends JavaPlugin {
             //Вычисляем версию сервера и создаем соответствующий экземпляр
             this.version = matchVersion();
 
-            //Проверяем, существует ли дефолтная папка (первый раз включается плагин?)
-            setupTranslates(this.version);
+            //Проверяем, на месте ли включенные языки
+            checkAndDownloadLanguages();
 
             //Подгружаем языки с диска
             this.version.loadLanguages(getLanguageFolder(), this.enabledLanguages);
@@ -104,6 +104,8 @@ public class LangHelper extends JavaPlugin {
     }
 
     public void loadConfigData() {
+        reloadConfig();
+
         List<LangType> tmpEnabledLanguages = new ArrayList<>();
         List<String> configLangs = this.getConfig().getStringList("enabledLanguages");
         if (configLangs != null) {
@@ -127,13 +129,7 @@ public class LangHelper extends JavaPlugin {
 
     // Метод проверяет и скачивает с серверов mojang нужный язык для нужной версии.
     // Сам бы я не узнал как именно скачивать языки. Спасибо автору который реализовал утилиту: https://gist.github.com/Mystiflow/c2b8838688e3215bb5492041046e458e
-    private void setupTranslates(AbstractTranslateManager translate) throws LangParseException {
-        //Если папки текущей версии сервера нет то создаем новую, получая версию сервера..
-        File currentTranFolder = new File(this.getDataFolder(), "languages" + File.separator + translate.getVersion() + File.separator);
-        if (currentTranFolder.exists()) {
-            return;
-        }
-
+    public void checkAndDownloadLanguages() throws LangParseException {
         //Получаем обьект MANIFEST который имеет список всех существующих версий игры
         JSONObject jsonManifest = JsonUtils.connectNormal(VERSION_MANIFEST_URL);
         if (jsonManifest == null) {
@@ -160,14 +156,14 @@ public class LangHelper extends JavaPlugin {
             }
 
             //Ищем только ту версию которая сейчас
-            if (versionId.equals(translate.getVersion())) {
+            if (versionId.equals(this.version.getVersion())) {
                 versionUrl = JsonUtils.getStringObject(versionJson.get("url"));
                 break;
             }
         }
 
         if (versionUrl == null) {
-            throw new LangParseException("Не удалось найти версию " + translate.getVersion() + " в json обьекте MANIFEST");
+            throw new LangParseException("Не удалось найти версию " + this.version.getVersion() + " в json обьекте MANIFEST");
         }
 
         //Получив успешно обьект ресурсов этой версии, ищем далее в ней требуемый язык
@@ -196,8 +192,16 @@ public class LangHelper extends JavaPlugin {
             throw new LangParseException("Не удалось найти objects обьект");
         }
 
-        //Пытаемся для каждого поддерживаемого языка получить файл
+        File currentTranFolder = new File(this.getDataFolder(), "languages" + File.separator + this.version.getVersion() + File.separator);
+
+        //Пытаемся скачать для каждого языка файл
         for (LangType lt : this.enabledLanguages) {
+            File langFile = new File(currentTranFolder, lt.name());
+            //Скачиваем только тот язык, которого нет
+            if (langFile.exists()) {
+                continue;
+            }
+
             //Все языки ниже 1.13 не имеют формата json, поэтому учитываем это ниже.
             JSONObject langJsonData = JsonUtils.getJsonObject(langObjects.get("minecraft/lang/" + lt.getName() + ".json"));
             if (langJsonData == null) {
@@ -225,11 +229,11 @@ public class LangHelper extends JavaPlugin {
 
                     Path outputPath = Paths.get(pat);
                     Files.copy(stream, outputPath);
-                    this.getLogger().info("Скачан язык " + lt.getName() + " для версии " + translate.getVersion());
+                    this.getLogger().info("Скачан язык " + lt.getName() + " для версии " + this.version.getVersion());
                 }
             }
             catch (Exception e) {
-                this.getLogger().severe("Не удалось скачать язык " + lt.getName() + " для версии " + translate.getVersion());
+                this.getLogger().severe("Не удалось скачать язык " + lt.getName() + " для версии " + this.version.getVersion());
                 e.printStackTrace();
             }
         }
