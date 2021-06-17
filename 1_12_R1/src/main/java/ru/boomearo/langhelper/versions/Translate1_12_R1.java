@@ -2,6 +2,7 @@ package ru.boomearo.langhelper.versions;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -73,9 +74,8 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
         return getTranslate(name, type);
     }
 
-
     @Override
-    public ConcurrentMap<LangType, Translate> loadTranslateFromDisk(File file) {
+    protected ConcurrentMap<LangType, Translate> loadTranslateFromDisk(File file, Collection<LangType> enabledLanguages) {
         ConcurrentMap<LangType, Translate> types = new ConcurrentHashMap<LangType, Translate>();
         try {
             File folders = file;
@@ -99,18 +99,20 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
                             catch (Exception e) {
                             }
                             if (lt != null) {
-                                ConcurrentMap<String, String> translates = new ConcurrentHashMap<String, String>();
-                                for (String line : com.google.common.io.Files.readLines(t, StandardCharsets.UTF_8)) {
-                                    if (line.isEmpty()) {
-                                        continue;
-                                    }
+                                if (enabledLanguages.contains(lt)) {
+                                    ConcurrentMap<String, String> translates = new ConcurrentHashMap<String, String>();
+                                    for (String line : com.google.common.io.Files.readLines(t, StandardCharsets.UTF_8)) {
+                                        if (line.isEmpty()) {
+                                            continue;
+                                        }
 
-                                    String[] args = line.split("=");
-                                    if (args.length >= 2) {
-                                        translates.put(args[0].toLowerCase().replace("_", ""), args[1]);
+                                        String[] args = line.split("=");
+                                        if (args.length >= 2) {
+                                            translates.put(args[0].toLowerCase().replace("_", ""), args[1]);
+                                        }
                                     }
+                                    types.put(lt, new Translate(lt, translates));
                                 }
-                                types.put(lt, new Translate(lt, translates));
                             }
                         }
                     }

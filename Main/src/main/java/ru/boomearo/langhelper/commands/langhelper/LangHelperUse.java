@@ -18,7 +18,10 @@ public class LangHelperUse {
             return false;
         }
 
-        LangHelper.getInstance().getAbstractTranslateManager().loadTranslateFromDisk(LangHelper.getLanguageFolder());
+        LangHelper lh = LangHelper.getInstance();
+        lh.loadConfigData();
+
+        lh.getAbstractTranslateManager().loadLanguages(LangHelper.getLanguageFolder(), lh.getEnabledLanguages());
 
         cs.sendMessage("Конфигурация успешно перезагружена!");
 

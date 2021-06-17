@@ -22,8 +22,8 @@ public abstract class AbstractTranslateManager {
         return this.version;
     }
 
-    public void loadLanguages(File file) {
-        this.types = loadTranslateFromDisk(file);
+    public void loadLanguages(File file, Collection<LangType> enabledLanguages) {
+        this.types = loadTranslateFromDisk(file, enabledLanguages);
     }
 
     public Translate getTranslate(LangType type) {
@@ -54,5 +54,5 @@ public abstract class AbstractTranslateManager {
 
     public abstract String getEnchantLevelName(int level, LangType type);
 
-    public abstract ConcurrentMap<LangType, Translate> loadTranslateFromDisk(File file);
+    protected abstract ConcurrentMap<LangType, Translate> loadTranslateFromDisk(File file, Collection<LangType> enabledLanguages);
 }

@@ -5,7 +5,9 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -44,11 +46,21 @@ public class LangHelper extends JavaPlugin {
     private static final String TRANSLATION_FILE_URL = "http://resources.download.minecraft.net/%s/%s";
     private static final String VERSION_MANIFEST_URL = "https://launchermeta.mojang.com/mc/game/version_manifest.json";
 
+    private List<LangType> enabledLanguages = new ArrayList<>();
+
     @Override
     public void onEnable() {
         instance = this;
-
         try {
+            File configFile = new File(getDataFolder() + File.separator + "config.yml");
+            if (!configFile.exists()) {
+                getLogger().info("Конфиг не найден, создаю новый...");
+                saveDefaultConfig();
+            }
+
+            //Загружаем информацию с конфига
+            loadConfigData();
+
             //Вычисляем версию сервера и создаем соответствующий экземпляр
             this.version = matchVersion();
 
@@ -56,7 +68,7 @@ public class LangHelper extends JavaPlugin {
             setupTranslates(this.version);
 
             //Подгружаем языки с диска
-            this.version.loadLanguages(getLanguageFolder());
+            this.version.loadLanguages(getLanguageFolder(), this.enabledLanguages);
 
             //Просто оповещаем о том, сколько строк и какие языки были загружены
             for (Translate tra : this.version.getAllTranslate()) {
@@ -89,6 +101,28 @@ public class LangHelper extends JavaPlugin {
     @Override
     public void onDisable() {
         this.getLogger().info("Плагин успешно выключен!");
+    }
+
+    public void loadConfigData() {
+        List<LangType> tmpEnabledLanguages = new ArrayList<>();
+        List<String> configLangs = this.getConfig().getStringList("enabledLanguages");
+        if (configLangs != null) {
+            for (String t : configLangs) {
+                LangType parsedType = null;
+                try {
+                    parsedType = LangType.valueOf(t.toUpperCase());
+                }
+                catch (Exception e) {}
+                if (parsedType == null) {
+                    continue;
+                }
+
+                this.getLogger().info("Используем язык: " + parsedType.getName());
+                tmpEnabledLanguages.add(parsedType);
+            }
+        }
+
+        this.enabledLanguages = Collections.unmodifiableList(tmpEnabledLanguages);
     }
 
     // Метод проверяет и скачивает с серверов mojang нужный язык для нужной версии.
@@ -163,7 +197,7 @@ public class LangHelper extends JavaPlugin {
         }
 
         //Пытаемся для каждого поддерживаемого языка получить файл
-        for (LangType lt : LangType.values()) {
+        for (LangType lt : this.enabledLanguages) {
             //Все языки ниже 1.13 не имеют формата json, поэтому учитываем это ниже.
             JSONObject langJsonData = JsonUtils.getJsonObject(langObjects.get("minecraft/lang/" + lt.getName() + ".json"));
             if (langJsonData == null) {
@@ -256,6 +290,10 @@ public class LangHelper extends JavaPlugin {
             name = capitalize(entity.name());
         }
         return name;
+    }
+
+    public List<LangType> getEnabledLanguages() {
+        return this.enabledLanguages;
     }
 
     private AbstractTranslateManager matchVersion() throws LangVersionException {
