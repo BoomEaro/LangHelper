@@ -266,7 +266,10 @@ public class LangHelper extends JavaPlugin {
     public String getEnchantmentName(Enchantment enc, LangType lang) {
         String name = this.version.getEnchantName(enc, lang);
         if (name == null) {
-            name = capitalize(enc.getName());
+            name = this.version.getEnchantName(enc, LangType.EN_US);
+            if (name == null) {
+                name = capitalize(enc.getName());
+            }
         }
         return name;
     }
@@ -274,8 +277,11 @@ public class LangHelper extends JavaPlugin {
     public String getItemTranslate(ItemStack item, LangType lang) {
         String name = this.version.getItemName(item, lang);
         if (name == null) {
-            short dur = item.getDurability();
-            name = capitalize(item.getType().name()) + (dur > 0 ? ":" + dur : "");
+            name = this.version.getItemName(item, LangType.EN_US);
+            if (name == null) {
+                short dur = item.getDurability();
+                name = capitalize(item.getType().name()) + (dur > 0 ? ":" + dur : "");
+            }
         }
         return name;
     }
@@ -283,7 +289,10 @@ public class LangHelper extends JavaPlugin {
     public String getEnchantLevelTranslate(int level, LangType lang) {
         String name = this.version.getEnchantLevelName(level, lang);
         if (name == null) {
-            name = "" + level;
+            name = this.version.getEnchantLevelName(level, LangType.EN_US);
+            if (name == null) {
+                name = "" + level;
+            }
         }
         return name;
     }
@@ -291,7 +300,10 @@ public class LangHelper extends JavaPlugin {
     public String getEntityTranslate(EntityType entity, LangType lang) {
         String name = this.version.getEntityName(entity, lang);
         if (name == null) {
-            name = capitalize(entity.name());
+            name = this.version.getEntityName(entity, LangType.EN_US);
+            if (name == null) {
+                name = capitalize(entity.name());
+            }
         }
         return name;
     }
