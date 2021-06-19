@@ -40,7 +40,7 @@ public class Translate1_13_R2 extends AbstractJsonTranslate {
 
     @Override
     public String getEntityName(EntityType entity, LangType type) {
-        String name = "entity.minecraft." + entity.name();
+        String name = "entity.minecraft." + entity.getName();
         return getTranslate(name, type);
     }
 
