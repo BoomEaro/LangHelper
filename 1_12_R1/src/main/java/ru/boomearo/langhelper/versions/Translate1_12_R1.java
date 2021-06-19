@@ -7,18 +7,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
-
-import net.minecraft.server.v1_12_R1.EnumColor;
-import net.minecraft.server.v1_12_R1.Item;
-import net.minecraft.server.v1_12_R1.ItemBanner;
-import net.minecraft.server.v1_12_R1.ItemLingeringPotion;
-import net.minecraft.server.v1_12_R1.ItemPotion;
-import net.minecraft.server.v1_12_R1.ItemSplashPotion;
-import net.minecraft.server.v1_12_R1.ItemTippedArrow;
-import net.minecraft.server.v1_12_R1.PotionUtil;
 
 public class Translate1_12_R1 extends AbstractTranslateManager {
 
@@ -62,10 +54,10 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
         return getTranslate(name, type);
     }
 
-    //Похоже что на 1.12 название в файле и на сервере отличаются, поэтому до 1.13 не рекомендуется юзать
     @Override
     public String getEnchantName(Enchantment enchant, LangType type) {
-        String name = "enchantment." + enchant.getName();
+        String name = org.bukkit.craftbukkit.v1_12_R1.enchantments.CraftEnchantment.getRaw(enchant).a();
+
         return getTranslate(name, type);
     }
 
