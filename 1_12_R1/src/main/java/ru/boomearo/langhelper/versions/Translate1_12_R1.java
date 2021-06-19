@@ -2,7 +2,6 @@ package ru.boomearo.langhelper.versions;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
-import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -75,54 +74,23 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
     }
 
     @Override
-    protected ConcurrentMap<LangType, Translate> loadTranslateFromDisk(File file, Collection<LangType> enabledLanguages) {
-        ConcurrentMap<LangType, Translate> types = new ConcurrentHashMap<LangType, Translate>();
+    protected ConcurrentMap<String, String> parseTranslate(File file) {
+        ConcurrentMap<String, String> translates = new ConcurrentHashMap<String, String>();
         try {
-            File folders = file;
-            if (!folders.exists()) {
-                folders.getParentFile().mkdirs();
-            }
+            for (String line : com.google.common.io.Files.readLines(file, StandardCharsets.UTF_8)) {
+                if (line.isEmpty()) {
+                    continue;
+                }
 
-            if (!folders.isDirectory()) {
-                return types;
-            }
-            File ver = new File(folders, getVersion());
-            if (ver.isDirectory()) {
-                File[] type = ver.listFiles();
-                if (type != null) {
-                    for (File t : type) {
-                        if (t.isFile()) {
-                            LangType lt = null;
-                            try {
-                                lt = LangType.valueOf(t.getName());
-                            }
-                            catch (Exception e) {
-                            }
-                            if (lt != null) {
-                                if (enabledLanguages.contains(lt)) {
-                                    ConcurrentMap<String, String> translates = new ConcurrentHashMap<String, String>();
-                                    for (String line : com.google.common.io.Files.readLines(t, StandardCharsets.UTF_8)) {
-                                        if (line.isEmpty()) {
-                                            continue;
-                                        }
-
-                                        String[] args = line.split("=");
-                                        if (args.length >= 2) {
-                                            translates.put(args[0].toLowerCase().replace("_", ""), args[1]);
-                                        }
-                                    }
-                                    types.put(lt, new Translate(lt, translates));
-                                }
-                            }
-                        }
-                    }
+                String[] args = line.split("=");
+                if (args.length >= 2) {
+                    translates.put(args[0].toLowerCase().replace("_", ""), args[1]);
                 }
             }
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-
-        return types;
+        return translates;
     }
 }

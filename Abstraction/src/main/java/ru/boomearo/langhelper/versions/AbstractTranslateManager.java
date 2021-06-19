@@ -3,6 +3,7 @@ package ru.boomearo.langhelper.versions;
 import java.io.File;
 import java.util.Collection;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.bukkit.enchantments.Enchantment;
@@ -23,7 +24,47 @@ public abstract class AbstractTranslateManager {
     }
 
     public void loadLanguages(File file, Collection<LangType> enabledLanguages) {
-        this.types = loadTranslateFromDisk(file, enabledLanguages);
+        ConcurrentMap<LangType, Translate> types = new ConcurrentHashMap<LangType, Translate>();
+        try {
+            File folders = file;
+            if (!folders.exists()) {
+                folders.getParentFile().mkdirs();
+            }
+
+            if (folders.isDirectory()) {
+                File ver = new File(folders, getVersion());
+                if (ver.isDirectory()) {
+                    File[] type = ver.listFiles();
+                    if (type != null) {
+                        for (File t : type) {
+                            if (t.isFile()) {
+                                LangType lt = null;
+                                try {
+                                    lt = LangType.valueOf(t.getName());
+                                }
+                                catch (Exception e) {
+                                }
+                                if (lt != null) {
+                                    if (lt.isExternal()) {
+                                        if (enabledLanguages.contains(lt)) {
+                                            ConcurrentMap<String, String> translate = parseTranslate(t);
+                                            if (translate != null) {
+                                                types.put(lt, new Translate(lt, translate));
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        this.types = types;
     }
 
     public Translate getTranslate(LangType type) {
@@ -54,5 +95,5 @@ public abstract class AbstractTranslateManager {
 
     public abstract String getEnchantLevelName(int level, LangType type);
 
-    protected abstract ConcurrentMap<LangType, Translate> loadTranslateFromDisk(File file, Collection<LangType> enabledLanguages);
+    protected abstract ConcurrentMap<String, String> parseTranslate(File file);
 }
