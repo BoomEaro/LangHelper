@@ -1,6 +1,8 @@
 package ru.boomearo.langhelper.versions;
 
-import java.io.File;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -74,10 +76,14 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
     }
 
     @Override
-    protected ConcurrentMap<String, String> parseTranslate(File file) {
+    protected ConcurrentMap<String, String> parseTranslate(InputStream stream) {
         ConcurrentMap<String, String> translates = new ConcurrentHashMap<String, String>();
-        try {
-            for (String line : com.google.common.io.Files.readLines(file, StandardCharsets.UTF_8)) {
+        try (InputStreamReader streamReader =
+                     new InputStreamReader(stream, StandardCharsets.UTF_8);
+             BufferedReader reader = new BufferedReader(streamReader)) {
+
+            String line;
+            while ((line = reader.readLine()) != null) {
                 if (line.isEmpty()) {
                     continue;
                 }
@@ -87,10 +93,13 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
                     translates.put(args[0].toLowerCase().replace("_", ""), args[1]);
                 }
             }
+
+
         }
         catch (Exception e) {
             e.printStackTrace();
         }
+
         return translates;
     }
 }

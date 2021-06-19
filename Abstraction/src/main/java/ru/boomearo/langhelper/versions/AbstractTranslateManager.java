@@ -1,11 +1,12 @@
 package ru.boomearo.langhelper.versions;
 
-import java.io.File;
+import java.io.*;
 import java.util.Collection;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import org.bukkit.Bukkit;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
@@ -26,6 +27,26 @@ public abstract class AbstractTranslateManager {
     public void loadLanguages(File file, Collection<LangType> enabledLanguages) {
         ConcurrentMap<LangType, Translate> types = new ConcurrentHashMap<LangType, Translate>();
         try {
+            ClassLoader classLoader = Bukkit.getServer().getClass().getClassLoader();
+
+            InputStream stream = classLoader.getResourceAsStream("assets/minecraft/lang/" + LangType.EN_US.getName() + ".lang");
+            if (stream == null) {
+                stream = classLoader.getResourceAsStream("assets/minecraft/lang/" + LangType.EN_US.getName() + ".json");
+                if (stream == null) {
+                    throw new IllegalArgumentException("Не найден языковый файл по умолчанию!");
+                }
+            }
+
+            ConcurrentMap<String, String> translates = parseTranslate(stream);
+            if (translates != null) {
+                types.put(LangType.EN_US, new Translate(LangType.EN_US, translates));
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
             File folders = file;
             if (!folders.exists()) {
                 folders.getParentFile().mkdirs();
@@ -40,14 +61,15 @@ public abstract class AbstractTranslateManager {
                             if (t.isFile()) {
                                 LangType lt = null;
                                 try {
-                                    lt = LangType.valueOf(t.getName());
+                                    lt = LangType.valueOf(t.getName().toUpperCase());
                                 }
                                 catch (Exception e) {
                                 }
                                 if (lt != null) {
                                     if (lt.isExternal()) {
                                         if (enabledLanguages.contains(lt)) {
-                                            ConcurrentMap<String, String> translate = parseTranslate(t);
+                                            InputStream stream = new FileInputStream(t);
+                                            ConcurrentMap<String, String> translate = parseTranslate(stream);
                                             if (translate != null) {
                                                 types.put(lt, new Translate(lt, translate));
                                             }
@@ -95,5 +117,5 @@ public abstract class AbstractTranslateManager {
 
     public abstract String getEnchantLevelName(int level, LangType type);
 
-    protected abstract ConcurrentMap<String, String> parseTranslate(File file);
+    protected abstract ConcurrentMap<String, String> parseTranslate(InputStream stream);
 }

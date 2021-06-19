@@ -7,8 +7,8 @@ import org.bukkit.inventory.ItemStack;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -33,10 +33,13 @@ public abstract class AbstractJsonTranslate extends AbstractTranslateManager {
     public abstract String getEnchantLevelName(int level, LangType type);
 
     @Override
-    protected ConcurrentMap<String, String> parseTranslate(File file) {
+    protected ConcurrentMap<String, String> parseTranslate(InputStream stream) {
         ConcurrentMap<String, String> translates = new ConcurrentHashMap<String, String>();
         JSONParser jsonParser = new JSONParser();
-        try (FileReader reader = new FileReader(file)) {
+
+        try (InputStreamReader streamReader =
+                     new InputStreamReader(stream, StandardCharsets.UTF_8);
+             BufferedReader reader = new BufferedReader(streamReader)) {
 
             Object obj = jsonParser.parse(reader);
 
@@ -55,6 +58,7 @@ public abstract class AbstractJsonTranslate extends AbstractTranslateManager {
         catch (Exception e) {
             e.printStackTrace();
         }
+
         return translates;
     }
 }
