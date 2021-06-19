@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
+import ru.boomearo.langhelper.LangHelper;
 import ru.boomearo.langhelper.commands.AbstractExecutor;
 import ru.boomearo.langhelper.commands.CmdList;
 import ru.boomearo.langhelper.versions.LangType;
@@ -50,7 +51,7 @@ public class CmdExecutorLangHelper extends AbstractExecutor {
 
                 List<String> matches = new ArrayList<>();
                 String search = args[1].toLowerCase();
-                for (LangType lt : LangType.values()) {
+                for (LangType lt : LangHelper.getInstance().getAbstractTranslateManager().getAllTranslateLang()) {
                     if (lt.getName().toLowerCase().startsWith(search)) {
                         matches.add(lt.getName());
                     }
