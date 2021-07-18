@@ -29,9 +29,11 @@ public abstract class AbstractTranslateManager {
         try {
             ClassLoader classLoader = Bukkit.getServer().getClass().getClassLoader();
 
-            InputStream stream = classLoader.getResourceAsStream("assets/minecraft/lang/" + LangType.EN_US.getName() + ".lang");
+            String defaultEnPath = "assets/minecraft/lang/" + LangType.EN_US.getName();
+
+            InputStream stream = classLoader.getResourceAsStream(defaultEnPath + ".lang");
             if (stream == null) {
-                stream = classLoader.getResourceAsStream("assets/minecraft/lang/" + LangType.EN_US.getName() + ".json");
+                stream = classLoader.getResourceAsStream(defaultEnPath + ".json");
                 if (stream == null) {
                     throw new IllegalArgumentException("Не найден языковый файл по умолчанию!");
                 }
@@ -47,13 +49,12 @@ public abstract class AbstractTranslateManager {
         }
 
         try {
-            File folders = file;
-            if (!folders.exists()) {
-                folders.getParentFile().mkdirs();
+            if (!file.exists()) {
+                file.getParentFile().mkdirs();
             }
 
-            if (folders.isDirectory()) {
-                File ver = new File(folders, getVersion());
+            if (file.isDirectory()) {
+                File ver = new File(file, getVersion());
                 if (ver.isDirectory()) {
                     File[] type = ver.listFiles();
                     if (type != null) {
