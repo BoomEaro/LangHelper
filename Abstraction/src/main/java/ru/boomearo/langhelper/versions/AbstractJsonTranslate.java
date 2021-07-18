@@ -4,6 +4,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 
+import org.bukkit.potion.PotionEffectType;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -31,6 +32,9 @@ public abstract class AbstractJsonTranslate extends AbstractTranslateManager {
 
     @Override
     public abstract String getEnchantLevelName(int level, LangType type);
+
+    @Override
+    public abstract String getPotionEffectName(PotionEffectType effect, LangType type);
 
     @Override
     protected ConcurrentMap<String, String> parseTranslate(InputStream stream) {

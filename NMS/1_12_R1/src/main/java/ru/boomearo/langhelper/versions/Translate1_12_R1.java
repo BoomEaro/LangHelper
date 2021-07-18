@@ -11,6 +11,7 @@ import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 
 public class Translate1_12_R1 extends AbstractTranslateManager {
 
@@ -64,6 +65,20 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
     @Override
     public String getEnchantLevelName(int level, LangType type) {
         String name = "enchantment.level." + level;
+        return getTranslate(name, type);
+    }
+
+    @Override
+    public String getPotionEffectName(PotionEffectType effect, LangType type) {
+        String effectName = effect.getName().toLowerCase();
+        switch (effectName) {
+            case "fast_digging": effectName = "digSpeed"; break;
+            case "slow_digging": effectName = "digSlowDown"; break;
+            case "damage_resistance": effectName = "resistance"; break;
+            case "slow": effectName = "moveSlowdown"; break;
+            case "increase_damage": effectName = "damageBoost"; break;
+        }
+        String name = "effect." + effectName;
         return getTranslate(name, type);
     }
 

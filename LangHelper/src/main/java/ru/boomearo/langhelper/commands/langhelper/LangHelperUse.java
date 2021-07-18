@@ -6,6 +6,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import org.bukkit.potion.PotionEffectType;
 import ru.boomearo.langhelper.LangHelper;
 import ru.boomearo.langhelper.commands.CmdInfo;
 import ru.boomearo.langhelper.versions.LangType;
@@ -162,6 +163,38 @@ public class LangHelperUse {
         }
 
         cs.sendMessage("Зачарование: " + LangHelper.getInstance().getAbstractTranslateManager().getEnchantLevelName(enType, laType));
+        return true;
+    }
+
+    @CmdInfo(name = "testpotioneffect", description = "Протестировать название эффекта зелья.", usage = "/langhelper testpotioneffect <язык> <зачарование>", permission = "langhelper.admin")
+    public boolean testpotioneffect(CommandSender cs, String[] args) {
+        if (args.length != 2) {
+            return false;
+        }
+
+        LangType laType = null;
+        try {
+            laType = LangType.valueOf(args[0].toUpperCase());
+        }
+        catch (Exception e) {}
+
+        if (laType == null) {
+            cs.sendMessage("Не верный тип языка!");
+            return true;
+        }
+
+        PotionEffectType efType = null;
+        try {
+            efType = PotionEffectType.getByName(args[1].toUpperCase());
+        }
+        catch (Exception e) {
+        }
+        if (efType == null) {
+            cs.sendMessage("Указанный тип зелья не найден!");
+            return true;
+        }
+
+        cs.sendMessage("Тип зелья: " + LangHelper.getInstance().getAbstractTranslateManager().getPotionEffectName(efType, laType));
         return true;
     }
 }

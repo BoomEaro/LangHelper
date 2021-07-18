@@ -16,6 +16,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import org.bukkit.potion.PotionEffectType;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -303,6 +304,17 @@ public class LangHelper extends JavaPlugin {
             name = this.version.getEntityName(entity, LangType.EN_US);
             if (name == null) {
                 name = capitalize(entity.name());
+            }
+        }
+        return name;
+    }
+
+    public String getPotionEffectTranslate(PotionEffectType effect, LangType lang) {
+        String name = this.version.getPotionEffectName(effect, lang);
+        if (name == null) {
+            name = this.version.getPotionEffectName(effect, LangType.EN_US);
+            if (name == null) {
+                name = capitalize(effect.getName());
             }
         }
         return name;

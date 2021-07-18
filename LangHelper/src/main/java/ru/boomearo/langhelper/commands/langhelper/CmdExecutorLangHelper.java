@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
+import org.bukkit.potion.PotionEffectType;
 import ru.boomearo.langhelper.LangHelper;
 import ru.boomearo.langhelper.commands.AbstractExecutor;
 import ru.boomearo.langhelper.commands.CmdList;
@@ -36,7 +37,7 @@ public class CmdExecutorLangHelper extends AbstractExecutor {
         if (args.length == 1) {
             List<String> matches = new ArrayList<>();
             String search = args[0].toLowerCase();
-            for (String se : Arrays.asList("reload", "testitem", "testentity", "testenchant", "testenchantlevel")) {
+            for (String se : Arrays.asList("reload", "testitem", "testentity", "testenchant", "testenchantlevel", "testpotioneffect")) {
                 if (se.toLowerCase().startsWith(search)) {
                     matches.add(se);
                 }
@@ -47,7 +48,8 @@ public class CmdExecutorLangHelper extends AbstractExecutor {
             if (args[0].equalsIgnoreCase("testitem") ||
                     args[0].equalsIgnoreCase("testentity") ||
                     args[0].equalsIgnoreCase("testenchant") ||
-                    args[0].equalsIgnoreCase("testenchantlevel")) {
+                    args[0].equalsIgnoreCase("testenchantlevel") ||
+                    args[0].equalsIgnoreCase("testpotioneffect")) {
 
                 List<String> matches = new ArrayList<>();
                 String search = args[1].toLowerCase();
@@ -79,6 +81,18 @@ public class CmdExecutorLangHelper extends AbstractExecutor {
                     for (Enchantment ench : Enchantment.values()) {
                         if (ench.getName().toLowerCase().startsWith(search)) {
                             matches.add(ench.getName());
+                        }
+                    }
+                    return matches;
+                }
+            }
+            else if (args[0].equalsIgnoreCase("testpotioneffect")) {
+                if (!args[1].isEmpty()) {
+                    List<String> matches = new ArrayList<>();
+                    String search = args[2].toLowerCase();
+                    for (PotionEffectType pet : PotionEffectType.values()) {
+                        if (pet.getName().toLowerCase().startsWith(search)) {
+                            matches.add(pet.getName());
                         }
                     }
                     return matches;

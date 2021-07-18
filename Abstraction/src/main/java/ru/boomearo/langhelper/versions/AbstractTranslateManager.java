@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 
 public abstract class AbstractTranslateManager {
 
@@ -117,6 +118,8 @@ public abstract class AbstractTranslateManager {
     public abstract String getEnchantName(Enchantment enchant, LangType type);
 
     public abstract String getEnchantLevelName(int level, LangType type);
+
+    public abstract String getPotionEffectName(PotionEffectType effect, LangType type);
 
     protected abstract ConcurrentMap<String, String> parseTranslate(InputStream stream);
 }
