@@ -5,29 +5,26 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>LangHelper</groupId>
-        <artifactId>LangHelper</artifactId>
+        <groupId>ru.boomearo</groupId>
+        <artifactId>langhelper-parent</artifactId>
         <version>1.0</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>1_16_R3</artifactId>
+    <artifactId>1_13_R2</artifactId>
     <version>1.0</version>
-    <name>1_16_R3</name>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <name>1_13_R2</name>
 
     <dependencies>
         <dependency>
-            <groupId>LangHelper</groupId>
+            <groupId>ru.boomearo</groupId>
             <artifactId>Abstraction</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.16.5-R0.1-SNAPSHOT</version>
+            <version>1.13.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

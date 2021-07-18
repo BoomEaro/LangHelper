@@ -4,20 +4,28 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>LangHelper</groupId>
-    <artifactId>LangHelper</artifactId>
+    <groupId>ru.boomearo</groupId>
+    <artifactId>langhelper-parent</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
 
+    <name>LangHelper-parent</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
+
     <modules>
-        <module>Main</module>
+        <module>LangHelper</module>
         <module>Abstraction</module>
-        <module>1_12_R1</module>
-        <module>1_13_R2</module>
-        <module>1_14_R1</module>
-        <module>1_15_R1</module>
-        <module>1_16_R3</module>
-        <module>1_17_R1</module>
+        <module>NMS/1_12_R1</module>
+        <module>NMS/1_13_R2</module>
+        <module>NMS/1_14_R1</module>
+        <module>NMS/1_15_R1</module>
+        <module>NMS/1_16_R3</module>
+        <module>NMS/1_17_R1</module>
     </modules>
 
     <repositories>
@@ -27,16 +35,4 @@
         </repository>
     </repositories>
 
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.5.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>
