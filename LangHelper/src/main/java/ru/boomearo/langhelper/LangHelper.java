@@ -17,12 +17,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import org.bukkit.potion.PotionEffectType;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import ru.boomearo.langhelper.commands.langhelper.CmdExecutorLangHelper;
-import ru.boomearo.langhelper.utils.JsonUtils;
 import ru.boomearo.langhelper.versions.*;
+import ru.boomearo.langhelper.versions.cached.UrlManifestManager;
 import ru.boomearo.langhelper.versions.exceptions.LangException;
 import ru.boomearo.langhelper.versions.exceptions.LangParseException;
 import ru.boomearo.langhelper.versions.exceptions.LangVersionException;
@@ -30,6 +28,8 @@ import ru.boomearo.langhelper.versions.exceptions.LangVersionException;
 public class LangHelper extends JavaPlugin {
 
     private AbstractTranslateManager version = null;
+
+    private final UrlManifestManager manifestManager = new UrlManifestManager();
 
     private static LangHelper instance = null;
 
@@ -45,13 +45,13 @@ public class LangHelper extends JavaPlugin {
     );
 
     private static final String TRANSLATION_FILE_URL = "http://resources.download.minecraft.net/%s/%s";
-    private static final String VERSION_MANIFEST_URL = "https://launchermeta.mojang.com/mc/game/version_manifest.json";
 
     private List<LangType> enabledLanguages = new ArrayList<>();
 
     @Override
     public void onEnable() {
         instance = this;
+
         try {
             File configFile = new File(getDataFolder() + File.separator + "config.yml");
             if (!configFile.exists()) {
@@ -131,96 +131,21 @@ public class LangHelper extends JavaPlugin {
     // Метод проверяет и скачивает с серверов mojang нужный язык для нужной версии.
     // Сам бы я не узнал как именно скачивать языки. Спасибо автору который реализовал утилиту: https://gist.github.com/Mystiflow/c2b8838688e3215bb5492041046e458e
     public void checkAndDownloadLanguages() throws LangParseException {
-        //Получаем обьект MANIFEST который имеет список всех существующих версий игры
-        JSONObject jsonManifest = JsonUtils.connectNormal(VERSION_MANIFEST_URL);
-        if (jsonManifest == null) {
-            throw new LangParseException("Не удалось спарсить json обьект для MANIFEST");
-        }
-
-        //Далее ниже все что мы делаем, это убеждаемся что он существует а потом извлекаем из него ссылку на ресурс этой версии
-        JSONArray versionArray = JsonUtils.getJsonArrayObject(jsonManifest.get("versions"));
-        if (versionArray == null) {
-            throw new LangParseException("Не удалось спарсить json array обьект для MANIFEST");
-        }
-
-        String versionUrl = null;
-
-        for (Object arrO : versionArray) {
-            JSONObject versionJson = JsonUtils.getJsonObject(arrO);
-            if (versionJson == null) {
-                continue;
-            }
-
-            String versionId = JsonUtils.getStringObject(versionJson.get("id"));
-            if (versionId == null) {
-                continue;
-            }
-
-            //Ищем только ту версию которая сейчас
-            if (versionId.equals(this.version.getVersion())) {
-                versionUrl = JsonUtils.getStringObject(versionJson.get("url"));
-                break;
-            }
-        }
-
-        if (versionUrl == null) {
-            throw new LangParseException("Не удалось найти версию " + this.version.getVersion() + " в json обьекте MANIFEST");
-        }
-
-        //Получив успешно обьект ресурсов этой версии, ищем далее в ней требуемый язык
-        JSONObject versionJson = JsonUtils.connectNormal(versionUrl);
-        if (versionJson == null) {
-            throw new LangParseException("Не удалось спарсить json обьект по ссылке '" + versionUrl + "'");
-        }
-
-        JSONObject jsonAssertIndex = JsonUtils.getJsonObject(versionJson.get("assetIndex"));
-        if (jsonAssertIndex == null) {
-            throw new LangParseException("Не удалось спарсить json обьект assetIndex");
-        }
-
-        String langUrl = JsonUtils.getStringObject(jsonAssertIndex.get("url"));
-        if (langUrl == null) {
-            throw new LangParseException("Не удалось найти url строку в assetIndex");
-        }
-
-        JSONObject jsonLang = JsonUtils.connectNormal(langUrl);
-        if (jsonLang == null) {
-            throw new LangParseException("Не удалось спарсить json обьект по ссылке '" + langUrl + "'");
-        }
-
-        JSONObject langObjects = JsonUtils.getJsonObject(jsonLang.get("objects"));
-        if (langObjects == null) {
-            throw new LangParseException("Не удалось найти objects обьект");
-        }
-
         File currentTranFolder = new File(this.getDataFolder(), "languages" + File.separator + this.version.getVersion() + File.separator);
 
-        //Пытаемся скачать для каждого языка файл
         for (LangType lt : this.enabledLanguages) {
+            //Убеждаемся что файл языка существует.
+            //Нам на самом деле не важно, пустой или модифицирован, главное что он есть.
             File langFile = new File(currentTranFolder, lt.name());
-            //Скачиваем только тот язык, которого нет
             if (langFile.exists()) {
                 continue;
             }
 
-            //Все языки ниже 1.13 не имеют формата json, поэтому учитываем это ниже.
-            JSONObject langJsonData = JsonUtils.getJsonObject(langObjects.get("minecraft/lang/" + lt.getName() + ".json"));
-            if (langJsonData == null) {
-                langJsonData = JsonUtils.getJsonObject(langObjects.get("minecraft/lang/" + lt.getName() + ".lang"));
-            }
-
-            if (langJsonData == null) {
-                continue;
-            }
-
-            //Получаем наконец то хэш, который используется для скачивания языка
-            String hash = JsonUtils.getStringObject(langJsonData.get("hash"));
-            if (hash == null) {
-                continue;
-            }
+            //Пытаемся получить хэш для скачивания этого языка
+            String hash = this.manifestManager.getLanguageHash(this.version.getVersion(), lt.name().toLowerCase());
 
             try {
-                //Пытаемся скачать язык, используя хэш
+                //Пытаемся скачать язык, используя хэш.
                 URL url = new URL(String.format(TRANSLATION_FILE_URL, hash.substring(0, 2), hash));
                 try (InputStream stream = url.openStream()) {
                     String pat = currentTranFolder.getAbsolutePath() + File.separator + lt.name();
