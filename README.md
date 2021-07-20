@@ -8,9 +8,15 @@ API достаточно простой, все что нужно сделать
 
 Пример использования:
 ```
-String translateItem = LangHelper.getInstance().getItemTranslate(new ItemStack(Material.STONE), LangType.RU_RU); // Получить русский перевод каменного блока
-String translateEnchant = LangHelper.getInstance().getEnchantmentName(Enchantment.LUCK, LangType.RU_RU); // Получить русский перевод зачарования на удачу
-String translateEntity = LangHelper.getInstance().getEntityTranslate(EntityType.CREEPER, LangType.RU_RU); // Получить русский перевод сущности крипера
-System.out.println("Переводы: " + translateItem + " " + translateEnchant + " " + translateEntity);
+LangHelper languages = LangHelper.getInstance();
+String translateItem = languages.getItemTranslate(new ItemStack(Material.STONE), LangType.RU_RU); // Получить русский перевод каменного блока
+String translateEnchant = languages.getEnchantmentName(Enchantment.LUCK, LangType.RU_RU); // Получить русский перевод зачарования на удачу
+String translateEntity = languages.getEntityTranslate(EntityType.CREEPER, LangType.RU_RU); // Получить русский перевод сущности крипера
+String translatePotionEffect = languages.getPotionEffectTranslate(PotionEffectType.REGENERATION, LangType.RU_RU); // Получить русский перевод эффекта зелья регенерации
+
+System.out.println("Предмет: " + translateItem);
+System.out.println("Зачарование: " + translateEnchant);
+System.out.println("Сущность: " + translateEntity);
+System.out.println("Эффект зелья: " + translatePotionEffect);
 ```
 Все методы никогда не вернут null. Если по каким-то причинам перевода нет, будет возвращена отформатированная строка содержащая английский перевод от самого сервера.
