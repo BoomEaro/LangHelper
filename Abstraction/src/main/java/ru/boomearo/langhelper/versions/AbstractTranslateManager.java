@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.bukkit.Bukkit;
+import org.bukkit.block.Biome;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
@@ -120,6 +121,8 @@ public abstract class AbstractTranslateManager {
     public abstract String getEnchantLevelName(int level, LangType type);
 
     public abstract String getPotionEffectName(PotionEffectType effect, LangType type);
+
+    public abstract String getBiomeName(Biome biome, LangType type);
 
     protected abstract ConcurrentMap<String, String> parseTranslate(InputStream stream);
 }

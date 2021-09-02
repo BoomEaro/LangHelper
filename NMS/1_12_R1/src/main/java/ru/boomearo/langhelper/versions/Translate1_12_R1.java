@@ -8,6 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.block.Biome;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
@@ -82,6 +83,12 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
         return getTranslate(name, type);
     }
 
+    //TODO К сожалению 1.12.2 не имеет строк для перевода биомов.
+    @Override
+    public String getBiomeName(Biome biome, LangType type) {
+        return null;
+    }
+
     @Override
     protected ConcurrentMap<String, String> parseTranslate(InputStream stream) {
         ConcurrentMap<String, String> translates = new ConcurrentHashMap<String, String>();
@@ -109,4 +116,5 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
 
         return translates;
     }
+
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -37,7 +38,7 @@ public class CmdExecutorLangHelper extends AbstractExecutor {
         if (args.length == 1) {
             List<String> matches = new ArrayList<>();
             String search = args[0].toLowerCase();
-            for (String se : Arrays.asList("reload", "testitem", "testentity", "testenchant", "testenchantlevel", "testpotioneffect")) {
+            for (String se : Arrays.asList("reload", "testitem", "testentity", "testenchant", "testenchantlevel", "testpotioneffect", "testbiome")) {
                 if (se.toLowerCase().startsWith(search)) {
                     matches.add(se);
                 }
@@ -49,7 +50,8 @@ public class CmdExecutorLangHelper extends AbstractExecutor {
                     args[0].equalsIgnoreCase("testentity") ||
                     args[0].equalsIgnoreCase("testenchant") ||
                     args[0].equalsIgnoreCase("testenchantlevel") ||
-                    args[0].equalsIgnoreCase("testpotioneffect")) {
+                    args[0].equalsIgnoreCase("testpotioneffect") ||
+                    args[0].equalsIgnoreCase("testbiome")) {
 
                 List<String> matches = new ArrayList<>();
                 String search = args[1].toLowerCase();
@@ -93,6 +95,18 @@ public class CmdExecutorLangHelper extends AbstractExecutor {
                     for (PotionEffectType pet : PotionEffectType.values()) {
                         if (pet.getName().toLowerCase().startsWith(search)) {
                             matches.add(pet.getName());
+                        }
+                    }
+                    return matches;
+                }
+            }
+            else if (args[0].equalsIgnoreCase("testbiome")) {
+                if (!args[1].isEmpty()) {
+                    List<String> matches = new ArrayList<>();
+                    String search = args[2].toLowerCase();
+                    for (Biome bi : Biome.values()) {
+                        if (bi.name().toLowerCase().startsWith(search)) {
+                            matches.add(bi.name());
                         }
                     }
                     return matches;

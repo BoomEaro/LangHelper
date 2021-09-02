@@ -1,5 +1,6 @@
 package ru.boomearo.langhelper.versions;
 
+import org.bukkit.block.Biome;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
@@ -73,5 +74,10 @@ public class Translate1_15_R1 extends AbstractJsonTranslate {
         }
         String name = "effect.minecraft." + effectName;
         return getTranslate(name, type);
+    }
+
+    @Override
+    public String getBiomeName(Biome biome, LangType type) {
+        return getTranslate("biome.minecraft." + biome.name().toLowerCase(), type);
     }
 }

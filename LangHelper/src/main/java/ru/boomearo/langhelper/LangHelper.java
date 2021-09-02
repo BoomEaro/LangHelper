@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.block.Biome;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
@@ -240,6 +241,17 @@ public class LangHelper extends JavaPlugin {
             name = this.version.getPotionEffectName(effect, LangType.EN_US);
             if (name == null) {
                 name = capitalize(effect.getName());
+            }
+        }
+        return name;
+    }
+
+    public String getBiomeTranslate(Biome biome, LangType lang) {
+        String name = this.version.getBiomeName(biome, lang);
+        if (name == null) {
+            name = this.version.getBiomeName(biome, LangType.EN_US);
+            if (name == null) {
+                name = capitalize(biome.name());
             }
         }
         return name;

@@ -1,5 +1,6 @@
 package ru.boomearo.langhelper.commands.langhelper;
 
+import org.bukkit.block.Biome;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
@@ -195,6 +196,38 @@ public class LangHelperUse {
         }
 
         cs.sendMessage("Тип зелья: " + LangHelper.getInstance().getAbstractTranslateManager().getPotionEffectName(efType, laType));
+        return true;
+    }
+
+    @CmdInfo(name = "testbiome", description = "Протестировать название биома.", usage = "/langhelper testbiome <язык> <биом>", permission = "langhelper.admin")
+    public boolean testbiome(CommandSender cs, String[] args) {
+        if (args.length != 2) {
+            return false;
+        }
+
+        LangType laType = null;
+        try {
+            laType = LangType.valueOf(args[0].toUpperCase());
+        }
+        catch (Exception e) {}
+
+        if (laType == null) {
+            cs.sendMessage("Не верный тип языка!");
+            return true;
+        }
+
+        Biome biome = null;
+        try {
+            biome = Biome.valueOf(args[1].toUpperCase());
+        }
+        catch (Exception e) {
+        }
+        if (biome == null) {
+            cs.sendMessage("Указанный тип биома не найден!");
+            return true;
+        }
+
+        cs.sendMessage("Тип биома: " + LangHelper.getInstance().getAbstractTranslateManager().getBiomeName(biome, laType));
         return true;
     }
 }
