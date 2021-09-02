@@ -13,10 +13,12 @@ String translateItem = languages.getItemTranslate(new ItemStack(Material.STONE),
 String translateEnchant = languages.getEnchantmentName(Enchantment.LUCK, LangType.RU_RU); // Получить русский перевод зачарования на удачу
 String translateEntity = languages.getEntityTranslate(EntityType.CREEPER, LangType.RU_RU); // Получить русский перевод сущности крипера
 String translatePotionEffect = languages.getPotionEffectTranslate(PotionEffectType.REGENERATION, LangType.RU_RU); // Получить русский перевод эффекта зелья регенерации
+String translateBiome = languages.getBiomeTranslate(Biome.DESERT, LangType.RU_RU); // Получить русский перевод биома пустыни
 
 System.out.println("Предмет: " + translateItem);
 System.out.println("Зачарование: " + translateEnchant);
 System.out.println("Сущность: " + translateEntity);
 System.out.println("Эффект зелья: " + translatePotionEffect);
+System.out.println("Биом: " + translateBiome);
 ```
 Все методы никогда не вернут null. Если по каким-то причинам перевода нет, будет возвращена отформатированная строка содержащая английский перевод от самого сервера.
