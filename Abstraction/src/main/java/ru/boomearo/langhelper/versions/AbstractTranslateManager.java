@@ -27,7 +27,7 @@ public abstract class AbstractTranslateManager {
     }
 
     public void loadLanguages(File file, Collection<LangType> enabledLanguages) {
-        ConcurrentMap<LangType, Translate> types = new ConcurrentHashMap<LangType, Translate>();
+        ConcurrentMap<LangType, Translate> types = new ConcurrentHashMap<>();
         try {
             ClassLoader classLoader = Bukkit.getServer().getClass().getClassLoader();
 
@@ -66,7 +66,7 @@ public abstract class AbstractTranslateManager {
                                 try {
                                     lt = LangType.valueOf(t.getName().toUpperCase());
                                 }
-                                catch (Exception e) {
+                                catch (Exception ignored) {
                                 }
                                 if (lt != null) {
                                     if (lt.isExternal()) {
@@ -99,7 +99,7 @@ public abstract class AbstractTranslateManager {
     public String getTranslate(String name, LangType type) {
         Translate tr = this.types.get(type);
         if (tr != null) {
-            return tr.getTranstale(name.toLowerCase().replace("_", ""));
+            return tr.getTranslate(name.toLowerCase().replace("_", ""));
         }
         return null;
     }

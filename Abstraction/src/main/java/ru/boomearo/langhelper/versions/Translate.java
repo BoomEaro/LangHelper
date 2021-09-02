@@ -17,7 +17,7 @@ public class Translate {
         return this.lang;
     }
 
-    public String getTranstale(String name) {
+    public String getTranslate(String name) {
         return this.tr.get(name);
     }
 

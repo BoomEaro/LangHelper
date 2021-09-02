@@ -42,7 +42,7 @@ public abstract class AbstractJsonTranslate extends AbstractTranslateManager {
 
     @Override
     protected ConcurrentMap<String, String> parseTranslate(InputStream stream) {
-        ConcurrentMap<String, String> translates = new ConcurrentHashMap<String, String>();
+        ConcurrentMap<String, String> translates = new ConcurrentHashMap<>();
         JSONParser jsonParser = new JSONParser();
 
         try (InputStreamReader streamReader =

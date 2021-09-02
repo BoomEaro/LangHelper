@@ -51,7 +51,7 @@ public class LangHelperUse {
         try {
             type = LangType.valueOf(args[0].toUpperCase());
         }
-        catch (Exception e) {}
+        catch (Exception ignored) {}
 
         if (type == null) {
             cs.sendMessage("Не верный тип языка!");
@@ -81,7 +81,7 @@ public class LangHelperUse {
         try {
             laType = LangType.valueOf(args[0].toUpperCase());
         }
-        catch (Exception e) {}
+        catch (Exception ignored) {}
 
         if (laType == null) {
             cs.sendMessage("Не верный тип языка!");
@@ -92,7 +92,7 @@ public class LangHelperUse {
         try {
             enType = EntityType.valueOf(args[1].toUpperCase());
         }
-        catch (Exception e) {
+        catch (Exception ignored) {
         }
         if (enType == null) {
             cs.sendMessage("Указанная сущность не найдена!");
@@ -113,7 +113,7 @@ public class LangHelperUse {
         try {
             laType = LangType.valueOf(args[0].toUpperCase());
         }
-        catch (Exception e) {}
+        catch (Exception ignored) {}
 
         if (laType == null) {
             cs.sendMessage("Не верный тип языка!");
@@ -124,7 +124,7 @@ public class LangHelperUse {
         try {
             enType = Enchantment.getByName(args[1].toUpperCase());
         }
-        catch (Exception e) {
+        catch (Exception ignored) {
         }
         if (enType == null) {
             cs.sendMessage("Указанное зачарование не найдено!");
@@ -145,7 +145,7 @@ public class LangHelperUse {
         try {
             laType = LangType.valueOf(args[0].toUpperCase());
         }
-        catch (Exception e) {}
+        catch (Exception ignored) {}
 
         if (laType == null) {
             cs.sendMessage("Не верный тип языка!");
@@ -156,7 +156,7 @@ public class LangHelperUse {
         try {
             enType = Integer.parseInt(args[1]);
         }
-        catch (Exception e) {
+        catch (Exception ignored) {
         }
         if (enType == null) {
             cs.sendMessage("Указанный уровень зачарования не найден!");
@@ -177,7 +177,7 @@ public class LangHelperUse {
         try {
             laType = LangType.valueOf(args[0].toUpperCase());
         }
-        catch (Exception e) {}
+        catch (Exception ignored) {}
 
         if (laType == null) {
             cs.sendMessage("Не верный тип языка!");
@@ -188,7 +188,7 @@ public class LangHelperUse {
         try {
             efType = PotionEffectType.getByName(args[1].toUpperCase());
         }
-        catch (Exception e) {
+        catch (Exception ignored) {
         }
         if (efType == null) {
             cs.sendMessage("Указанный тип зелья не найден!");
@@ -209,7 +209,7 @@ public class LangHelperUse {
         try {
             laType = LangType.valueOf(args[0].toUpperCase());
         }
-        catch (Exception e) {}
+        catch (Exception ignored) {}
 
         if (laType == null) {
             cs.sendMessage("Не верный тип языка!");
@@ -220,7 +220,7 @@ public class LangHelperUse {
         try {
             biome = Biome.valueOf(args[1].toUpperCase());
         }
-        catch (Exception e) {
+        catch (Exception ignored) {
         }
         if (biome == null) {
             cs.sendMessage("Указанный тип биома не найден!");

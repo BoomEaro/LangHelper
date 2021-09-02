@@ -91,7 +91,7 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
 
     @Override
     protected ConcurrentMap<String, String> parseTranslate(InputStream stream) {
-        ConcurrentMap<String, String> translates = new ConcurrentHashMap<String, String>();
+        ConcurrentMap<String, String> translates = new ConcurrentHashMap<>();
         try (InputStreamReader streamReader =
                      new InputStreamReader(stream, StandardCharsets.UTF_8);
              BufferedReader reader = new BufferedReader(streamReader)) {

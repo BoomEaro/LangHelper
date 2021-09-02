@@ -74,11 +74,11 @@ public class LangHelper extends JavaPlugin {
 
             //Просто оповещаем о том, сколько строк и какие языки были загружены
             for (Translate tra : this.version.getAllTranslate()) {
-                String languageName = tra.getTranstale("language.name");
+                String languageName = tra.getTranslate("language.name");
                 if (languageName == null) {
                     languageName = "Unknown-name";
                 }
-                String languageRegion = tra.getTranstale("language.region");
+                String languageRegion = tra.getTranslate("language.region");
                 if (languageRegion == null) {
                     languageRegion = "Unknown-region";
                 }
@@ -116,7 +116,8 @@ public class LangHelper extends JavaPlugin {
                 try {
                     parsedType = LangType.valueOf(t.toUpperCase());
                 }
-                catch (Exception e) {}
+                catch (Exception ignored) {
+                }
                 if (parsedType == null) {
                     continue;
                 }
