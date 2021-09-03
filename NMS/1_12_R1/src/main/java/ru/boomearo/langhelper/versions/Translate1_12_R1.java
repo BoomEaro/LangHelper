@@ -70,6 +70,16 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
         if (type == null) {
             throw new IllegalArgumentException("type является null!");
         }
+        // TODO Нужно ли править?
+
+        // Следующие ниже сущности имеют СОВСЕМ другой ключ перевода.. Похоже в 1.12.2 нет nms енумов и все типы сущностей это классы.
+        // К тому же, ключ перевода реализован у каждой реализации сущности свой, а это значит придется передавать сюда обьект entity что не очень удобно.
+
+        // AREA_EFFECT_CLOUD, EGG, LEASH_HITCH, ENDER_PEARL, ENDER_SIGNAL, SPLASH_POTION, THROWN_EXP_BOTTLE, ITEM_FRAME, WITHER_SKULL, PRIMED_TNT, FALLING_BLOCK, FIREWORK,
+        // SPECTRAL_ARROW, SHULKER_BULLET, EVOKER_FANGS, MINECART_COMMAND, MINECART_CHEST, MINECART_FURNACE, MINECART_TNT, MINECART_HOPPER, MINECART_MOB_SPAWNER, PIG_ZOMBIE,
+        // MAGMA_CUBE, WITHER, MUSHROOM_COW, OCELOT, LLAMA_SPIT, ENDER_CRYSTAL, LINGERING_POTION, FISHING_HOOK, LIGHTNING, WEATHER, PLAYER, COMPLEX_PART, TIPPED_ARROW
+
+        // Мне лень делать switch/case для каждого перевода, да и нужно ли оно?
         return getTranslate("entity." + entity.name() + ".name", type);
     }
 
