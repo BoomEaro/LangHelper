@@ -171,39 +171,31 @@ public class LangHelper extends JavaPlugin {
         return this.version;
     }
 
-    private static String capitalize(String name) {
-        String material = name.replace("_", " ").toLowerCase();
-
-        StringBuilder sb = new StringBuilder();
-        String[] arrayOfString;
-        int j = (arrayOfString = material.split(" ")).length;
-        for (int i = 0; i < j; i++) {
-            String word = arrayOfString[i];
-            sb.append(" ");
-            if (i == 0) {
-                sb.append(word.toUpperCase().charAt(0));
-                sb.append(word.substring(1));
-            }
-            else {
-                sb.append(word.substring(0));
-            }
+    public String getEnchantmentName(Enchantment entity, LangType language) {
+        if (entity == null) {
+            throw new IllegalArgumentException("entity является null!");
         }
-        return sb.toString().substring(1);
-    }
-
-    public String getEnchantmentName(Enchantment enc, LangType lang) {
-        String name = this.version.getEnchantName(enc, lang);
+        if (language == null) {
+            throw new IllegalArgumentException("language является null!");
+        }
+        String name = this.version.getEnchantName(entity, language);
         if (name == null) {
-            name = this.version.getEnchantName(enc, LangType.EN_US);
+            name = this.version.getEnchantName(entity, LangType.EN_US);
             if (name == null) {
-                name = capitalize(enc.getName());
+                name = capitalize(entity.getName());
             }
         }
         return name;
     }
 
-    public String getItemTranslate(ItemStack item, LangType lang) {
-        String name = this.version.getItemName(item, lang);
+    public String getItemTranslate(ItemStack item, LangType language) {
+        if (item == null) {
+            throw new IllegalArgumentException("item является null!");
+        }
+        if (language == null) {
+            throw new IllegalArgumentException("language является null!");
+        }
+        String name = this.version.getItemName(item, language);
         if (name == null) {
             name = this.version.getItemName(item, LangType.EN_US);
             if (name == null) {
@@ -214,8 +206,11 @@ public class LangHelper extends JavaPlugin {
         return name;
     }
 
-    public String getEnchantLevelTranslate(int level, LangType lang) {
-        String name = this.version.getEnchantLevelName(level, lang);
+    public String getEnchantLevelTranslate(int level, LangType language) {
+        if (language == null) {
+            throw new IllegalArgumentException("language является null!");
+        }
+        String name = this.version.getEnchantLevelName(level, language);
         if (name == null) {
             name = this.version.getEnchantLevelName(level, LangType.EN_US);
             if (name == null) {
@@ -225,8 +220,14 @@ public class LangHelper extends JavaPlugin {
         return name;
     }
 
-    public String getEntityTranslate(EntityType entity, LangType lang) {
-        String name = this.version.getEntityName(entity, lang);
+    public String getEntityTranslate(EntityType entity, LangType language) {
+        if (entity == null) {
+            throw new IllegalArgumentException("entity является null!");
+        }
+        if (language == null) {
+            throw new IllegalArgumentException("language является null!");
+        }
+        String name = this.version.getEntityName(entity, language);
         if (name == null) {
             name = this.version.getEntityName(entity, LangType.EN_US);
             if (name == null) {
@@ -236,8 +237,14 @@ public class LangHelper extends JavaPlugin {
         return name;
     }
 
-    public String getPotionEffectTranslate(PotionEffectType effect, LangType lang) {
-        String name = this.version.getPotionEffectName(effect, lang);
+    public String getPotionEffectTranslate(PotionEffectType effect, LangType language) {
+        if (effect == null) {
+            throw new IllegalArgumentException("effect является null!");
+        }
+        if (language == null) {
+            throw new IllegalArgumentException("language является null!");
+        }
+        String name = this.version.getPotionEffectName(effect, language);
         if (name == null) {
             name = this.version.getPotionEffectName(effect, LangType.EN_US);
             if (name == null) {
@@ -247,8 +254,14 @@ public class LangHelper extends JavaPlugin {
         return name;
     }
 
-    public String getBiomeTranslate(Biome biome, LangType lang) {
-        String name = this.version.getBiomeName(biome, lang);
+    public String getBiomeTranslate(Biome biome, LangType language) {
+        if (biome == null) {
+            throw new IllegalArgumentException("biome является null!");
+        }
+        if (language == null) {
+            throw new IllegalArgumentException("language является null!");
+        }
+        String name = this.version.getBiomeName(biome, language);
         if (name == null) {
             name = this.version.getBiomeName(biome, LangType.EN_US);
             if (name == null) {
@@ -282,6 +295,26 @@ public class LangHelper extends JavaPlugin {
 
     public static File getLanguageFolder() {
         return new File(LangHelper.getInstance().getDataFolder(), "languages" + File.separator);
+    }
+
+    private static String capitalize(String name) {
+        String material = name.replace("_", " ").toLowerCase();
+
+        StringBuilder sb = new StringBuilder();
+        String[] arrayOfString;
+        int j = (arrayOfString = material.split(" ")).length;
+        for (int i = 0; i < j; i++) {
+            String word = arrayOfString[i];
+            sb.append(" ");
+            if (i == 0) {
+                sb.append(word.toUpperCase().charAt(0));
+                sb.append(word.substring(1));
+            }
+            else {
+                sb.append(word.substring(0));
+            }
+        }
+        return sb.toString().substring(1);
     }
 
 }
