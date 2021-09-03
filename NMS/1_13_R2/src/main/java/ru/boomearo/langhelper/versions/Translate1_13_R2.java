@@ -20,46 +20,79 @@ public class Translate1_13_R2 extends AbstractJsonTranslate {
 
     @Override
     public String getItemName(ItemStack item, LangType type) {
-        net.minecraft.server.v1_13_R2.ItemStack itemStack = org.bukkit.craftbukkit.v1_13_R2.inventory.CraftItemStack.asNMSCopy(item);
-
-        String name;
-        Item i = itemStack.getItem();
-        if (i instanceof ItemSplashPotion) {
-            name = "item.minecraft." + PotionUtil.d(itemStack).b("splash_potion.effect.");
+        if (item == null) {
+            throw new IllegalArgumentException("item является null!");
         }
-        else if (i instanceof ItemLingeringPotion) {
-            name = "item.minecraft." + PotionUtil.d(itemStack).b("lingering_potion.effect.");
-        }
-        else if (i instanceof ItemPotion) {
-            name = "item.minecraft." + PotionUtil.d(itemStack).b("potion.effect.");
-        }
-        else {
-            name = itemStack.getItem().getName();
+        if (type == null) {
+            throw new IllegalArgumentException("type является null!");
         }
 
-        return getTranslate(name, type);
+        try {
+            net.minecraft.server.v1_13_R2.ItemStack itemStack = org.bukkit.craftbukkit.v1_13_R2.inventory.CraftItemStack.asNMSCopy(item);
+
+            String name;
+            Item i = itemStack.getItem();
+            if (i instanceof ItemSplashPotion) {
+                name = "item.minecraft." + PotionUtil.d(itemStack).b("splash_potion.effect.");
+            }
+            else if (i instanceof ItemLingeringPotion) {
+                name = "item.minecraft." + PotionUtil.d(itemStack).b("lingering_potion.effect.");
+            }
+            else if (i instanceof ItemPotion) {
+                name = "item.minecraft." + PotionUtil.d(itemStack).b("potion.effect.");
+            }
+            else {
+                name = itemStack.getItem().getName();
+            }
+
+            return getTranslate(name, type);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public String getEntityName(EntityType entity, LangType type) {
-        String name = "entity.minecraft." + entity.getName();
-        return getTranslate(name, type);
+        if (entity == null) {
+            throw new IllegalArgumentException("entity является null!");
+        }
+        if (type == null) {
+            throw new IllegalArgumentException("type является null!");
+        }
+
+        return getTranslate("entity.minecraft." + entity.getName(), type);
     }
 
     @Override
     public String getEnchantName(Enchantment enchant, LangType type) {
-        String name = "enchantment.minecraft." + enchant.getKey().getKey();
-        return getTranslate(name, type);
+        if (enchant == null) {
+            throw new IllegalArgumentException("enchant является null!");
+        }
+        if (type == null) {
+            throw new IllegalArgumentException("type является null!");
+        }
+
+        return getTranslate("enchantment.minecraft." + enchant.getKey().getKey(), type);
     }
 
     @Override
     public String getEnchantLevelName(int level, LangType type) {
-        String name = "enchantment.level." + level;
-        return getTranslate(name, type);
+        if (type == null) {
+            throw new IllegalArgumentException("type является null!");
+        }
+        return getTranslate("enchantment.level." + level, type);
     }
 
     @Override
     public String getPotionEffectName(PotionEffectType effect, LangType type) {
+        if (effect == null) {
+            throw new IllegalArgumentException("effect является null!");
+        }
+        if (type == null) {
+            throw new IllegalArgumentException("type является null!");
+        }
         String effectName = effect.getName().toLowerCase();
         switch (effectName) {
             case "fast_digging": effectName = "haste"; break;
@@ -72,12 +105,17 @@ public class Translate1_13_R2 extends AbstractJsonTranslate {
             case "slow": effectName = "slowness"; break;
             case "increase_damage": effectName = "strength"; break;
         }
-        String name = "effect.minecraft." + effectName;
-        return getTranslate(name, type);
+        return getTranslate("effect.minecraft." + effectName, type);
     }
 
     @Override
     public String getBiomeName(Biome biome, LangType type) {
+        if (biome == null) {
+            throw new IllegalArgumentException("biome является null!");
+        }
+        if (type == null) {
+            throw new IllegalArgumentException("type является null!");
+        }
         return getTranslate("biome.minecraft." + biome.name().toLowerCase(), type);
     }
 }

@@ -76,13 +76,19 @@ public class LangHelperUse {
         {
             List<Material> failed = new ArrayList<>();
             for (Material mat : Material.values()) {
-                String name = LangHelper.getInstance().getAbstractTranslateManager().getItemName(new ItemStack(mat, 1), type);
-                if (name == null) {
-                    failed.add(mat);
-                }
+                try {
+                    String name = LangHelper.getInstance().getAbstractTranslateManager().getItemName(new ItemStack(mat, 1), type);
+                    if (name == null) {
+                        failed.add(mat);
+                    }
 
-                if (debug) {
-                    cs.sendMessage(mat + " == " + name);
+                    if (debug) {
+                        cs.sendMessage(mat + " == " + name);
+                    }
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                    cs.sendMessage("Ошибка при получении предмета " + mat);
                 }
             }
 
@@ -91,16 +97,22 @@ public class LangHelperUse {
         {
             List<EntityType> failed = new ArrayList<>();
             for (EntityType en : EntityType.values()) {
-                if (en == EntityType.UNKNOWN) {
-                    continue;
-                }
-                String name = LangHelper.getInstance().getAbstractTranslateManager().getEntityName(en, type);
-                if (name == null) {
-                    failed.add(en);
-                }
+                try {
+                    if (en == EntityType.UNKNOWN) {
+                        continue;
+                    }
+                    String name = LangHelper.getInstance().getAbstractTranslateManager().getEntityName(en, type);
+                    if (name == null) {
+                        failed.add(en);
+                    }
 
-                if (debug) {
-                    cs.sendMessage(en + " == " + name);
+                    if (debug) {
+                        cs.sendMessage(en + " == " + name);
+                    }
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                    cs.sendMessage("Ошибка при получении сущности " + en);
                 }
             }
 
@@ -109,13 +121,19 @@ public class LangHelperUse {
         {
             List<Enchantment> failed = new ArrayList<>();
             for (Enchantment en : Enchantment.values()) {
-                String name = LangHelper.getInstance().getAbstractTranslateManager().getEnchantName(en, type);
-                if (name == null) {
-                    failed.add(en);
-                }
+                try {
+                    String name = LangHelper.getInstance().getAbstractTranslateManager().getEnchantName(en, type);
+                    if (name == null) {
+                        failed.add(en);
+                    }
 
-                if (debug) {
-                    cs.sendMessage(en + " == " + name);
+                    if (debug) {
+                        cs.sendMessage(en + " == " + name);
+                    }
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                    cs.sendMessage("Ошибка при получении зачарования " + en);
                 }
             }
 
@@ -124,13 +142,19 @@ public class LangHelperUse {
         {
             List<Integer> failed = new ArrayList<>();
             for (int i = 1; i <= 10; i++) {
-                String name = LangHelper.getInstance().getAbstractTranslateManager().getEnchantLevelName(i, type);
-                if (name == null) {
-                    failed.add(i);
-                }
+                try {
+                    String name = LangHelper.getInstance().getAbstractTranslateManager().getEnchantLevelName(i, type);
+                    if (name == null) {
+                        failed.add(i);
+                    }
 
-                if (debug) {
-                    cs.sendMessage(i + " == " + name);
+                    if (debug) {
+                        cs.sendMessage(i + " == " + name);
+                    }
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                    cs.sendMessage("Ошибка при получении уровня зачарования " + i);
                 }
             }
 
@@ -139,13 +163,23 @@ public class LangHelperUse {
         {
             List<PotionEffectType> failed = new ArrayList<>();
             for (PotionEffectType pet : PotionEffectType.values()) {
-                String name = LangHelper.getInstance().getAbstractTranslateManager().getPotionEffectName(pet, type);
-                if (name == null) {
-                    failed.add(pet);
+                //Да. По каким то причинам в 1.12.2 в массиве енумов есть нулл запись..
+                if (pet == null) {
+                    continue;
                 }
+                try {
+                    String name = LangHelper.getInstance().getAbstractTranslateManager().getPotionEffectName(pet, type);
+                    if (name == null) {
+                        failed.add(pet);
+                    }
 
-                if (debug) {
-                    cs.sendMessage(pet + " == " + name);
+                    if (debug) {
+                        cs.sendMessage(pet + " == " + name);
+                    }
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                    cs.sendMessage("Ошибка при получении эффекта зелья " + pet);
                 }
             }
 
@@ -154,13 +188,19 @@ public class LangHelperUse {
         {
             List<Biome> failed = new ArrayList<>();
             for (Biome b : Biome.values()) {
-                String name = LangHelper.getInstance().getAbstractTranslateManager().getBiomeName(b, type);
-                if (name == null) {
-                    failed.add(b);
-                }
+                try {
+                    String name = LangHelper.getInstance().getAbstractTranslateManager().getBiomeName(b, type);
+                    if (name == null) {
+                        failed.add(b);
+                    }
 
-                if (debug) {
-                    cs.sendMessage(b + " == " + name);
+                    if (debug) {
+                        cs.sendMessage(b + " == " + name);
+                    }
+                }
+                catch (Exception e ) {
+                    e.printStackTrace();
+                    cs.sendMessage("Ошибка при получении биома " + b);
                 }
             }
 
