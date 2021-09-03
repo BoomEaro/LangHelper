@@ -109,6 +109,7 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
         }
         String effectName = effect.getName().toLowerCase();
         switch (effectName) {
+            case "speed": effectName = "moveSpeed"; break;
             case "fast_digging": effectName = "digSpeed"; break;
             case "slow_digging": effectName = "digSlowDown"; break;
             case "damage_resistance": effectName = "resistance"; break;
