@@ -1,5 +1,6 @@
 package ru.boomearo.langhelper.commands.langhelper;
 
+import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
@@ -12,6 +13,9 @@ import ru.boomearo.langhelper.LangHelper;
 import ru.boomearo.langhelper.commands.CmdInfo;
 import ru.boomearo.langhelper.versions.LangType;
 import ru.boomearo.langhelper.versions.exceptions.LangException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LangHelperUse {
 
@@ -33,6 +37,136 @@ public class LangHelperUse {
         catch (LangException e) {
             cs.sendMessage("Ошибка: " + e.getMessage());
         }
+
+        return true;
+    }
+
+    @CmdInfo(name = "testall", description = "Протестировать все названия и типы переводов.", usage = "/langhelper testall <язык> <дебаг>", permission = "langhelper.admin")
+    public boolean testall(CommandSender cs, String[] args) {
+        if (args.length != 2) {
+            return false;
+        }
+
+        LangType type = null;
+        try {
+            type = LangType.valueOf(args[0].toUpperCase());
+        }
+        catch (Exception ignored) {}
+
+        if (type == null) {
+            cs.sendMessage("Не верный тип языка!");
+            return true;
+        }
+
+        boolean debug;
+
+        if (args[1].equalsIgnoreCase("yes")) {
+            debug = true;
+        }
+        else if (args[1].equalsIgnoreCase("no")) {
+            debug = false;
+        }
+        else {
+            cs.sendMessage("Ожидается аргумент yes или no!");
+            return true;
+        }
+
+        cs.sendMessage("Проверяем перевод " + type.getName() + "..");
+
+        {
+            List<Material> failed = new ArrayList<>();
+            for (Material mat : Material.values()) {
+                String name = LangHelper.getInstance().getAbstractTranslateManager().getItemName(new ItemStack(mat, 1), type);
+                if (name == null) {
+                    failed.add(mat);
+                }
+
+                if (debug) {
+                    cs.sendMessage(mat + " == " + name);
+                }
+            }
+
+            cs.sendMessage((failed.isEmpty() ? "Все предметы присутствует в переводе." : "Следующие предметы не переведены: " + failed.toString()));
+        }
+        {
+            List<EntityType> failed = new ArrayList<>();
+            for (EntityType en : EntityType.values()) {
+                if (en == EntityType.UNKNOWN) {
+                    continue;
+                }
+                String name = LangHelper.getInstance().getAbstractTranslateManager().getEntityName(en, type);
+                if (name == null) {
+                    failed.add(en);
+                }
+
+                if (debug) {
+                    cs.sendMessage(en + " == " + name);
+                }
+            }
+
+            cs.sendMessage((failed.isEmpty() ? "Все сущности присутствует в переводе." : "Следующие сущности не переведены: " + failed.toString()));
+        }
+        {
+            List<Enchantment> failed = new ArrayList<>();
+            for (Enchantment en : Enchantment.values()) {
+                String name = LangHelper.getInstance().getAbstractTranslateManager().getEnchantName(en, type);
+                if (name == null) {
+                    failed.add(en);
+                }
+
+                if (debug) {
+                    cs.sendMessage(en + " == " + name);
+                }
+            }
+
+            cs.sendMessage((failed.isEmpty() ? "Все зачарования присутствует в переводе." : "Следующие зачарования не переведены: " + failed.toString()));
+        }
+        {
+            List<Integer> failed = new ArrayList<>();
+            for (int i = 1; i <= 10; i++) {
+                String name = LangHelper.getInstance().getAbstractTranslateManager().getEnchantLevelName(i, type);
+                if (name == null) {
+                    failed.add(i);
+                }
+
+                if (debug) {
+                    cs.sendMessage(i + " == " + name);
+                }
+            }
+
+            cs.sendMessage((failed.isEmpty() ? "Все уровни зачарования присутствует в переводе." : "Следующие уровни зачарования не переведены: " + failed.toString()));
+        }
+        {
+            List<PotionEffectType> failed = new ArrayList<>();
+            for (PotionEffectType pet : PotionEffectType.values()) {
+                String name = LangHelper.getInstance().getAbstractTranslateManager().getPotionEffectName(pet, type);
+                if (name == null) {
+                    failed.add(pet);
+                }
+
+                if (debug) {
+                    cs.sendMessage(pet + " == " + name);
+                }
+            }
+
+            cs.sendMessage((failed.isEmpty() ? "Все эффекты зелий присутствует в переводе." : "Следующие эффекты зелий не переведены: " + failed.toString()));
+        }
+        {
+            List<Biome> failed = new ArrayList<>();
+            for (Biome b : Biome.values()) {
+                String name = LangHelper.getInstance().getAbstractTranslateManager().getBiomeName(b, type);
+                if (name == null) {
+                    failed.add(b);
+                }
+
+                if (debug) {
+                    cs.sendMessage(b + " == " + name);
+                }
+            }
+
+            cs.sendMessage((failed.isEmpty() ? "Все биомы присутствует в переводе." : "Следующие биомы не переведены: " + failed.toString()));
+        }
+
 
         return true;
     }

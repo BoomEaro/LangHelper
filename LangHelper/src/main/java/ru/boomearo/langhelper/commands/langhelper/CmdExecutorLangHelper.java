@@ -38,7 +38,7 @@ public class CmdExecutorLangHelper extends AbstractExecutor {
         if (args.length == 1) {
             List<String> matches = new ArrayList<>();
             String search = args[0].toLowerCase();
-            for (String se : Arrays.asList("reload", "testitem", "testentity", "testenchant", "testenchantlevel", "testpotioneffect", "testbiome")) {
+            for (String se : Arrays.asList("reload", "testitem", "testentity", "testenchant", "testenchantlevel", "testpotioneffect", "testbiome", "testall")) {
                 if (se.toLowerCase().startsWith(search)) {
                     matches.add(se);
                 }
@@ -51,7 +51,8 @@ public class CmdExecutorLangHelper extends AbstractExecutor {
                     args[0].equalsIgnoreCase("testenchant") ||
                     args[0].equalsIgnoreCase("testenchantlevel") ||
                     args[0].equalsIgnoreCase("testpotioneffect") ||
-                    args[0].equalsIgnoreCase("testbiome")) {
+                    args[0].equalsIgnoreCase("testbiome") ||
+                    args[0].equalsIgnoreCase("testall")) {
 
                 List<String> matches = new ArrayList<>();
                 String search = args[1].toLowerCase();
