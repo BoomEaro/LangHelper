@@ -94,6 +94,10 @@ public class CmdExecutorLangHelper extends AbstractExecutor {
                     List<String> matches = new ArrayList<>();
                     String search = args[2].toLowerCase();
                     for (PotionEffectType pet : PotionEffectType.values()) {
+                        //Опять же, это же бред.
+                        if (pet == null) {
+                            continue;
+                        }
                         if (pet.getName().toLowerCase().startsWith(search)) {
                             matches.add(pet.getName());
                         }
