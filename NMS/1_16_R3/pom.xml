@@ -4,16 +4,17 @@
         xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
 
+    <artifactId>1_16_R3</artifactId>
+    <version>1.0</version>
+    <name>1_16_R3</name>
+    <packaging>jar</packaging>
+
     <parent>
         <groupId>ru.boomearo</groupId>
         <artifactId>langhelper-parent</artifactId>
         <version>1.0</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
-
-    <artifactId>1_16_R3</artifactId>
-    <version>1.0</version>
-    <name>1_16_R3</name>
 
     <dependencies>
         <dependency>

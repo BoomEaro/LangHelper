@@ -8,6 +8,7 @@
     <groupId>ru.boomearo</groupId>
     <artifactId>langhelper</artifactId>
     <version>1.0</version>
+    <packaging>jar</packaging>
 
     <name>LangHelper</name>
 
