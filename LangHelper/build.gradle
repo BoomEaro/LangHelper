@@ -1,4 +1,7 @@
-version = '1.0'
+import org.apache.tools.ant.filters.*
+
+version = "1.0"
+group = "ru.boomearo"
 
 configurations {
 	extraLibs
@@ -21,6 +24,12 @@ dependencies {
 	extraLibs project(":NMS:1_15_R1")
 	extraLibs project(":NMS:1_16_R3")
 	extraLibs project(":NMS:1_17_R1")
+}
+
+processResources {
+	filter ReplaceTokens, tokens: [
+			"version": version
+	]
 }
 
 jar {
