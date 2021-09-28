@@ -3,6 +3,9 @@ package ru.boomearo.langhelper.versions;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentMap;
 
+/**
+ * Представляет целый перевод строк.
+ */
 public class Translate {
 
     private final LangType lang;
@@ -24,6 +27,5 @@ public class Translate {
     public Collection<String> getAllTranslate() {
         return this.tr.values();
     }
-
 
 }

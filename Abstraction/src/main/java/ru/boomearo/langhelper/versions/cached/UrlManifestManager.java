@@ -24,13 +24,13 @@ public class UrlManifestManager {
         //Получаем обьект MANIFEST который имеет список всех существующих версий игры
         JSONObject jsonManifest = JsonUtils.connectNormal(VERSION_MANIFEST_URL);
         if (jsonManifest == null) {
-            throw new LangParseException("Не удалось спарсить json обьект для MANIFEST");
+            throw new LangParseException("Не удалось спарсить json объект для MANIFEST");
         }
 
-        //Далее ниже все что мы делаем, это убеждаемся что он существует а потом извлекаем из него ссылку на ресурс этой версии
+        //Далее ниже все что мы делаем, это убеждаемся что он существует, а потом извлекаем из него ссылку на ресурс этой версии
         JSONArray versionArray = JsonUtils.getJsonArrayObject(jsonManifest.get("versions"));
         if (versionArray == null) {
-            throw new LangParseException("Не удалось спарсить json array обьект для MANIFEST");
+            throw new LangParseException("Не удалось спарсить json array объект для MANIFEST");
         }
 
         for (Object arrO : versionArray) {

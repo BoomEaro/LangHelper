@@ -13,6 +13,9 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+/**
+ * Абстракция, представляет версию игры со всеми видами переводов
+ */
 public abstract class AbstractTranslateManager {
 
     private final String version;
@@ -22,10 +25,16 @@ public abstract class AbstractTranslateManager {
         this.version = version;
     }
 
+    /**
+     * @return версия игры
+     */
     public String getVersion() {
         return this.version;
     }
 
+    /**
+     * Загружает языки из файла в менеджер, учитывая включенные языки.
+     */
     public void loadLanguages(File file, Collection<LangType> enabledLanguages) {
         ConcurrentMap<LangType, Translate> types = new ConcurrentHashMap<>();
         try {
@@ -92,10 +101,18 @@ public abstract class AbstractTranslateManager {
         this.types = types;
     }
 
+    /**
+     * @return перевод на основе типа языка
+     * @see Translate
+     */
     public Translate getTranslate(LangType type) {
         return this.types.get(type);
     }
 
+    /**
+     * @return переведенную строку, на основе ключа и типа языка
+     * @see Translate
+     */
     public String getTranslate(String name, LangType type) {
         Translate tr = this.types.get(type);
         if (tr != null) {
@@ -112,17 +129,38 @@ public abstract class AbstractTranslateManager {
         return this.types.keySet();
     }
 
+    /**
+     * @return перевод предмета. Может вернуть null если его нет.
+     */
     public abstract String getItemName(ItemStack item, LangType type);
 
+    /**
+     * @return перевод сущности. Может вернуть null если его нет.
+     */
     public abstract String getEntityName(EntityType entity, LangType type);
 
+    /**
+     * @return перевод зачарования. Может вернуть null если его нет.
+     */
     public abstract String getEnchantName(Enchantment enchant, LangType type);
 
+    /**
+     * @return перевод уровня зачарования. Может вернуть null если его нет.
+     */
     public abstract String getEnchantLevelName(int level, LangType type);
 
+    /**
+     * @return перевод типа эффекта. Может вернуть null если его нет.
+     */
     public abstract String getPotionEffectName(PotionEffectType effect, LangType type);
 
+    /**
+     * @return перевод биома. Может вернуть null если его нет.
+     */
     public abstract String getBiomeName(Biome biome, LangType type);
 
+    /**
+     * Парсер строк, использующий InputStream
+     */
     protected abstract ConcurrentMap<String, String> parseTranslate(InputStream stream);
 }

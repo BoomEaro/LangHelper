@@ -130,14 +130,16 @@ public class LangHelper extends JavaPlugin {
         this.enabledLanguages = Collections.unmodifiableList(tmpEnabledLanguages);
     }
 
-    // Метод проверяет и скачивает с серверов mojang нужный язык для нужной версии.
-    // Сам бы я не узнал как именно скачивать языки. Спасибо автору который реализовал утилиту: https://gist.github.com/Mystiflow/c2b8838688e3215bb5492041046e458e
+    /**
+     * Метод проверяет и скачивает с серверов mojang нужный язык для нужной версии.
+     * Сам бы я не узнал как именно скачивать языки. Спасибо автору который реализовал утилиту: https://gist.github.com/Mystiflow/c2b8838688e3215bb5492041046e458e
+     **/
     public void checkAndDownloadLanguages() throws LangParseException {
         File currentTranFolder = new File(this.getDataFolder(), "languages" + File.separator + this.version.getVersion() + File.separator);
 
         for (LangType lt : this.enabledLanguages) {
             //Убеждаемся что файл языка существует.
-            //Нам на самом деле не важно, пустой или модифицирован, главное что он есть.
+            //Нам на самом деле не важно, пустой или модифицирован, главное, что он есть.
             File langFile = new File(currentTranFolder, lt.name());
             if (langFile.exists()) {
                 continue;
@@ -171,6 +173,10 @@ public class LangHelper extends JavaPlugin {
         return this.version;
     }
 
+    /**
+     * @return перевод зачарования. Если перевода не оказалось, возвращает перевод по умолчанию.
+     * @throws IllegalStateException если аргументы entity или language являются null
+     */
     public String getEnchantmentName(Enchantment entity, LangType language) {
         if (entity == null) {
             throw new IllegalArgumentException("entity является null!");
@@ -188,6 +194,10 @@ public class LangHelper extends JavaPlugin {
         return name;
     }
 
+    /**
+     * @return перевод предмета. Если перевода не оказалось, возвращает перевод по умолчанию.
+     * @throws IllegalStateException если аргументы item или language являются null
+     */
     public String getItemTranslate(ItemStack item, LangType language) {
         if (item == null) {
             throw new IllegalArgumentException("item является null!");
@@ -206,6 +216,10 @@ public class LangHelper extends JavaPlugin {
         return name;
     }
 
+    /**
+     * @return перевод уровня зачарования. Обычно во всех переводах одинаковый. Если перевода не оказалось, возвращает перевод по умолчанию.
+     * @throws IllegalStateException если аргумент language являются null
+     */
     public String getEnchantLevelTranslate(int level, LangType language) {
         if (language == null) {
             throw new IllegalArgumentException("language является null!");
@@ -220,6 +234,10 @@ public class LangHelper extends JavaPlugin {
         return name;
     }
 
+    /**
+     * @return перевод сущности. Если перевода не оказалось, возвращает перевод по умолчанию.
+     * @throws IllegalStateException если аргументы entity или language являются null
+     */
     public String getEntityTranslate(EntityType entity, LangType language) {
         if (entity == null) {
             throw new IllegalArgumentException("entity является null!");
@@ -237,6 +255,10 @@ public class LangHelper extends JavaPlugin {
         return name;
     }
 
+    /**
+     * @return перевод типа зелья. Если перевода не оказалось, возвращает перевод по умолчанию.
+     * @throws IllegalStateException если аргументы effect или language являются null
+     */
     public String getPotionEffectTranslate(PotionEffectType effect, LangType language) {
         if (effect == null) {
             throw new IllegalArgumentException("effect является null!");
@@ -254,6 +276,10 @@ public class LangHelper extends JavaPlugin {
         return name;
     }
 
+    /**
+     * @return перевод биома. Если перевода не оказалось, возвращает перевод по умолчанию.
+     * @throws IllegalStateException если аргументы biome или language являются null
+     */
     public String getBiomeTranslate(Biome biome, LangType language) {
         if (biome == null) {
             throw new IllegalArgumentException("biome является null!");
@@ -284,7 +310,7 @@ public class LangHelper extends JavaPlugin {
                             newInstance();
         }
         catch (Exception e) {
-            //Вызываем новое но свое
+            //Вызываем новое, но свое
             throw new LangVersionException(e.getMessage());
         }
     }

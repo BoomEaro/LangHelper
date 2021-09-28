@@ -35,15 +35,15 @@ public class CachedVersionData {
 
         ConcurrentMap<String, String> tmp = new ConcurrentHashMap<>();
 
-        //Получив успешно обьект ресурсов этой версии, ищем далее в ней требуемый язык
+        //Получив успешно объект ресурсов этой версии, ищем далее в ней требуемый язык
         JSONObject versionJson = JsonUtils.connectNormal(this.url);
         if (versionJson == null) {
-            throw new LangParseException("Не удалось спарсить json обьект по ссылке '" + this.url + "'");
+            throw new LangParseException("Не удалось спарсить json объект по ссылке '" + this.url + "'");
         }
 
         JSONObject jsonAssetIndex = JsonUtils.getJsonObject(versionJson.get("assetIndex"));
         if (jsonAssetIndex == null) {
-            throw new LangParseException("Не удалось спарсить json обьект assetIndex");
+            throw new LangParseException("Не удалось спарсить json объект assetIndex");
         }
 
         String langUrl = JsonUtils.getStringObject(jsonAssetIndex.get("url"));
@@ -53,12 +53,12 @@ public class CachedVersionData {
 
         JSONObject jsonLang = JsonUtils.connectNormal(langUrl);
         if (jsonLang == null) {
-            throw new LangParseException("Не удалось спарсить json обьект по ссылке '" + langUrl + "'");
+            throw new LangParseException("Не удалось спарсить json объект по ссылке '" + langUrl + "'");
         }
 
         JSONObject langObjects = JsonUtils.getJsonObject(jsonLang.get("objects"));
         if (langObjects == null) {
-            throw new LangParseException("Не удалось найти objects обьект");
+            throw new LangParseException("Не удалось найти objects объект");
         }
 
         String languagePattern = "minecraft/lang/";
@@ -73,7 +73,7 @@ public class CachedVersionData {
                 //Вырезаем из имени этого ресурса ненужное. А именно расширение и путь
                 String langName = lang.substring(languagePattern.length()).replace(".json", "").replace(".lang", "");
 
-                //Получаем у этого ресурса хэш а затем добавляем в кэш
+                //Получаем у этого ресурса хэш, а затем добавляем в кэш
                 String hash = JsonUtils.getStringObject(entry.getValue().get("hash"));
                 if (hash == null) {
                     continue;

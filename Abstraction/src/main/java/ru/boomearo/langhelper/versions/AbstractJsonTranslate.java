@@ -16,6 +16,9 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+/**
+ * Более продвинутая абстракция менеджера перевода, использующая парсинг json
+ */
 public abstract class AbstractJsonTranslate extends AbstractTranslateManager {
 
     public AbstractJsonTranslate(String version) {
