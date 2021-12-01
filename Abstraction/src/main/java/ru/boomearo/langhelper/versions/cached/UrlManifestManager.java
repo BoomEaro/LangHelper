@@ -21,7 +21,7 @@ public class UrlManifestManager {
         }
         ConcurrentMap<String, CachedVersionData> tmp = new ConcurrentHashMap<>();
 
-        //Получаем обьект MANIFEST который имеет список всех существующих версий игры
+        //Получаем объект MANIFEST который имеет список всех существующих версий игры
         JSONObject jsonManifest = JsonUtils.connectNormal(VERSION_MANIFEST_URL);
         if (jsonManifest == null) {
             throw new LangParseException("Не удалось спарсить json объект для MANIFEST");

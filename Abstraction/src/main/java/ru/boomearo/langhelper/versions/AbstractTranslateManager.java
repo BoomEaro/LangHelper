@@ -33,7 +33,7 @@ public abstract class AbstractTranslateManager {
     }
 
     /**
-     * Загружает языки из файла в менеджер, учитывая включенные языки.
+     * Загружает языки из файла в менеджере, учитывая включенные языки.
      */
     public void loadLanguages(File file, Collection<LangType> enabledLanguages) {
         ConcurrentMap<LangType, Translate> types = new ConcurrentHashMap<>();

@@ -4,13 +4,13 @@ import org.bukkit.block.Biome;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 
 import net.minecraft.server.v1_13_R2.Item;
 import net.minecraft.server.v1_13_R2.ItemLingeringPotion;
 import net.minecraft.server.v1_13_R2.ItemPotion;
 import net.minecraft.server.v1_13_R2.ItemSplashPotion;
 import net.minecraft.server.v1_13_R2.PotionUtil;
-import org.bukkit.potion.PotionEffectType;
 
 public class Translate1_13_R2 extends AbstractJsonTranslate {
 

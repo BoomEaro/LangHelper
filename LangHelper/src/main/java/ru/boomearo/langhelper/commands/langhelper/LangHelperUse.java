@@ -7,8 +7,8 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-
 import org.bukkit.potion.PotionEffectType;
+
 import ru.boomearo.langhelper.LangHelper;
 import ru.boomearo.langhelper.commands.CmdInfo;
 import ru.boomearo.langhelper.versions.LangType;
@@ -213,7 +213,7 @@ public class LangHelperUse {
 
     @CmdInfo(name = "testitem", description = "Протестировать название указанного предмета.", usage = "/langhelper testitem <язык>", permission = "langhelper.admin")
     public boolean testitem(CommandSender cs, String[] args) {
-        if (!(cs instanceof Player)) {
+        if (!(cs instanceof Player pl)) {
             cs.sendMessage("Данная команда только для игроков.");
             return true;
         }
@@ -231,8 +231,6 @@ public class LangHelperUse {
             cs.sendMessage("Не верный тип языка!");
             return true;
         }
-
-        Player pl = (Player) cs;
 
         ItemStack item = pl.getInventory().getItemInMainHand();
         if (item == null) {

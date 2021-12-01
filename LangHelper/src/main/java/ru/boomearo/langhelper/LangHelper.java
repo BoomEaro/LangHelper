@@ -175,7 +175,7 @@ public class LangHelper extends JavaPlugin {
     }
 
     /**
-     * @return перевод зачарования. Если перевода не оказалось, возвращает перевод по умолчанию.
+     * @return Перевод зачарования. Если перевода не оказалось, возвращает перевод по умолчанию.
      * @throws IllegalStateException если аргументы entity или language являются null
      */
     public String getEnchantmentName(Enchantment entity, LangType language) {
@@ -196,7 +196,7 @@ public class LangHelper extends JavaPlugin {
     }
 
     /**
-     * @return перевод предмета. Если перевода не оказалось, возвращает перевод по умолчанию.
+     * @return Перевод предмета. Если перевода не оказалось, возвращает перевод по умолчанию.
      * @throws IllegalStateException если аргументы item или language являются null
      */
     public String getItemTranslate(ItemStack item, LangType language) {
@@ -218,7 +218,7 @@ public class LangHelper extends JavaPlugin {
     }
 
     /**
-     * @return перевод уровня зачарования. Обычно во всех переводах одинаковый. Если перевода не оказалось, возвращает перевод по умолчанию.
+     * @return Перевод уровня зачарования. Обычно во всех переводах одинаковый. Если перевода не оказалось, возвращает перевод по умолчанию.
      * @throws IllegalStateException если аргумент language являются null
      */
     public String getEnchantLevelTranslate(int level, LangType language) {
@@ -236,7 +236,7 @@ public class LangHelper extends JavaPlugin {
     }
 
     /**
-     * @return перевод сущности. Если перевода не оказалось, возвращает перевод по умолчанию.
+     * @return Перевод сущности. Если перевода не оказалось, возвращает перевод по умолчанию.
      * @throws IllegalStateException если аргументы entity или language являются null
      */
     public String getEntityTranslate(EntityType entity, LangType language) {
@@ -257,7 +257,7 @@ public class LangHelper extends JavaPlugin {
     }
 
     /**
-     * @return перевод типа зелья. Если перевода не оказалось, возвращает перевод по умолчанию.
+     * @return Перевод типа зелья. Если перевода не оказалось, возвращает перевод по умолчанию.
      * @throws IllegalStateException если аргументы effect или language являются null
      */
     public String getPotionEffectTranslate(PotionEffectType effect, LangType language) {
@@ -278,7 +278,7 @@ public class LangHelper extends JavaPlugin {
     }
 
     /**
-     * @return перевод биома. Если перевода не оказалось, возвращает перевод по умолчанию.
+     * @return Перевод биома. Если перевода не оказалось, возвращает перевод по умолчанию.
      * @throws IllegalStateException если аргументы biome или language являются null
      */
     public String getBiomeTranslate(Biome biome, LangType language) {

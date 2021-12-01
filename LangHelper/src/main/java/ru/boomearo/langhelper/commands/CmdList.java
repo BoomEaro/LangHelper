@@ -11,7 +11,7 @@ public class CmdList {
 
     private static final String sep = "=============================================";
 
-    private final Map<String, Cmd> cmd = new HashMap<String, Cmd>();
+    private final Map<String, Cmd> cmd = new HashMap<>();
 
     private String prefix;
     private String suffix;

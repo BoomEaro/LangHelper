@@ -7,12 +7,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.block.Biome;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
+
+import net.minecraft.server.v1_12_R1.*;
 
 public class Translate1_12_R1 extends AbstractTranslateManager {
 

@@ -10,9 +10,9 @@ import org.bukkit.command.TabCompleter;
 public abstract class AbstractExecutor implements CommandExecutor, TabCompleter {
     private CmdList cmds = null;
 
-    private Object cmdMain = null;
+    private final Object cmdMain;
 
-    //Мне нужно получить обьект класса с которого я беру методы
+    //Мне нужно получить объект класса с которого я беру методы
     public AbstractExecutor(Object cmd) {
         this.cmdMain = cmd;
         registerCmd();
