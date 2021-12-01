@@ -4,16 +4,24 @@ apply plugin: "eclipse"
 subprojects {
     apply plugin: "java"
 
-    compileJava {options.encoding = "UTF-8"}
-    
+    compileJava { options.encoding = "UTF-8" }
+
     tasks.withType(JavaCompile) {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     repositories {
         maven {
-           url "https://repo.codemc.org/repository/nms/"
+            name = 'codemc-repo'
+            url "https://repo.codemc.org/repository/nms/"
         }
+        maven {
+            name = 'minecraft-repo'
+            url = 'https://libraries.minecraft.net/'
+        }
+        mavenCentral()
     }
+
+
 }

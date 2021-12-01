@@ -42,7 +42,8 @@ public class LangHelper extends JavaPlugin {
             Translate1_14_R1.class,
             Translate1_15_R1.class,
             Translate1_16_R3.class,
-            Translate1_17_R1.class
+            Translate1_17_R1.class,
+            Translate1_18_R1.class
     );
 
     private static final String TRANSLATION_FILE_URL = "http://resources.download.minecraft.net/%s/%s";

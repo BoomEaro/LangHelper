@@ -42,7 +42,7 @@ public class Translate1_14_R1 extends AbstractJsonTranslate {
                 name = "item.minecraft." + PotionUtil.d(itemStack).b("potion.effect.");
             }
             else {
-                name = itemStack.getItem().getName();
+                name = i.getName();
             }
 
             return getTranslate(name, type);

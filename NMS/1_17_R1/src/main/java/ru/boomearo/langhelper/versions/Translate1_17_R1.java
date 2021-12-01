@@ -5,13 +5,13 @@ import org.bukkit.craftbukkit.v1_17_R1.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemLingeringPotion;
 import net.minecraft.world.item.ItemPotion;
 import net.minecraft.world.item.ItemSplashPotion;
 import net.minecraft.world.item.alchemy.PotionUtil;
-import org.bukkit.potion.PotionEffectType;
 
 public class Translate1_17_R1 extends AbstractJsonTranslate {
 
@@ -43,7 +43,7 @@ public class Translate1_17_R1 extends AbstractJsonTranslate {
                 name = "item.minecraft." + PotionUtil.d(itemStack).b("potion.effect.");
             }
             else {
-                name = itemStack.getItem().getName();
+                name = i.getName();
             }
 
             return getTranslate(name, type);

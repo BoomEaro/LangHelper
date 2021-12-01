@@ -51,7 +51,7 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
                 name = PotionUtil.d(itemStack).b("tipped_arrow.effect.");
             }
             else {
-                name = itemStack.getItem().a(itemStack) + ".name";
+                name = i.a(itemStack) + ".name";
             }
 
             return getTranslate(name, type);

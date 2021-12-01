@@ -1,21 +1,22 @@
 package ru.boomearo.langhelper.versions;
 
 import org.bukkit.block.Biome;
+import org.bukkit.craftbukkit.v1_18_R1.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
-
-import net.minecraft.server.v1_13_R2.Item;
-import net.minecraft.server.v1_13_R2.ItemLingeringPotion;
-import net.minecraft.server.v1_13_R2.ItemPotion;
-import net.minecraft.server.v1_13_R2.ItemSplashPotion;
-import net.minecraft.server.v1_13_R2.PotionUtil;
 import org.bukkit.potion.PotionEffectType;
 
-public class Translate1_13_R2 extends AbstractJsonTranslate {
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemLingeringPotion;
+import net.minecraft.world.item.ItemPotion;
+import net.minecraft.world.item.ItemSplashPotion;
+import net.minecraft.world.item.alchemy.PotionUtil;
 
-    public Translate1_13_R2() {
-        super("1.13.2");
+public class Translate1_18_R1 extends AbstractJsonTranslate {
+
+    public Translate1_18_R1() {
+        super("1.18");
     }
 
     @Override
@@ -28,10 +29,10 @@ public class Translate1_13_R2 extends AbstractJsonTranslate {
         }
 
         try {
-            net.minecraft.server.v1_13_R2.ItemStack itemStack = org.bukkit.craftbukkit.v1_13_R2.inventory.CraftItemStack.asNMSCopy(item);
+            net.minecraft.world.item.ItemStack itemStack = CraftItemStack.asNMSCopy(item);
 
             String name;
-            Item i = itemStack.getItem();
+            Item i = itemStack.c();
             if (i instanceof ItemSplashPotion) {
                 name = "item.minecraft." + PotionUtil.d(itemStack).b("splash_potion.effect.");
             }
@@ -42,7 +43,7 @@ public class Translate1_13_R2 extends AbstractJsonTranslate {
                 name = "item.minecraft." + PotionUtil.d(itemStack).b("potion.effect.");
             }
             else {
-                name = i.getName();
+                name = i.a();
             }
 
             return getTranslate(name, type);
@@ -62,7 +63,7 @@ public class Translate1_13_R2 extends AbstractJsonTranslate {
             throw new IllegalArgumentException("type является null!");
         }
 
-        return getTranslate("entity.minecraft." + entity.getName(), type);
+        return getTranslate("entity.minecraft." + entity.getKey().getKey(), type);
     }
 
     @Override
@@ -105,7 +106,8 @@ public class Translate1_13_R2 extends AbstractJsonTranslate {
             case "slow": effectName = "slowness"; break;
             case "increase_damage": effectName = "strength"; break;
         }
-        return getTranslate("effect.minecraft." + effectName, type);
+        String name = "effect.minecraft." + effectName;
+        return getTranslate(name, type);
     }
 
     @Override
