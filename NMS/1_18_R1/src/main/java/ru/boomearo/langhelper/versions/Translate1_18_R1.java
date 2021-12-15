@@ -16,7 +16,7 @@ import net.minecraft.world.item.alchemy.PotionUtil;
 public class Translate1_18_R1 extends AbstractJsonTranslate {
 
     public Translate1_18_R1() {
-        super("1.18");
+        super("1.18.1");
     }
 
     @Override
