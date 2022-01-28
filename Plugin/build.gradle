@@ -1,0 +1,22 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+version = "1.0"
+group = "ru.boomearo"
+
+dependencies {
+    compileOnly "org.spigotmc:spigot:1.12.2-R0.1-SNAPSHOT"
+    implementation project(":Common")
+    implementation project(":NMS:1_12_R1")
+    implementation project(":NMS:1_13_R2")
+    implementation project(":NMS:1_14_R1")
+    implementation project(":NMS:1_15_R1")
+    implementation project(":NMS:1_16_R3")
+    implementation project(":NMS:1_17_R1")
+    implementation project(":NMS:1_18_R1")
+}
+
+processResources {
+    filter ReplaceTokens, tokens: [
+            "version": version
+    ]
+}

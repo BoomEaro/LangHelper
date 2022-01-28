@@ -1,5 +1,3 @@
-import org.apache.tools.ant.filters.*
-
 version = "1.0"
 group = "ru.boomearo"
 
@@ -8,8 +6,8 @@ configurations {
 }
 
 dependencies {
-    compileOnly "org.spigotmc:spigot:1.12.2-R0.1-SNAPSHOT"
-    implementation project(":Abstraction")
+    implementation project(":Plugin")
+    implementation project(":Common")
     implementation project(":NMS:1_12_R1")
     implementation project(":NMS:1_13_R2")
     implementation project(":NMS:1_14_R1")
@@ -17,8 +15,9 @@ dependencies {
     implementation project(":NMS:1_16_R3")
     implementation project(":NMS:1_17_R1")
     implementation project(":NMS:1_18_R1")
-	
-    extraLibs project(":Abstraction")
+
+    extraLibs project(":Plugin")
+    extraLibs project(":Common")
     extraLibs project(":NMS:1_12_R1")
     extraLibs project(":NMS:1_13_R2")
     extraLibs project(":NMS:1_14_R1")
@@ -26,12 +25,6 @@ dependencies {
     extraLibs project(":NMS:1_16_R3")
     extraLibs project(":NMS:1_17_R1")
 	extraLibs project(":NMS:1_18_R1")
-}
-
-processResources {
-    filter ReplaceTokens, tokens: [
-            "version": version
-    ]
 }
 
 jar {

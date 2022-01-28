@@ -1,6 +1,6 @@
 version = '1.0'
 
 dependencies {
-    compileOnly project(":Abstraction")
+    compileOnly project(":Common")
     compileOnly 'org.spigotmc:spigot:1.15.2-R0.1-SNAPSHOT'
 }
