@@ -45,7 +45,7 @@ public class JsonUtils {
             BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             String line;
             StringBuilder response = new StringBuilder();
-            while((line = rd.readLine()) != null){
+            while ((line = rd.readLine()) != null) {
                 response.append(line);
                 response.append('\r');
             }

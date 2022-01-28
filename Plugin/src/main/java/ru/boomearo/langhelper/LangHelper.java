@@ -307,8 +307,8 @@ public class LangHelper extends JavaPlugin {
             return versions.stream()
                     .filter(version -> version.getSimpleName().substring(9).equals(this.serverVersion))
                     .findFirst().orElseThrow(() -> new LangException("Плагин не поддерживает данную версию сервера!")).
-                            getConstructor().
-                            newInstance();
+                    getConstructor().
+                    newInstance();
         }
         catch (Exception e) {
             //Вызываем новое, но свое

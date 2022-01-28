@@ -7,7 +7,6 @@ public enum LangType {
 
     //Только английский язык является не скачиваемым, поэтому переопределяем ему этот метод
     EN_US("en_us") {
-
         @Override
         public boolean isExternal() {
             return false;
@@ -149,6 +148,7 @@ public enum LangType {
     /**
      * Обозначает, является ли язык скачиваемым.
      * По умолчанию все языки скачиваемые.
+     *
      * @return является ли язык скачиваемым
      */
     public boolean isExternal() {

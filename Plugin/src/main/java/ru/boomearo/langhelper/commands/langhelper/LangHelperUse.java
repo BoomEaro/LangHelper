@@ -51,7 +51,8 @@ public class LangHelperUse {
         try {
             type = LangType.valueOf(args[0].toUpperCase());
         }
-        catch (Exception ignored) {}
+        catch (Exception ignored) {
+        }
 
         if (type == null) {
             cs.sendMessage("Не верный тип языка!");
@@ -198,7 +199,7 @@ public class LangHelperUse {
                         cs.sendMessage(b + " == " + name);
                     }
                 }
-                catch (Exception e ) {
+                catch (Exception e) {
                     e.printStackTrace();
                     cs.sendMessage("Ошибка при получении биома " + b);
                 }
@@ -225,7 +226,8 @@ public class LangHelperUse {
         try {
             type = LangType.valueOf(args[0].toUpperCase());
         }
-        catch (Exception ignored) {}
+        catch (Exception ignored) {
+        }
 
         if (type == null) {
             cs.sendMessage("Не верный тип языка!");
@@ -253,7 +255,8 @@ public class LangHelperUse {
         try {
             laType = LangType.valueOf(args[0].toUpperCase());
         }
-        catch (Exception ignored) {}
+        catch (Exception ignored) {
+        }
 
         if (laType == null) {
             cs.sendMessage("Не верный тип языка!");
@@ -285,7 +288,8 @@ public class LangHelperUse {
         try {
             laType = LangType.valueOf(args[0].toUpperCase());
         }
-        catch (Exception ignored) {}
+        catch (Exception ignored) {
+        }
 
         if (laType == null) {
             cs.sendMessage("Не верный тип языка!");
@@ -317,7 +321,8 @@ public class LangHelperUse {
         try {
             laType = LangType.valueOf(args[0].toUpperCase());
         }
-        catch (Exception ignored) {}
+        catch (Exception ignored) {
+        }
 
         if (laType == null) {
             cs.sendMessage("Не верный тип языка!");
@@ -349,7 +354,8 @@ public class LangHelperUse {
         try {
             laType = LangType.valueOf(args[0].toUpperCase());
         }
-        catch (Exception ignored) {}
+        catch (Exception ignored) {
+        }
 
         if (laType == null) {
             cs.sendMessage("Не верный тип языка!");
@@ -381,7 +387,8 @@ public class LangHelperUse {
         try {
             laType = LangType.valueOf(args[0].toUpperCase());
         }
-        catch (Exception ignored) {}
+        catch (Exception ignored) {
+        }
 
         if (laType == null) {
             cs.sendMessage("Не верный тип языка!");

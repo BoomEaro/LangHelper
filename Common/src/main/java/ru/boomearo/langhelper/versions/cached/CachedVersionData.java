@@ -94,7 +94,7 @@ public class CachedVersionData {
 
     @Override
     public String toString() {
-        return "{V:" + this.version + " URL:" +  this.url + " data:" + (this.languagesHash != null ? this.languagesHash.toString() : "null") + "}";
+        return "{V:" + this.version + " URL:" + this.url + " data:" + (this.languagesHash != null ? this.languagesHash.toString() : "null") + "}";
     }
 
 }

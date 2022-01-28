@@ -95,15 +95,33 @@ public class Translate1_16_R3 extends AbstractJsonTranslate {
         }
         String effectName = effect.getName().toLowerCase();
         switch (effectName) {
-            case "fast_digging": effectName = "haste"; break;
-            case "harm": effectName = "instant_damage"; break;
-            case "heal": effectName = "instant_health"; break;
-            case "jump": effectName = "jump_boost"; break;
-            case "slow_digging": effectName = "mining_fatigue"; break;
-            case "confusion": effectName = "nausea"; break;
-            case "damage_resistance": effectName = "resistance"; break;
-            case "slow": effectName = "slowness"; break;
-            case "increase_damage": effectName = "strength"; break;
+            case "fast_digging":
+                effectName = "haste";
+                break;
+            case "harm":
+                effectName = "instant_damage";
+                break;
+            case "heal":
+                effectName = "instant_health";
+                break;
+            case "jump":
+                effectName = "jump_boost";
+                break;
+            case "slow_digging":
+                effectName = "mining_fatigue";
+                break;
+            case "confusion":
+                effectName = "nausea";
+                break;
+            case "damage_resistance":
+                effectName = "resistance";
+                break;
+            case "slow":
+                effectName = "slowness";
+                break;
+            case "increase_damage":
+                effectName = "strength";
+                break;
         }
         String name = "effect.minecraft." + effectName;
         return getTranslate(name, type);
