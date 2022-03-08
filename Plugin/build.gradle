@@ -12,7 +12,7 @@ dependencies {
     implementation project(":NMS:1_15_R1")
     implementation project(":NMS:1_16_R3")
     implementation project(":NMS:1_17_R1")
-    implementation project(":NMS:1_18_R1")
+    implementation project(":NMS:1_18_R2")
 }
 
 processResources {

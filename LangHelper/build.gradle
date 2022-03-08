@@ -14,7 +14,7 @@ dependencies {
     implementation project(":NMS:1_15_R1")
     implementation project(":NMS:1_16_R3")
     implementation project(":NMS:1_17_R1")
-    implementation project(":NMS:1_18_R1")
+    implementation project(":NMS:1_18_R2")
 
     extraLibs project(":Plugin")
     extraLibs project(":Common")
@@ -24,7 +24,7 @@ dependencies {
     extraLibs project(":NMS:1_15_R1")
     extraLibs project(":NMS:1_16_R3")
     extraLibs project(":NMS:1_17_R1")
-    extraLibs project(":NMS:1_18_R1")
+    extraLibs project(":NMS:1_18_R2")
 }
 
 jar {

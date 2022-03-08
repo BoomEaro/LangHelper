@@ -1,6 +1,7 @@
 package ru.boomearo.langhelper;
 
-import java.io.*;
+import java.io.File;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,7 +21,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
 
 import ru.boomearo.langhelper.commands.langhelper.CmdExecutorLangHelper;
-import ru.boomearo.langhelper.versions.*;
+import ru.boomearo.langhelper.versions.AbstractTranslateManager;
+import ru.boomearo.langhelper.versions.LangType;
+import ru.boomearo.langhelper.versions.Translate;
+import ru.boomearo.langhelper.versions.Translate1_12_R1;
+import ru.boomearo.langhelper.versions.Translate1_13_R2;
+import ru.boomearo.langhelper.versions.Translate1_14_R1;
+import ru.boomearo.langhelper.versions.Translate1_15_R1;
+import ru.boomearo.langhelper.versions.Translate1_16_R3;
+import ru.boomearo.langhelper.versions.Translate1_17_R1;
+import ru.boomearo.langhelper.versions.Translate1_18_R2;
 import ru.boomearo.langhelper.versions.cached.UrlManifestManager;
 import ru.boomearo.langhelper.versions.exceptions.LangException;
 import ru.boomearo.langhelper.versions.exceptions.LangParseException;
@@ -43,7 +53,7 @@ public class LangHelper extends JavaPlugin {
             Translate1_15_R1.class,
             Translate1_16_R3.class,
             Translate1_17_R1.class,
-            Translate1_18_R1.class
+            Translate1_18_R2.class
     );
 
     private static final String TRANSLATION_FILE_URL = "http://resources.download.minecraft.net/%s/%s";
