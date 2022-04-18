@@ -36,23 +36,23 @@ publishing {
         maven(MavenPublication) {
             from components.java
         }
+
     }
 }
-
 configurations {
     extraLibs
 }
 
 dependencies {
-    implementation project(":Plugin")
-    implementation project(":Common")
-    implementation project(":NMS:1_12_R1")
-    implementation project(":NMS:1_13_R2")
-    implementation project(":NMS:1_14_R1")
-    implementation project(":NMS:1_15_R1")
-    implementation project(":NMS:1_16_R3")
-    implementation project(":NMS:1_17_R1")
-    implementation project(":NMS:1_18_R2")
+    compileOnly project(":Plugin")
+    compileOnly project(":Common")
+    compileOnly project(":NMS:1_12_R1")
+    compileOnly project(":NMS:1_13_R2")
+    compileOnly project(":NMS:1_14_R1")
+    compileOnly project(":NMS:1_15_R1")
+    compileOnly project(":NMS:1_16_R3")
+    compileOnly project(":NMS:1_17_R1")
+    compileOnly project(":NMS:1_18_R2")
 
     extraLibs project(":Plugin")
     extraLibs project(":Common")
