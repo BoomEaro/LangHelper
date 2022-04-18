@@ -1,11 +1,11 @@
-apply plugin: "idea"
-apply plugin: "eclipse"
-apply plugin: 'maven-publish'
-
 subprojects {
     apply plugin: "java"
+    apply plugin: "idea"
+    apply plugin: "eclipse"
 
-    compileJava { options.encoding = "UTF-8" }
+    compileJava {
+        options.encoding = "UTF-8"
+    }
 
     tasks.withType(JavaCompile) {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -23,6 +23,5 @@ subprojects {
         }
         mavenCentral()
     }
-
 
 }

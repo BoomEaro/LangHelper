@@ -1,5 +1,15 @@
-version = "1.0"
-group = "ru.boomearo"
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
+}
 
 configurations {
     extraLibs
