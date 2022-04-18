@@ -32,6 +32,6 @@ System.out.println("Биом: " + translateBiome);
 ```
 gradle build
 ```
-Скомпилированный плагин будет находится в директории 'Корневая_директория_проекта'/LangHelper/build/libs/LangHelper.jar
+Скомпилированный плагин будет находится в директории 'Корневая_директория_проекта'/build/libs/LangHelper.jar
 
 
