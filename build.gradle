@@ -8,6 +8,9 @@ subprojects {
     apply plugin: "idea"
     apply plugin: "eclipse"
 
+    group = "ru.boomearo"
+    version = "1.1"
+
     compileJava {
         options.encoding = "UTF-8"
     }
