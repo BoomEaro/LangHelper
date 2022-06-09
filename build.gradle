@@ -56,6 +56,7 @@ dependencies {
     compileOnly project(":NMS:1_16_R3")
     compileOnly project(":NMS:1_17_R1")
     compileOnly project(":NMS:1_18_R2")
+	compileOnly project(":NMS:1_19_R1")
 
     extraLibs project(":Plugin")
     extraLibs project(":Common")
@@ -66,6 +67,7 @@ dependencies {
     extraLibs project(":NMS:1_16_R3")
     extraLibs project(":NMS:1_17_R1")
     extraLibs project(":NMS:1_18_R2")
+	extraLibs project(":NMS:1_19_R1")
 }
 
 jar {

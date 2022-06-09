@@ -31,6 +31,7 @@ import ru.boomearo.langhelper.versions.Translate1_15_R1;
 import ru.boomearo.langhelper.versions.Translate1_16_R3;
 import ru.boomearo.langhelper.versions.Translate1_17_R1;
 import ru.boomearo.langhelper.versions.Translate1_18_R2;
+import ru.boomearo.langhelper.versions.Translate1_19_R1;
 import ru.boomearo.langhelper.versions.cached.UrlManifestManager;
 import ru.boomearo.langhelper.versions.exceptions.LangException;
 import ru.boomearo.langhelper.versions.exceptions.LangParseException;
@@ -46,6 +47,7 @@ public class LangHelper extends JavaPlugin {
 
     private final String serverVersion = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3].substring(1);
 
+    //Через рефлексию как-нибудь сделать поиск всех версий автоматически
     private static final List<Class<? extends AbstractTranslateManager>> versions = Arrays.asList(
             Translate1_12_R1.class,
             Translate1_13_R2.class,
@@ -53,7 +55,8 @@ public class LangHelper extends JavaPlugin {
             Translate1_15_R1.class,
             Translate1_16_R3.class,
             Translate1_17_R1.class,
-            Translate1_18_R2.class
+            Translate1_18_R2.class,
+            Translate1_19_R1.class
     );
 
     private static final String TRANSLATION_FILE_URL = "http://resources.download.minecraft.net/%s/%s";
