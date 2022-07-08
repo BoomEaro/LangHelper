@@ -6,7 +6,30 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.Collection;
+
 public interface TranslateManager {
+
+    /**
+     * Получить все доступные языки с переведенными строками
+     * @return Язык с переведенными строками
+     */
+    Collection<TranslatedMessages> getAllTranslate();
+
+    /**
+     * Получить все переведенные строки языка указанного типа
+     * @param type Тип языка
+     * @return Все переведенные строки этого языка
+     */
+    TranslatedMessages getTranslate(LangType type);
+
+    /**
+     * Получить переведенную строку на основе ключа строки перевода и типа языка
+     * @param key Ключ строки перевода
+     * @param langType Тип языка
+     * @return Переведенная строка. Может вернуть null если перевода нет.
+     */
+    String getTranslate(String key, LangType langType);
 
     /**
      * Получить перевод предмета.

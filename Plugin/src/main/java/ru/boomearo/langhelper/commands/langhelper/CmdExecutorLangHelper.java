@@ -18,12 +18,12 @@ import ru.boomearo.langhelper.versions.LangType;
 
 public class CmdExecutorLangHelper extends AbstractExecutor {
 
-    private final DefaultTranslateManager defaultTranslateManagerж;
+    private final DefaultTranslateManager defaultTranslateManager;
     private static final List<String> empty = new ArrayList<>();
 
     public CmdExecutorLangHelper(DefaultTranslateManager defaultTranslateManager) {
         super(new LangHelperUse(defaultTranslateManager));
-        this.defaultTranslateManagerж = defaultTranslateManager;
+        this.defaultTranslateManager = defaultTranslateManager;
     }
 
     @Override
@@ -58,7 +58,7 @@ public class CmdExecutorLangHelper extends AbstractExecutor {
 
                 List<String> matches = new ArrayList<>();
                 String search = args[1].toLowerCase();
-                for (LangType lt : this.defaultTranslateManagerж.getAllTranslateLang()) {
+                for (LangType lt : this.defaultTranslateManager.getAllTranslateLang()) {
                     if (lt.getName().toLowerCase().startsWith(search)) {
                         matches.add(lt.getName());
                     }

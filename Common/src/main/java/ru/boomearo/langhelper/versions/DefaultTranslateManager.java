@@ -33,7 +33,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
     private final UrlManifestManager urlManifestManager = new UrlManifestManager();
     private final String version;
     private final JavaPlugin javaPlugin;
-    private ConcurrentMap<LangType, Translate> types;
+    private ConcurrentMap<LangType, TranslatedMessages> types;
 
     private List<LangType> enabledLanguages = new ArrayList<>();
 
@@ -55,7 +55,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
      * Загружает языки из файла в менеджере, учитывая включенные языки.
      */
     public void loadLanguages() {
-        ConcurrentMap<LangType, Translate> types = new ConcurrentHashMap<>();
+        ConcurrentMap<LangType, TranslatedMessages> types = new ConcurrentHashMap<>();
         try {
             ClassLoader classLoader = Bukkit.getServer().getClass().getClassLoader();
 
@@ -71,7 +71,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
 
             ConcurrentMap<String, String> translates = parseTranslate(stream);
             if (translates != null) {
-                types.put(LangType.EN_US, new Translate(LangType.EN_US, translates));
+                types.put(LangType.EN_US, new TranslatedMessages(LangType.EN_US, translates));
             }
         }
         catch (Exception e) {
@@ -104,7 +104,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
                                             InputStream stream = new FileInputStream(t);
                                             ConcurrentMap<String, String> translate = parseTranslate(stream);
                                             if (translate != null) {
-                                                types.put(lt, new Translate(lt, translate));
+                                                types.put(lt, new TranslatedMessages(lt, translate));
                                             }
                                         }
                                     }
@@ -120,30 +120,6 @@ public abstract class DefaultTranslateManager implements TranslateManager {
         }
 
         this.types = types;
-    }
-
-    /**
-     * @return перевод на основе типа языка
-     * @see Translate
-     */
-    public Translate getTranslate(LangType type) {
-        return this.types.get(type);
-    }
-
-    /**
-     * @return переведенную строку, на основе ключа и типа языка
-     * @see Translate
-     */
-    public String getTranslate(String name, LangType type) {
-        Translate tr = this.types.get(type);
-        if (tr != null) {
-            return tr.getTranslate(name.toLowerCase().replace("_", ""));
-        }
-        return null;
-    }
-
-    public Collection<Translate> getAllTranslate() {
-        return this.types.values();
     }
 
     public Set<LangType> getAllTranslateLang() {
@@ -212,6 +188,25 @@ public abstract class DefaultTranslateManager implements TranslateManager {
         }
 
         this.enabledLanguages = Collections.unmodifiableList(tmpEnabledLanguages);
+    }
+
+    @Override
+    public Collection<TranslatedMessages> getAllTranslate() {
+        return this.types.values();
+    }
+
+    @Override
+    public TranslatedMessages getTranslate(LangType type) {
+        return this.types.get(type);
+    }
+
+    @Override
+    public String getTranslate(String key, LangType langType) {
+        TranslatedMessages tr = this.types.get(langType);
+        if (tr != null) {
+            return tr.getTranslate(key.toLowerCase().replace("_", ""));
+        }
+        return null;
     }
 
     @Override

@@ -9,7 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import ru.boomearo.langhelper.commands.langhelper.CmdExecutorLangHelper;
 import ru.boomearo.langhelper.versions.DefaultTranslateManager;
-import ru.boomearo.langhelper.versions.Translate;
+import ru.boomearo.langhelper.versions.TranslatedMessages;
 import ru.boomearo.langhelper.versions.Translate1_12_R1;
 import ru.boomearo.langhelper.versions.Translate1_13_R2Manager;
 import ru.boomearo.langhelper.versions.Translate1_14_R1Manager;
@@ -65,7 +65,7 @@ public class LangHelper extends JavaPlugin {
             this.defaultTranslateManager.loadLanguages();
 
             //Просто оповещаем о том, сколько строк и какие языки были загружены
-            for (Translate tra : this.defaultTranslateManager.getAllTranslate()) {
+            for (TranslatedMessages tra : this.defaultTranslateManager.getAllTranslate()) {
                 String languageName = tra.getTranslate("language.name");
                 if (languageName == null) {
                     languageName = "Unknown-name";

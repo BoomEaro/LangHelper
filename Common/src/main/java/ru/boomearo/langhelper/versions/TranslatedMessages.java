@@ -4,15 +4,15 @@ import java.util.Collection;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * Представляет целый перевод строк.
+ * Представляет языковые строки
  */
-public class Translate {
+public class TranslatedMessages {
 
     private final LangType langType;
     private final ConcurrentMap<String, String> translate;
 
-    public Translate(LangType lang, ConcurrentMap<String, String> translate) {
-        this.langType = lang;
+    public TranslatedMessages(LangType langType, ConcurrentMap<String, String> translate) {
+        this.langType = langType;
         this.translate = translate;
     }
 
