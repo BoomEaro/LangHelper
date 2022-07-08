@@ -11,22 +11,23 @@ import org.bukkit.block.Biome;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
 
 import net.minecraft.server.v1_12_R1.*;
 
-public class Translate1_12_R1 extends AbstractTranslateManager {
+public class Translate1_12_R1 extends DefaultTranslateManager {
 
-    public Translate1_12_R1() {
-        super("1.12.2");
+    public Translate1_12_R1(JavaPlugin javaPlugin) {
+        super("1.12.2", javaPlugin);
     }
 
     @Override
-    public String getItemName(ItemStack item, LangType type) {
+    public String getItemName(ItemStack item, LangType langType) {
         if (item == null) {
             throw new IllegalArgumentException("item является null!");
         }
-        if (type == null) {
+        if (langType == null) {
             throw new IllegalArgumentException("type является null!");
         }
         try {
@@ -55,7 +56,7 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
                 name = i.a(itemStack) + ".name";
             }
 
-            return getTranslate(name, type);
+            return getTranslate(name, langType);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -64,11 +65,11 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
     }
 
     @Override
-    public String getEntityName(EntityType entity, LangType type) {
-        if (entity == null) {
+    public String getEntityName(EntityType entityType, LangType langType) {
+        if (entityType == null) {
             throw new IllegalArgumentException("entity является null!");
         }
-        if (type == null) {
+        if (langType == null) {
             throw new IllegalArgumentException("type является null!");
         }
         // TODO Нужно ли править?
@@ -81,20 +82,20 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
         // MAGMA_CUBE, WITHER, MUSHROOM_COW, OCELOT, LLAMA_SPIT, ENDER_CRYSTAL, LINGERING_POTION, FISHING_HOOK, LIGHTNING, WEATHER, PLAYER, COMPLEX_PART, TIPPED_ARROW
 
         // Мне лень делать switch/case для каждого перевода, да и нужно ли оно?
-        return getTranslate("entity." + entity.name() + ".name", type);
+        return getTranslate("entity." + entityType.name() + ".name", langType);
     }
 
     @Override
-    public String getEnchantName(Enchantment enchant, LangType type) {
+    public String getEnchantName(Enchantment enchant, LangType langType) {
         if (enchant == null) {
             throw new IllegalArgumentException("enchant является null!");
         }
-        if (type == null) {
+        if (langType == null) {
             throw new IllegalArgumentException("type является null!");
         }
         try {
             String name = org.bukkit.craftbukkit.v1_12_R1.enchantments.CraftEnchantment.getRaw(enchant).a();
-            return getTranslate(name, type);
+            return getTranslate(name, langType);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -103,22 +104,22 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
     }
 
     @Override
-    public String getEnchantLevelName(int level, LangType type) {
-        if (type == null) {
+    public String getEnchantLevelName(int level, LangType langType) {
+        if (langType == null) {
             throw new IllegalArgumentException("type является null!");
         }
-        return getTranslate("enchantment.level." + level, type);
+        return getTranslate("enchantment.level." + level, langType);
     }
 
     @Override
-    public String getPotionEffectName(PotionEffectType effect, LangType type) {
-        if (effect == null) {
+    public String getPotionEffectName(PotionEffectType potionEffectType, LangType langType) {
+        if (potionEffectType == null) {
             throw new IllegalArgumentException("effect является null!");
         }
-        if (type == null) {
+        if (langType == null) {
             throw new IllegalArgumentException("type является null!");
         }
-        String effectName = effect.getName().toLowerCase();
+        String effectName = potionEffectType.getName().toLowerCase();
         switch (effectName) {
             case "speed":
                 effectName = "moveSpeed";
@@ -140,12 +141,12 @@ public class Translate1_12_R1 extends AbstractTranslateManager {
                 break;
         }
         String name = "effect." + effectName;
-        return getTranslate(name, type);
+        return getTranslate(name, langType);
     }
 
     //TODO К сожалению 1.12.2 не имеет строк для перевода биомов.
     @Override
-    public String getBiomeName(Biome biome, LangType type) {
+    public String getBiomeName(Biome biome, LangType langType) {
         return null;
     }
 

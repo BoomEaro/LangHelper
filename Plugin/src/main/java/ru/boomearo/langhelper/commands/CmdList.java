@@ -64,7 +64,7 @@ public class CmdList {
     }
 
     public Set<Cmd> getCmds() {
-        return new TreeSet<Cmd>(this.cmd.values());
+        return new TreeSet<>(this.cmd.values());
     }
 
     public void sendUsageCmds(CommandSender cs) {

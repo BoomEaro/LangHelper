@@ -9,8 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import ru.boomearo.langhelper.LangHelper;
 import ru.boomearo.langhelper.commands.CmdInfo;
+import ru.boomearo.langhelper.versions.DefaultTranslateManager;
 import ru.boomearo.langhelper.versions.LangType;
 import ru.boomearo.langhelper.versions.exceptions.LangException;
 
@@ -19,6 +19,12 @@ import java.util.List;
 
 public class LangHelperUse {
 
+    private final DefaultTranslateManager defaultTranslateManager;
+
+    public LangHelperUse(DefaultTranslateManager defaultTranslateManager) {
+        this.defaultTranslateManager = defaultTranslateManager;
+    }
+
     @CmdInfo(name = "reload", description = "Перезагрузить конфигурацию.", usage = "/langhelper reload", permission = "langhelper.admin")
     public boolean reload(CommandSender cs, String[] args) {
         if (args.length != 0) {
@@ -26,11 +32,9 @@ public class LangHelperUse {
         }
 
         try {
-            LangHelper lh = LangHelper.getInstance();
-            lh.loadConfigData();
-            lh.checkAndDownloadLanguages();
-
-            lh.getAbstractTranslateManager().loadLanguages(LangHelper.getLanguageFolder(), lh.getEnabledLanguages());
+            this.defaultTranslateManager.loadConfigData();
+            this.defaultTranslateManager.checkAndDownloadLanguages();
+            this.defaultTranslateManager.loadLanguages();
 
             cs.sendMessage("Конфигурация успешно перезагружена!");
         }
@@ -78,7 +82,7 @@ public class LangHelperUse {
             List<Material> failed = new ArrayList<>();
             for (Material mat : Material.values()) {
                 try {
-                    String name = LangHelper.getInstance().getAbstractTranslateManager().getItemName(new ItemStack(mat, 1), type);
+                    String name = this.defaultTranslateManager.getItemName(new ItemStack(mat, 1), type);
                     if (name == null) {
                         failed.add(mat);
                     }
@@ -102,7 +106,7 @@ public class LangHelperUse {
                     if (en == EntityType.UNKNOWN) {
                         continue;
                     }
-                    String name = LangHelper.getInstance().getAbstractTranslateManager().getEntityName(en, type);
+                    String name = this.defaultTranslateManager.getEntityName(en, type);
                     if (name == null) {
                         failed.add(en);
                     }
@@ -123,7 +127,7 @@ public class LangHelperUse {
             List<Enchantment> failed = new ArrayList<>();
             for (Enchantment en : Enchantment.values()) {
                 try {
-                    String name = LangHelper.getInstance().getAbstractTranslateManager().getEnchantName(en, type);
+                    String name = this.defaultTranslateManager.getEnchantName(en, type);
                     if (name == null) {
                         failed.add(en);
                     }
@@ -144,7 +148,7 @@ public class LangHelperUse {
             List<Integer> failed = new ArrayList<>();
             for (int i = 1; i <= 10; i++) {
                 try {
-                    String name = LangHelper.getInstance().getAbstractTranslateManager().getEnchantLevelName(i, type);
+                    String name = this.defaultTranslateManager.getEnchantLevelName(i, type);
                     if (name == null) {
                         failed.add(i);
                     }
@@ -169,7 +173,7 @@ public class LangHelperUse {
                     continue;
                 }
                 try {
-                    String name = LangHelper.getInstance().getAbstractTranslateManager().getPotionEffectName(pet, type);
+                    String name = this.defaultTranslateManager.getPotionEffectName(pet, type);
                     if (name == null) {
                         failed.add(pet);
                     }
@@ -190,7 +194,7 @@ public class LangHelperUse {
             List<Biome> failed = new ArrayList<>();
             for (Biome b : Biome.values()) {
                 try {
-                    String name = LangHelper.getInstance().getAbstractTranslateManager().getBiomeName(b, type);
+                    String name = this.defaultTranslateManager.getBiomeName(b, type);
                     if (name == null) {
                         failed.add(b);
                     }
@@ -240,7 +244,7 @@ public class LangHelperUse {
             return true;
         }
 
-        cs.sendMessage("Предмет: " + LangHelper.getInstance().getAbstractTranslateManager().getItemName(item, type));
+        cs.sendMessage("Предмет: " + this.defaultTranslateManager.getItemName(item, type));
         return true;
     }
 
@@ -274,7 +278,7 @@ public class LangHelperUse {
             return true;
         }
 
-        cs.sendMessage("Сущность: " + LangHelper.getInstance().getAbstractTranslateManager().getEntityName(enType, laType));
+        cs.sendMessage("Сущность: " + this.defaultTranslateManager.getEntityName(enType, laType));
         return true;
     }
 
@@ -307,7 +311,7 @@ public class LangHelperUse {
             return true;
         }
 
-        cs.sendMessage("Зачарование: " + LangHelper.getInstance().getAbstractTranslateManager().getEnchantName(enType, laType));
+        cs.sendMessage("Зачарование: " + this.defaultTranslateManager.getEnchantName(enType, laType));
         return true;
     }
 
@@ -340,7 +344,7 @@ public class LangHelperUse {
             return true;
         }
 
-        cs.sendMessage("Зачарование: " + LangHelper.getInstance().getAbstractTranslateManager().getEnchantLevelName(enType, laType));
+        cs.sendMessage("Зачарование: " + this.defaultTranslateManager.getEnchantLevelName(enType, laType));
         return true;
     }
 
@@ -373,7 +377,7 @@ public class LangHelperUse {
             return true;
         }
 
-        cs.sendMessage("Тип зелья: " + LangHelper.getInstance().getAbstractTranslateManager().getPotionEffectName(efType, laType));
+        cs.sendMessage("Тип зелья: " + this.defaultTranslateManager.getPotionEffectName(efType, laType));
         return true;
     }
 
@@ -406,7 +410,7 @@ public class LangHelperUse {
             return true;
         }
 
-        cs.sendMessage("Тип биома: " + LangHelper.getInstance().getAbstractTranslateManager().getBiomeName(biome, laType));
+        cs.sendMessage("Тип биома: " + this.defaultTranslateManager.getBiomeName(biome, laType));
         return true;
     }
 }

@@ -8,24 +8,24 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class Translate {
 
-    private final LangType lang;
-    private final ConcurrentMap<String, String> tr;
+    private final LangType langType;
+    private final ConcurrentMap<String, String> translate;
 
-    public Translate(LangType lang, ConcurrentMap<String, String> tr) {
-        this.lang = lang;
-        this.tr = tr;
+    public Translate(LangType lang, ConcurrentMap<String, String> translate) {
+        this.langType = lang;
+        this.translate = translate;
     }
 
     public LangType getLangType() {
-        return this.lang;
+        return this.langType;
     }
 
     public String getTranslate(String name) {
-        return this.tr.get(name);
+        return this.translate.get(name);
     }
 
     public Collection<String> getAllTranslate() {
-        return this.tr.values();
+        return this.translate.values();
     }
 
 }

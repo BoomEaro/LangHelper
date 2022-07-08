@@ -11,17 +11,19 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.potion.PotionEffectType;
-import ru.boomearo.langhelper.LangHelper;
 import ru.boomearo.langhelper.commands.AbstractExecutor;
 import ru.boomearo.langhelper.commands.CmdList;
+import ru.boomearo.langhelper.versions.DefaultTranslateManager;
 import ru.boomearo.langhelper.versions.LangType;
 
 public class CmdExecutorLangHelper extends AbstractExecutor {
 
+    private final DefaultTranslateManager defaultTranslateManagerж;
     private static final List<String> empty = new ArrayList<>();
 
-    public CmdExecutorLangHelper() {
-        super(new LangHelperUse());
+    public CmdExecutorLangHelper(DefaultTranslateManager defaultTranslateManager) {
+        super(new LangHelperUse(defaultTranslateManager));
+        this.defaultTranslateManagerж = defaultTranslateManager;
     }
 
     @Override
@@ -56,7 +58,7 @@ public class CmdExecutorLangHelper extends AbstractExecutor {
 
                 List<String> matches = new ArrayList<>();
                 String search = args[1].toLowerCase();
-                for (LangType lt : LangHelper.getInstance().getAbstractTranslateManager().getAllTranslateLang()) {
+                for (LangType lt : this.defaultTranslateManagerж.getAllTranslateLang()) {
                     if (lt.getName().toLowerCase().startsWith(search)) {
                         matches.add(lt.getName());
                     }

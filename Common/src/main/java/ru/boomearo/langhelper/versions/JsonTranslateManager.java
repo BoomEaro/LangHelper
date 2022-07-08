@@ -5,6 +5,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -19,29 +20,29 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * Более продвинутая абстракция менеджера перевода, использующая парсинг json
  */
-public abstract class AbstractJsonTranslate extends AbstractTranslateManager {
+public abstract class JsonTranslateManager extends DefaultTranslateManager {
 
-    public AbstractJsonTranslate(String version) {
-        super(version);
+    public JsonTranslateManager(String version, JavaPlugin javaPlugin) {
+        super(version, javaPlugin);
     }
 
     @Override
-    public abstract String getItemName(ItemStack item, LangType type);
+    public abstract String getItemName(ItemStack itemStack, LangType langType);
 
     @Override
-    public abstract String getEntityName(EntityType entity, LangType type);
+    public abstract String getEntityName(EntityType entityType, LangType langType);
 
     @Override
-    public abstract String getEnchantName(Enchantment enchant, LangType type);
+    public abstract String getEnchantName(Enchantment enchant, LangType langType);
 
     @Override
-    public abstract String getEnchantLevelName(int level, LangType type);
+    public abstract String getEnchantLevelName(int level, LangType langType);
 
     @Override
-    public abstract String getPotionEffectName(PotionEffectType effect, LangType type);
+    public abstract String getPotionEffectName(PotionEffectType potionEffectType, LangType langType);
 
     @Override
-    public abstract String getBiomeName(Biome biome, LangType type);
+    public abstract String getBiomeName(Biome biome, LangType langType);
 
     @Override
     protected ConcurrentMap<String, String> parseTranslate(InputStream stream) {
@@ -54,11 +55,7 @@ public abstract class AbstractJsonTranslate extends AbstractTranslateManager {
 
             Object obj = jsonParser.parse(reader);
 
-            if (obj instanceof JSONObject) {
-                JSONObject o = (JSONObject) obj;
-
-
-                @SuppressWarnings("unchecked")
+            if (obj instanceof JSONObject o) {
                 Set<Map.Entry<Object, Object>> s = (Set<Map.Entry<Object, Object>>) o.entrySet();
                 for (Map.Entry<Object, Object> f : s) {
                     translates.put(f.getKey().toString().toLowerCase().replace("_", ""), f.getValue().toString());
