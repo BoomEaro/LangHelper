@@ -53,7 +53,7 @@ public class LangHelper extends JavaPlugin {
             }
 
             //Вычисляем версию сервера и создаем соответствующий экземпляр
-            this.defaultTranslateManager = matchVersion();
+            this.defaultTranslateManager = matchVersion(this);
 
             //Загружаем информацию из конфига
             this.defaultTranslateManager.loadConfigData();
@@ -101,13 +101,13 @@ public class LangHelper extends JavaPlugin {
         return this.defaultTranslateManager;
     }
 
-    private DefaultTranslateManager matchVersion() throws LangVersionException {
+    private DefaultTranslateManager matchVersion(JavaPlugin javaPlugin) throws LangVersionException {
         try {
             return VERSIONS.stream()
                     .filter(version -> version.getSimpleName().substring(9).equals(this.serverVersion))
                     .findFirst().orElseThrow(() -> new LangException("Плагин не поддерживает данную версию сервера!")).
-                    getConstructor().
-                    newInstance();
+                    getConstructor(JavaPlugin.class).
+                    newInstance(javaPlugin);
         }
         catch (Exception e) {
             //Вызываем новое, но свое
