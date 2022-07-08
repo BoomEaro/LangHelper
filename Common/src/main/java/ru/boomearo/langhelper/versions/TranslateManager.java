@@ -53,7 +53,7 @@ public interface TranslateManager {
      * @param langType Тип языка
      * @return Строка с переводом этого зачарования. Если перевода нет, вернет английский перевод по умолчанию.
      */
-    String getEnchantNameSafe(Enchantment enchant, LangType langType);
+    String getEnchantmentNameSafe(Enchantment enchant, LangType langType);
 
     /**
      * Получить перевод уровня зачарования.
@@ -61,7 +61,7 @@ public interface TranslateManager {
      * @param langType Тип языка
      * @return Строка с переводом уровня зачарования. Если перевода нет, вернет английский перевод по умолчанию.
      */
-    String getEnchantLevelNameSafe(int level, LangType langType);
+    String getEnchantmentLevelNameSafe(int level, LangType langType);
 
     /**
      * Получить перевод типа зельий
@@ -102,7 +102,7 @@ public interface TranslateManager {
      * @param langType Тип языка
      * @return Строка с переводом этого зачарования. Может вернуть null если перевода нет.
      */
-    String getEnchantName(Enchantment enchant, LangType langType);
+    String getEnchantmentName(Enchantment enchant, LangType langType);
 
     /**
      * Получить перевод уровня зачарования.
@@ -110,7 +110,7 @@ public interface TranslateManager {
      * @param langType Тип языка
      * @return Строка с переводом уровня зачарования. Может вернуть null если перевода нет.
      */
-    String getEnchantLevelName(int level, LangType langType);
+    String getEnchantmentLevelName(int level, LangType langType);
 
     /**
      * Получить перевод типа зельий

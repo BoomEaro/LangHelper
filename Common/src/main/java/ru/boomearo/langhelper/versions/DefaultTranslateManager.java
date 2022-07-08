@@ -241,13 +241,13 @@ public abstract class DefaultTranslateManager implements TranslateManager {
     }
 
     @Override
-    public String getEnchantNameSafe(Enchantment enchant, LangType langType) {
+    public String getEnchantmentNameSafe(Enchantment enchant, LangType langType) {
         Preconditions.checkArgument(enchant != null);
         Preconditions.checkArgument(langType != null);
 
-        String name = getEnchantName(enchant, langType);
+        String name = getEnchantmentName(enchant, langType);
         if (name == null) {
-            name = getEnchantName(enchant, LangType.EN_US);
+            name = getEnchantmentName(enchant, LangType.EN_US);
             if (name == null) {
                 name = capitalize(enchant.getName());
             }
@@ -256,12 +256,12 @@ public abstract class DefaultTranslateManager implements TranslateManager {
     }
 
     @Override
-    public String getEnchantLevelNameSafe(int level, LangType langType) {
+    public String getEnchantmentLevelNameSafe(int level, LangType langType) {
         Preconditions.checkArgument(langType != null);
 
-        String name = getEnchantLevelName(level, langType);
+        String name = getEnchantmentLevelName(level, langType);
         if (name == null) {
-            name = getEnchantLevelName(level, LangType.EN_US);
+            name = getEnchantmentLevelName(level, LangType.EN_US);
             if (name == null) {
                 name = "" + level;
             }
@@ -306,10 +306,10 @@ public abstract class DefaultTranslateManager implements TranslateManager {
     public abstract String getEntityName(EntityType entityType, LangType langType);
 
     @Override
-    public abstract String getEnchantName(Enchantment enchant, LangType langType);
+    public abstract String getEnchantmentName(Enchantment enchant, LangType langType);
 
     @Override
-    public abstract String getEnchantLevelName(int level, LangType langType);
+    public abstract String getEnchantmentLevelName(int level, LangType langType);
 
     @Override
     public abstract String getPotionEffectName(PotionEffectType potionEffectType, LangType langType);

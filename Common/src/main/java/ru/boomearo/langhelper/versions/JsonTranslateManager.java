@@ -33,10 +33,10 @@ public abstract class JsonTranslateManager extends DefaultTranslateManager {
     public abstract String getEntityName(EntityType entityType, LangType langType);
 
     @Override
-    public abstract String getEnchantName(Enchantment enchant, LangType langType);
+    public abstract String getEnchantmentName(Enchantment enchant, LangType langType);
 
     @Override
-    public abstract String getEnchantLevelName(int level, LangType langType);
+    public abstract String getEnchantmentLevelName(int level, LangType langType);
 
     @Override
     public abstract String getPotionEffectName(PotionEffectType potionEffectType, LangType langType);

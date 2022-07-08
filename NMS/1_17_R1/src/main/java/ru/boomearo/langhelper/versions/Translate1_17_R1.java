@@ -61,7 +61,7 @@ public class Translate1_17_R1 extends JsonTranslateManager {
     }
 
     @Override
-    public String getEnchantName(Enchantment enchant, LangType langType) {
+    public String getEnchantmentName(Enchantment enchant, LangType langType) {
         Preconditions.checkArgument(enchant != null);
         Preconditions.checkArgument(langType != null);
 
@@ -69,7 +69,7 @@ public class Translate1_17_R1 extends JsonTranslateManager {
     }
 
     @Override
-    public String getEnchantLevelName(int level, LangType langType) {
+    public String getEnchantmentLevelName(int level, LangType langType) {
         Preconditions.checkArgument(langType != null);
 
         return getTranslate("enchantment.level." + level, langType);

@@ -127,7 +127,7 @@ public class LangHelperUse {
             List<Enchantment> failed = new ArrayList<>();
             for (Enchantment en : Enchantment.values()) {
                 try {
-                    String name = this.defaultTranslateManager.getEnchantName(en, type);
+                    String name = this.defaultTranslateManager.getEnchantmentName(en, type);
                     if (name == null) {
                         failed.add(en);
                     }
@@ -148,7 +148,7 @@ public class LangHelperUse {
             List<Integer> failed = new ArrayList<>();
             for (int i = 1; i <= 10; i++) {
                 try {
-                    String name = this.defaultTranslateManager.getEnchantLevelName(i, type);
+                    String name = this.defaultTranslateManager.getEnchantmentLevelName(i, type);
                     if (name == null) {
                         failed.add(i);
                     }
@@ -311,7 +311,7 @@ public class LangHelperUse {
             return true;
         }
 
-        cs.sendMessage("Зачарование: " + this.defaultTranslateManager.getEnchantName(enType, laType));
+        cs.sendMessage("Зачарование: " + this.defaultTranslateManager.getEnchantmentName(enType, laType));
         return true;
     }
 
@@ -344,7 +344,7 @@ public class LangHelperUse {
             return true;
         }
 
-        cs.sendMessage("Зачарование: " + this.defaultTranslateManager.getEnchantLevelName(enType, laType));
+        cs.sendMessage("Зачарование: " + this.defaultTranslateManager.getEnchantmentLevelName(enType, laType));
         return true;
     }
 
