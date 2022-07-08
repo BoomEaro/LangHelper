@@ -1,5 +1,6 @@
 package ru.boomearo.langhelper.versions;
 
+import com.google.common.base.Preconditions;
 import org.bukkit.block.Biome;
 import org.bukkit.craftbukkit.v1_19_R1.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
@@ -22,12 +23,8 @@ public class Translate1_19_R1Manager extends JsonTranslateManager {
 
     @Override
     public String getItemName(ItemStack item, LangType langType) {
-        if (item == null) {
-            throw new IllegalArgumentException("item является null!");
-        }
-        if (langType == null) {
-            throw new IllegalArgumentException("type является null!");
-        }
+        Preconditions.checkArgument(item != null);
+        Preconditions.checkArgument(langType != null);
 
         try {
             net.minecraft.world.item.ItemStack itemStack = CraftItemStack.asNMSCopy(item);
@@ -57,86 +54,53 @@ public class Translate1_19_R1Manager extends JsonTranslateManager {
 
     @Override
     public String getEntityName(EntityType entityType, LangType langType) {
-        if (entityType == null) {
-            throw new IllegalArgumentException("entity является null!");
-        }
-        if (langType == null) {
-            throw new IllegalArgumentException("type является null!");
-        }
+        Preconditions.checkArgument(entityType != null);
+        Preconditions.checkArgument(langType != null);
 
         return getTranslate("entity.minecraft." + entityType.getKey().getKey(), langType);
     }
 
     @Override
     public String getEnchantName(Enchantment enchant, LangType langType) {
-        if (enchant == null) {
-            throw new IllegalArgumentException("enchant является null!");
-        }
-        if (langType == null) {
-            throw new IllegalArgumentException("type является null!");
-        }
+        Preconditions.checkArgument(enchant != null);
+        Preconditions.checkArgument(langType != null);
 
         return getTranslate("enchantment.minecraft." + enchant.getKey().getKey(), langType);
     }
 
     @Override
     public String getEnchantLevelName(int level, LangType langType) {
-        if (langType == null) {
-            throw new IllegalArgumentException("type является null!");
-        }
+        Preconditions.checkArgument(langType != null);
+
         return getTranslate("enchantment.level." + level, langType);
     }
 
     @Override
     public String getPotionEffectName(PotionEffectType potionEffectType, LangType langType) {
-        if (potionEffectType == null) {
-            throw new IllegalArgumentException("effect является null!");
-        }
-        if (langType == null) {
-            throw new IllegalArgumentException("type является null!");
-        }
-        String effectName = potionEffectType.getName().toLowerCase();
-        switch (effectName) {
-            case "fast_digging":
-                effectName = "haste";
-                break;
-            case "harm":
-                effectName = "instant_damage";
-                break;
-            case "heal":
-                effectName = "instant_health";
-                break;
-            case "jump":
-                effectName = "jump_boost";
-                break;
-            case "slow_digging":
-                effectName = "mining_fatigue";
-                break;
-            case "confusion":
-                effectName = "nausea";
-                break;
-            case "damage_resistance":
-                effectName = "resistance";
-                break;
-            case "slow":
-                effectName = "slowness";
-                break;
-            case "increase_damage":
-                effectName = "strength";
-                break;
-        }
+        Preconditions.checkArgument(potionEffectType != null);
+        Preconditions.checkArgument(langType != null);
+
+        String effectName = switch (potionEffectType.getName().toLowerCase()) {
+            case "fast_digging" -> "haste";
+            case "harm" -> "instant_damage";
+            case "heal" -> "instant_health";
+            case "jump" -> "jump_boost";
+            case "slow_digging" -> "mining_fatigue";
+            case "confusion" -> "nausea";
+            case "damage_resistance" -> "resistance";
+            case "slow" -> "slowness";
+            case "increase_damage" -> "strength";
+            default -> potionEffectType.getName().toLowerCase();
+        };
         String name = "effect.minecraft." + effectName;
         return getTranslate(name, langType);
     }
 
     @Override
     public String getBiomeName(Biome biome, LangType langType) {
-        if (biome == null) {
-            throw new IllegalArgumentException("biome является null!");
-        }
-        if (langType == null) {
-            throw new IllegalArgumentException("type является null!");
-        }
+        Preconditions.checkArgument(biome != null);
+        Preconditions.checkArgument(langType != null);
+
         return getTranslate("biome.minecraft." + biome.name().toLowerCase(), langType);
     }
 }

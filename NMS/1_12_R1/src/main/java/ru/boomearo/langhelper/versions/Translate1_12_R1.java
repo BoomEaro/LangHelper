@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import com.google.common.base.Preconditions;
 import org.bukkit.block.Biome;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
@@ -24,12 +25,9 @@ public class Translate1_12_R1 extends DefaultTranslateManager {
 
     @Override
     public String getItemName(ItemStack item, LangType langType) {
-        if (item == null) {
-            throw new IllegalArgumentException("item является null!");
-        }
-        if (langType == null) {
-            throw new IllegalArgumentException("type является null!");
-        }
+        Preconditions.checkArgument(item != null);
+        Preconditions.checkArgument(langType != null);
+
         try {
             net.minecraft.server.v1_12_R1.ItemStack itemStack = org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack.asNMSCopy(item);
 
@@ -66,12 +64,9 @@ public class Translate1_12_R1 extends DefaultTranslateManager {
 
     @Override
     public String getEntityName(EntityType entityType, LangType langType) {
-        if (entityType == null) {
-            throw new IllegalArgumentException("entity является null!");
-        }
-        if (langType == null) {
-            throw new IllegalArgumentException("type является null!");
-        }
+        Preconditions.checkArgument(entityType != null);
+        Preconditions.checkArgument(langType != null);
+
         // TODO Нужно ли править?
 
         // Следующие ниже сущности имеют СОВСЕМ другой ключ перевода.. Похоже в 1.12.2 нет nms енумов и все типы сущностей это классы.
@@ -87,12 +82,9 @@ public class Translate1_12_R1 extends DefaultTranslateManager {
 
     @Override
     public String getEnchantName(Enchantment enchant, LangType langType) {
-        if (enchant == null) {
-            throw new IllegalArgumentException("enchant является null!");
-        }
-        if (langType == null) {
-            throw new IllegalArgumentException("type является null!");
-        }
+        Preconditions.checkArgument(enchant != null);
+        Preconditions.checkArgument(langType != null);
+
         try {
             String name = org.bukkit.craftbukkit.v1_12_R1.enchantments.CraftEnchantment.getRaw(enchant).a();
             return getTranslate(name, langType);
@@ -105,41 +97,26 @@ public class Translate1_12_R1 extends DefaultTranslateManager {
 
     @Override
     public String getEnchantLevelName(int level, LangType langType) {
-        if (langType == null) {
-            throw new IllegalArgumentException("type является null!");
-        }
+        Preconditions.checkArgument(langType != null);
+
         return getTranslate("enchantment.level." + level, langType);
     }
 
     @Override
     public String getPotionEffectName(PotionEffectType potionEffectType, LangType langType) {
-        if (potionEffectType == null) {
-            throw new IllegalArgumentException("effect является null!");
-        }
-        if (langType == null) {
-            throw new IllegalArgumentException("type является null!");
-        }
-        String effectName = potionEffectType.getName().toLowerCase();
-        switch (effectName) {
-            case "speed":
-                effectName = "moveSpeed";
-                break;
-            case "fast_digging":
-                effectName = "digSpeed";
-                break;
-            case "slow_digging":
-                effectName = "digSlowDown";
-                break;
-            case "damage_resistance":
-                effectName = "resistance";
-                break;
-            case "slow":
-                effectName = "moveSlowdown";
-                break;
-            case "increase_damage":
-                effectName = "damageBoost";
-                break;
-        }
+        Preconditions.checkArgument(potionEffectType != null);
+        Preconditions.checkArgument(langType != null);
+
+        String effectName = switch (potionEffectType.getName().toLowerCase()) {
+            case "speed" -> "moveSpeed";
+            case "fast_digging" -> "digSpeed";
+            case "slow_digging" -> "digSlowDown";
+            case "damage_resistance" -> "resistance";
+            case "slow" -> "moveSlowdown";
+            case "increase_damage" -> "damageBoost";
+            default -> potionEffectType.getName().toLowerCase();
+        };
+
         String name = "effect." + effectName;
         return getTranslate(name, langType);
     }
