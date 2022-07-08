@@ -2,7 +2,7 @@ package ru.boomearo.langhelper.versions;
 
 import com.google.common.base.Preconditions;
 import org.bukkit.block.Biome;
-import org.bukkit.craftbukkit.v1_17_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_18_R2.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
@@ -15,10 +15,10 @@ import net.minecraft.world.item.ItemPotion;
 import net.minecraft.world.item.ItemSplashPotion;
 import net.minecraft.world.item.alchemy.PotionUtil;
 
-public class Translate1_17_R1Manager extends JsonTranslateManager {
+public class Translate1_18_R2 extends JsonTranslateManager {
 
-    public Translate1_17_R1Manager(JavaPlugin javaPlugin) {
-        super("1.17.1", javaPlugin);
+    public Translate1_18_R2(JavaPlugin javaPlugin) {
+        super("1.18.2", javaPlugin);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class Translate1_17_R1Manager extends JsonTranslateManager {
             net.minecraft.world.item.ItemStack itemStack = CraftItemStack.asNMSCopy(item);
 
             String name;
-            Item i = itemStack.getItem();
+            Item i = itemStack.c();
             if (i instanceof ItemSplashPotion) {
                 name = "item.minecraft." + PotionUtil.d(itemStack).b("splash_potion.effect.");
             }
@@ -41,7 +41,7 @@ public class Translate1_17_R1Manager extends JsonTranslateManager {
                 name = "item.minecraft." + PotionUtil.d(itemStack).b("potion.effect.");
             }
             else {
-                name = i.getName();
+                name = i.a();
             }
 
             return getTranslate(name, langType);

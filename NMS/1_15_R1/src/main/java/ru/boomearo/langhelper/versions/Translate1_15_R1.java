@@ -14,9 +14,9 @@ import net.minecraft.server.v1_15_R1.ItemPotion;
 import net.minecraft.server.v1_15_R1.ItemSplashPotion;
 import net.minecraft.server.v1_15_R1.PotionUtil;
 
-public class Translate1_15_R1Manager extends JsonTranslateManager {
+public class Translate1_15_R1 extends JsonTranslateManager {
 
-    public Translate1_15_R1Manager(JavaPlugin javaPlugin) {
+    public Translate1_15_R1(JavaPlugin javaPlugin) {
         super("1.15.2", javaPlugin);
     }
 

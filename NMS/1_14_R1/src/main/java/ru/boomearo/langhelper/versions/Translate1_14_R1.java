@@ -2,23 +2,22 @@ package ru.boomearo.langhelper.versions;
 
 import com.google.common.base.Preconditions;
 import org.bukkit.block.Biome;
-import org.bukkit.craftbukkit.v1_18_R2.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
 
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemLingeringPotion;
-import net.minecraft.world.item.ItemPotion;
-import net.minecraft.world.item.ItemSplashPotion;
-import net.minecraft.world.item.alchemy.PotionUtil;
+import net.minecraft.server.v1_14_R1.Item;
+import net.minecraft.server.v1_14_R1.ItemLingeringPotion;
+import net.minecraft.server.v1_14_R1.ItemPotion;
+import net.minecraft.server.v1_14_R1.ItemSplashPotion;
+import net.minecraft.server.v1_14_R1.PotionUtil;
 
-public class Translate1_18_R2Manager extends JsonTranslateManager {
+public class Translate1_14_R1 extends JsonTranslateManager {
 
-    public Translate1_18_R2Manager(JavaPlugin javaPlugin) {
-        super("1.18.2", javaPlugin);
+    public Translate1_14_R1(JavaPlugin javaPlugin) {
+        super("1.14.4", javaPlugin);
     }
 
     @Override
@@ -27,10 +26,10 @@ public class Translate1_18_R2Manager extends JsonTranslateManager {
         Preconditions.checkArgument(langType != null);
 
         try {
-            net.minecraft.world.item.ItemStack itemStack = CraftItemStack.asNMSCopy(item);
+            net.minecraft.server.v1_14_R1.ItemStack itemStack = org.bukkit.craftbukkit.v1_14_R1.inventory.CraftItemStack.asNMSCopy(item);
 
             String name;
-            Item i = itemStack.c();
+            Item i = itemStack.getItem();
             if (i instanceof ItemSplashPotion) {
                 name = "item.minecraft." + PotionUtil.d(itemStack).b("splash_potion.effect.");
             }
@@ -41,7 +40,7 @@ public class Translate1_18_R2Manager extends JsonTranslateManager {
                 name = "item.minecraft." + PotionUtil.d(itemStack).b("potion.effect.");
             }
             else {
-                name = i.a();
+                name = i.getName();
             }
 
             return getTranslate(name, langType);
