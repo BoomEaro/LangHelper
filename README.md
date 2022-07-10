@@ -2,13 +2,13 @@
 LangHelper - это простой API плагин, который позволяет получить любую переведенную строку клиента игры Minecraft.
 
 Поддерживаются только самые последние релизные версии Minecraft:
-1.12.2
-1.13.2
-1.14.4
-1.15.2
-1.16.5
-1.17.1
-1.18.2
+1.12.2,
+1.13.2,
+1.14.4,
+1.15.2,
+1.16.5,
+1.17.1,
+1.18.2,
 1.19
 
 Плагин поддерживает все языки которые поддерживает сам Minecraft.
@@ -20,11 +20,11 @@ API достаточно простой, все что нужно сделать
 Пример использования:
 ```
 TranslateManager translateManager = LangHelper.getInstance().getTranslateManager();
-String translateItem = translateManager.getItemName(new ItemStack(Material.STONE), LangType.RU_RU); // Получить русский перевод каменного блока
-String translateEnchant = translateManager.getEnchantmentName(Enchantment.LUCK, LangType.RU_RU); // Получить русский перевод зачарования на удачу
-String translateEntity = translateManager.getEntityName(EntityType.CREEPER, LangType.RU_RU); // Получить русский перевод сущности крипера
-String translatePotionEffect = translateManager.getPotionEffectName(PotionEffectType.REGENERATION, LangType.RU_RU); // Получить русский перевод эффекта зелья регенерации
-String translateBiome = translateManager.getBiomeName(Biome.DESERT, LangType.RU_RU); // Получить русский перевод биома пустыни
+String translateItem = translateManager.getItemNameSafe(new ItemStack(Material.STONE), LangType.RU_RU); // Получить русский перевод каменного блока
+String translateEnchant = translateManager.getEnchantmentNameSafe(Enchantment.LUCK, LangType.RU_RU); // Получить русский перевод зачарования на удачу
+String translateEntity = translateManager.getEntityNameSafe(EntityType.CREEPER, LangType.RU_RU); // Получить русский перевод сущности крипера
+String translatePotionEffect = translateManager.getPotionEffectNameSafe(PotionEffectType.REGENERATION, LangType.RU_RU); // Получить русский перевод эффекта зелья регенерации
+String translateBiome = translateManager.getBiomeNameSafe(Biome.DESERT, LangType.RU_RU); // Получить русский перевод биома пустыни
 
 System.out.println("Предмет: " + translateItem);
 System.out.println("Зачарование: " + translateEnchant);
