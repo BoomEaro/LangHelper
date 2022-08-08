@@ -18,7 +18,7 @@ import net.minecraft.world.item.alchemy.PotionUtil;
 public class Translate1_19_R1 extends JsonTranslateManager {
 
     public Translate1_19_R1(JavaPlugin javaPlugin) {
-        super("1.19", javaPlugin);
+        super("1.19.2", javaPlugin);
     }
 
     @Override
