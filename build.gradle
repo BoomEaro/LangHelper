@@ -1,6 +1,7 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 subprojects {
@@ -42,37 +43,26 @@ publishing {
 
     }
 }
-configurations {
-    extraLibs
-}
 
 dependencies {
-    compileOnly project(":Plugin")
-    compileOnly project(":Common")
-    compileOnly project(":NMS:1_12_R1")
-    compileOnly project(":NMS:1_13_R2")
-    compileOnly project(":NMS:1_14_R1")
-    compileOnly project(":NMS:1_15_R1")
-    compileOnly project(":NMS:1_16_R3")
-    compileOnly project(":NMS:1_17_R1")
-    compileOnly project(":NMS:1_18_R2")
-	compileOnly project(":NMS:1_19_R1")
-
-    extraLibs project(":Plugin")
-    extraLibs project(":Common")
-    extraLibs project(":NMS:1_12_R1")
-    extraLibs project(":NMS:1_13_R2")
-    extraLibs project(":NMS:1_14_R1")
-    extraLibs project(":NMS:1_15_R1")
-    extraLibs project(":NMS:1_16_R3")
-    extraLibs project(":NMS:1_17_R1")
-    extraLibs project(":NMS:1_18_R2")
-	extraLibs project(":NMS:1_19_R1")
+    api project(":Plugin")
+    api project(":Common")
+    api project(":NMS:1_12_R1")
+    api project(":NMS:1_13_R2")
+    api project(":NMS:1_14_R1")
+    api project(":NMS:1_15_R1")
+    api project(":NMS:1_16_R3")
+    api project(":NMS:1_17_R1")
+    api project(":NMS:1_18_R2")
+    api project(":NMS:1_19_R1")
 }
 
-jar {
-    from {
-        configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-    archiveName 'LangHelper.jar'
+shadowJar {
+    archiveBaseName.set("LangHelper")
+    archiveClassifier.set("")
+    archiveVersion.set("")
+}
+
+artifacts {
+    archives shadowJar
 }
