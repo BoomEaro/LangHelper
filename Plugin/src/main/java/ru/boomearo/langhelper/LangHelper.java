@@ -17,7 +17,7 @@ import ru.boomearo.langhelper.versions.Translate1_15_R1;
 import ru.boomearo.langhelper.versions.Translate1_16_R3;
 import ru.boomearo.langhelper.versions.Translate1_17_R1;
 import ru.boomearo.langhelper.versions.Translate1_18_R2;
-import ru.boomearo.langhelper.versions.Translate1_19_R1;
+import ru.boomearo.langhelper.versions.Translate1_19_R2;
 import ru.boomearo.langhelper.versions.TranslateManager;
 import ru.boomearo.langhelper.versions.exceptions.LangException;
 import ru.boomearo.langhelper.versions.exceptions.LangParseException;
@@ -38,7 +38,7 @@ public class LangHelper extends JavaPlugin {
             Translate1_16_R3.class,
             Translate1_17_R1.class,
             Translate1_18_R2.class,
-            Translate1_19_R1.class
+            Translate1_19_R2.class
     );
 
     @Override
