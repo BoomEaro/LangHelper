@@ -37,7 +37,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
 
     private List<LangType> enabledLanguages = new ArrayList<>();
 
-    private static final String TRANSLATION_FILE_URL = "http://resources.download.minecraft.net/%s/%s";
+    private static final String TRANSLATION_FILE_URL = "https://resources.download.minecraft.net/%s/%s";
 
     public DefaultTranslateManager(String version, JavaPlugin javaPlugin) {
         this.version = version;

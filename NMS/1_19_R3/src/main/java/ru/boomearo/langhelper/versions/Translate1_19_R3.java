@@ -2,7 +2,7 @@ package ru.boomearo.langhelper.versions;
 
 import com.google.common.base.Preconditions;
 import org.bukkit.block.Biome;
-import org.bukkit.craftbukkit.v1_19_R2.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_19_R3.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
@@ -15,10 +15,10 @@ import net.minecraft.world.item.ItemPotion;
 import net.minecraft.world.item.ItemSplashPotion;
 import net.minecraft.world.item.alchemy.PotionUtil;
 
-public class Translate1_19_R2 extends JsonTranslateManager {
+public class Translate1_19_R3 extends JsonTranslateManager {
 
-    public Translate1_19_R2(JavaPlugin javaPlugin) {
-        super("1.19.3", javaPlugin);
+    public Translate1_19_R3(JavaPlugin javaPlugin) {
+        super("1.19.4", javaPlugin);
     }
 
     @Override
