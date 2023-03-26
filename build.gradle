@@ -10,7 +10,7 @@ subprojects {
     apply plugin: "eclipse"
 
     group = "ru.boomearo"
-    version = "1.2"
+    version = "1.4"
 
     compileJava {
         options.encoding = "UTF-8"
@@ -33,15 +33,6 @@ subprojects {
         mavenCentral()
     }
 
-}
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            from components.java
-        }
-
-    }
 }
 
 dependencies {
