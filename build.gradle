@@ -35,6 +35,15 @@ subprojects {
 
 }
 
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+
+    }
+}
+
 dependencies {
     api project(":Plugin")
     api project(":Common")
@@ -50,8 +59,6 @@ dependencies {
 
 shadowJar {
     archiveBaseName.set("LangHelper")
-    archiveClassifier.set("")
-    archiveVersion.set("")
 }
 
 artifacts {
