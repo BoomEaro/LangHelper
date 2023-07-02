@@ -8,17 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import ru.boomearo.langhelper.commands.langhelper.CmdExecutorLangHelper;
-import ru.boomearo.langhelper.versions.DefaultTranslateManager;
-import ru.boomearo.langhelper.versions.TranslatedMessages;
-import ru.boomearo.langhelper.versions.Translate1_12_R1;
-import ru.boomearo.langhelper.versions.Translate1_13_R2;
-import ru.boomearo.langhelper.versions.Translate1_14_R1;
-import ru.boomearo.langhelper.versions.Translate1_15_R1;
-import ru.boomearo.langhelper.versions.Translate1_16_R3;
-import ru.boomearo.langhelper.versions.Translate1_17_R1;
-import ru.boomearo.langhelper.versions.Translate1_18_R2;
-import ru.boomearo.langhelper.versions.Translate1_19_R3;
-import ru.boomearo.langhelper.versions.TranslateManager;
+import ru.boomearo.langhelper.versions.*;
 import ru.boomearo.langhelper.versions.exceptions.LangException;
 import ru.boomearo.langhelper.versions.exceptions.LangParseException;
 import ru.boomearo.langhelper.versions.exceptions.LangVersionException;
@@ -38,7 +28,8 @@ public class LangHelper extends JavaPlugin {
             Translate1_16_R3.class,
             Translate1_17_R1.class,
             Translate1_18_R2.class,
-            Translate1_19_R3.class
+            Translate1_19_R3.class,
+            Translate1_20_R1.class
     );
 
     @Override

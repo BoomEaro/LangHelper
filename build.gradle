@@ -16,7 +16,7 @@ subprojects {
         options.encoding = "UTF-8"
     }
 
-    tasks.withType(JavaCompile) {
+    tasks.withType(JavaCompile).configureEach {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
@@ -55,10 +55,13 @@ dependencies {
     api project(":NMS:1_17_R1")
     api project(":NMS:1_18_R2")
     api project(":NMS:1_19_R3")
+    api project(":NMS:1_20_R1")
 }
 
 shadowJar {
     archiveBaseName.set("LangHelper")
+    archiveClassifier.set("")
+    archiveVersion.set("")
 }
 
 artifacts {
