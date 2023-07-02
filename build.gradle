@@ -10,7 +10,7 @@ subprojects {
     apply plugin: "eclipse"
 
     group = "ru.boomearo"
-    version = "1.4"
+    version = "1.5"
 
     compileJava {
         options.encoding = "UTF-8"
