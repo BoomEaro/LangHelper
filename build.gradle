@@ -10,7 +10,7 @@ subprojects {
     apply plugin: "eclipse"
 
     group = "ru.boomearo"
-    version = "1.5.1"
+    version = "1.5.2"
 
     compileJava {
         options.encoding = "UTF-8"
@@ -60,6 +60,8 @@ dependencies {
 
 shadowJar {
     archiveBaseName.set("LangHelper")
+    archiveClassifier.set("")
+    archiveVersion.set("")
 }
 
 artifacts {
