@@ -1,4 +1,4 @@
 jdk:
   - openjdk17
 install:
-  - ./gradlew build -Pgroup=com.github.BoomEaro -xtest publishToMavenLocal
+  - ./gradlew clean build -Pgroup=com.github.BoomEaro publishToMavenLocal

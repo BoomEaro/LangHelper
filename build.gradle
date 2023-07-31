@@ -4,13 +4,15 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
+allprojects {
+    group = "ru.boomearo"
+    version = "1.5.4"
+}
+
 subprojects {
     apply plugin: "java"
     apply plugin: "idea"
     apply plugin: "eclipse"
-
-    group = "ru.boomearo"
-    version = "1.5.3"
 
     compileJava {
         options.encoding = "UTF-8"
@@ -37,10 +39,9 @@ subprojects {
 
 publishing {
     publications {
-        maven(MavenPublication) {
+        publishToMavenLocal(MavenPublication) {
             from components.java
         }
-
     }
 }
 
@@ -61,7 +62,6 @@ dependencies {
 shadowJar {
     archiveBaseName.set("LangHelper")
     archiveClassifier.set("")
-    archiveVersion.set("")
 }
 
 artifacts {
