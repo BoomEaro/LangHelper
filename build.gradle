@@ -44,17 +44,17 @@ publishing {
 }
 
 dependencies {
-    api project(":plugin")
-    api project(":common")
-    api project(":nms:1_12_R1")
-    api project(":nms:1_13_R2")
-    api project(":nms:1_14_R1")
-    api project(":nms:1_15_R1")
-    api project(":nms:1_16_R3")
-    api project(":nms:1_17_R1")
-    api project(":nms:1_18_R2")
-    api project(":nms:1_19_R3")
-    api project(":nms:1_20_R2")
+    implementation project(":plugin")
+    implementation project(":common")
+    implementation project(":nms:1_12_R1")
+    implementation project(":nms:1_13_R2")
+    implementation project(":nms:1_14_R1")
+    implementation project(":nms:1_15_R1")
+    implementation project(":nms:1_16_R3")
+    implementation project(":nms:1_17_R1")
+    implementation project(":nms:1_18_R2")
+    implementation project(":nms:1_19_R3")
+    implementation project(":nms:1_20_R2")
 }
 
 shadowJar {
