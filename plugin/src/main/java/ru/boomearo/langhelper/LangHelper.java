@@ -28,7 +28,8 @@ public class LangHelper extends JavaPlugin {
             Translate1_17_R1.class,
             Translate1_18_R2.class,
             Translate1_19_R3.class,
-            Translate1_20_R4.class
+            Translate1_20_R4.class,
+            Translate1_21_R1.class
     );
 
     @Override
