@@ -2,22 +2,18 @@ package ru.boomearo.langhelper.versions;
 
 import com.google.common.base.Preconditions;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemLingeringPotion;
-import net.minecraft.world.item.ItemPotion;
-import net.minecraft.world.item.ItemSplashPotion;
-import net.minecraft.world.item.alchemy.PotionUtil;
 import org.bukkit.block.Biome;
-import org.bukkit.craftbukkit.v1_20_R2.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
 
-public class Translate1_20_R2 extends JsonTranslateManager {
+public class Translate1_20_R4 extends JsonTranslateManager {
 
-    public Translate1_20_R2(JavaPlugin javaPlugin) {
-        super("1.20.2", javaPlugin);
+    public Translate1_20_R4(JavaPlugin javaPlugin) {
+        super("1.20.5", javaPlugin);
     }
 
     @Override
@@ -29,8 +25,10 @@ public class Translate1_20_R2 extends JsonTranslateManager {
             net.minecraft.world.item.ItemStack itemStack = CraftItemStack.asNMSCopy(item);
 
             String name;
-            Item i = itemStack.d();
-            if (i instanceof ItemSplashPotion) {
+            Item i = itemStack.g();
+
+            // TODO Deal with potions translations somehow
+            /*if (i instanceof ItemSplashPotion) {
                 name = "item.minecraft." + PotionUtil.d(itemStack).b("splash_potion.effect.");
             } else if (i instanceof ItemLingeringPotion) {
                 name = "item.minecraft." + PotionUtil.d(itemStack).b("lingering_potion.effect.");
@@ -38,7 +36,9 @@ public class Translate1_20_R2 extends JsonTranslateManager {
                 name = "item.minecraft." + PotionUtil.d(itemStack).b("potion.effect.");
             } else {
                 name = i.a();
-            }
+            }*/
+
+            name = i.a();
 
             return getTranslate(name, langType);
         } catch (Exception e) {
