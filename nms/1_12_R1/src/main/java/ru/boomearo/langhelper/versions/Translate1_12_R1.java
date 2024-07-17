@@ -1,13 +1,7 @@
 package ru.boomearo.langhelper.versions;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-
 import com.google.common.base.Preconditions;
+import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.block.Biome;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
@@ -15,7 +9,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
 
-import net.minecraft.server.v1_12_R1.*;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 public class Translate1_12_R1 extends DefaultTranslateManager {
 
@@ -37,26 +36,20 @@ public class Translate1_12_R1 extends DefaultTranslateManager {
                 String str = "item.banner.";
                 EnumColor enumColor = EnumColor.fromInvColorIndex(itemStack.getData() & 0xF);
                 name = str + enumColor.d() + ".name";
-            }
-            else if (i instanceof ItemSplashPotion) {
+            } else if (i instanceof ItemSplashPotion) {
                 name = PotionUtil.d(itemStack).b("splash_potion.effect.");
-            }
-            else if (i instanceof ItemLingeringPotion) {
+            } else if (i instanceof ItemLingeringPotion) {
                 name = PotionUtil.d(itemStack).b("lingering_potion.effect.");
-            }
-            else if (i instanceof ItemPotion) {
+            } else if (i instanceof ItemPotion) {
                 name = PotionUtil.d(itemStack).b("potion.effect.");
-            }
-            else if (i instanceof ItemTippedArrow) {
+            } else if (i instanceof ItemTippedArrow) {
                 name = PotionUtil.d(itemStack).b("tipped_arrow.effect.");
-            }
-            else {
+            } else {
                 name = i.a(itemStack) + ".name";
             }
 
             return getTranslate(name, langType);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -88,8 +81,7 @@ public class Translate1_12_R1 extends DefaultTranslateManager {
         try {
             String name = org.bukkit.craftbukkit.v1_12_R1.enchantments.CraftEnchantment.getRaw(enchant).a();
             return getTranslate(name, langType);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -147,8 +139,7 @@ public class Translate1_12_R1 extends DefaultTranslateManager {
             }
 
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

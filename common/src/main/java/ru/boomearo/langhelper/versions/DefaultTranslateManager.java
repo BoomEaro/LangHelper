@@ -1,20 +1,6 @@
 package ru.boomearo.langhelper.versions;
 
-import java.io.*;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-
 import com.google.common.base.Preconditions;
-
 import org.bukkit.Bukkit;
 import org.bukkit.block.Biome;
 import org.bukkit.enchantments.Enchantment;
@@ -24,6 +10,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
 import ru.boomearo.langhelper.versions.cached.UrlManifestManager;
 import ru.boomearo.langhelper.versions.exceptions.LangParseException;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * Абстракция, представляет версию игры со всеми видами переводов
@@ -73,8 +70,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
             if (translates != null) {
                 types.put(LangType.EN_US, new TranslatedMessages(LangType.EN_US, translates));
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -95,8 +91,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
                                 LangType lt = null;
                                 try {
                                     lt = LangType.valueOf(t.getName().toUpperCase());
-                                }
-                                catch (Exception ignored) {
+                                } catch (Exception ignored) {
                                 }
                                 if (lt != null) {
                                     if (lt.isExternal()) {
@@ -114,8 +109,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
                     }
                 }
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -157,8 +151,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
                     Files.copy(stream, outputPath);
                     this.javaPlugin.getLogger().info("Скачан язык " + lt.getName() + " для версии " + this.version);
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 this.javaPlugin.getLogger().severe("Не удалось скачать язык " + lt.getName() + " для версии " + this.version);
                 e.printStackTrace();
             }
@@ -175,8 +168,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
                 LangType parsedType = null;
                 try {
                     parsedType = LangType.valueOf(t.toUpperCase());
-                }
-                catch (Exception ignored) {
+                } catch (Exception ignored) {
                 }
                 if (parsedType == null) {
                     continue;
@@ -334,8 +326,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
             if (i == 0) {
                 sb.append(word.toUpperCase().charAt(0));
                 sb.append(word.substring(1));
-            }
-            else {
+            } else {
                 sb.append(word.substring(0));
             }
         }

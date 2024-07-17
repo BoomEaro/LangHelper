@@ -1,17 +1,16 @@
 package ru.boomearo.langhelper;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
-
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import ru.boomearo.langhelper.commands.langhelper.CmdExecutorLangHelper;
 import ru.boomearo.langhelper.versions.*;
 import ru.boomearo.langhelper.versions.exceptions.LangException;
 import ru.boomearo.langhelper.versions.exceptions.LangParseException;
 import ru.boomearo.langhelper.versions.exceptions.LangVersionException;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 public class LangHelper extends JavaPlugin {
 
@@ -67,14 +66,11 @@ public class LangHelper extends JavaPlugin {
                 }
                 this.getLogger().info("Язык '" + tra.getLangType().getName() + " [" + languageName + "-" + languageRegion + "]' успешно загружен. Количество строк: " + tra.getAllTranslate().size());
             }
-        }
-        catch (LangParseException e) {
+        } catch (LangParseException e) {
             this.getLogger().warning("Ошибка при получении языков от mojang: " + e.getMessage());
-        }
-        catch (LangVersionException e) {
+        } catch (LangVersionException e) {
             this.getLogger().warning("Ошибка при получении версии сервера: " + e.getMessage());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -99,8 +95,7 @@ public class LangHelper extends JavaPlugin {
                     .findFirst().orElseThrow(() -> new LangException("Плагин не поддерживает данную версию сервера!")).
                     getConstructor(JavaPlugin.class).
                     newInstance(javaPlugin);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             //Вызываем новое, но свое
             throw new LangVersionException(e.getMessage());
         }

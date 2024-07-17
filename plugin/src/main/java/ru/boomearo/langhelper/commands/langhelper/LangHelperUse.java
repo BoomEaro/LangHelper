@@ -8,7 +8,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
-
 import ru.boomearo.langhelper.commands.CmdInfo;
 import ru.boomearo.langhelper.versions.DefaultTranslateManager;
 import ru.boomearo.langhelper.versions.LangType;
@@ -37,8 +36,7 @@ public class LangHelperUse {
             this.defaultTranslateManager.loadLanguages();
 
             cs.sendMessage("Конфигурация успешно перезагружена!");
-        }
-        catch (LangException e) {
+        } catch (LangException e) {
             cs.sendMessage("Ошибка: " + e.getMessage());
         }
 
@@ -54,8 +52,7 @@ public class LangHelperUse {
         LangType type = null;
         try {
             type = LangType.valueOf(args[0].toUpperCase());
-        }
-        catch (Exception ignored) {
+        } catch (Exception ignored) {
         }
 
         if (type == null) {
@@ -67,11 +64,9 @@ public class LangHelperUse {
 
         if (args[1].equalsIgnoreCase("yes")) {
             debug = true;
-        }
-        else if (args[1].equalsIgnoreCase("no")) {
+        } else if (args[1].equalsIgnoreCase("no")) {
             debug = false;
-        }
-        else {
+        } else {
             cs.sendMessage("Ожидается аргумент yes или no!");
             return true;
         }
@@ -90,8 +85,7 @@ public class LangHelperUse {
                     if (debug) {
                         cs.sendMessage(mat + " == " + name);
                     }
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     cs.sendMessage("Ошибка при получении предмета " + mat);
                 }
@@ -114,8 +108,7 @@ public class LangHelperUse {
                     if (debug) {
                         cs.sendMessage(en + " == " + name);
                     }
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     cs.sendMessage("Ошибка при получении сущности " + en);
                 }
@@ -135,8 +128,7 @@ public class LangHelperUse {
                     if (debug) {
                         cs.sendMessage(en + " == " + name);
                     }
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     cs.sendMessage("Ошибка при получении зачарования " + en);
                 }
@@ -156,8 +148,7 @@ public class LangHelperUse {
                     if (debug) {
                         cs.sendMessage(i + " == " + name);
                     }
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     cs.sendMessage("Ошибка при получении уровня зачарования " + i);
                 }
@@ -181,8 +172,7 @@ public class LangHelperUse {
                     if (debug) {
                         cs.sendMessage(pet + " == " + name);
                     }
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     cs.sendMessage("Ошибка при получении эффекта зелья " + pet);
                 }
@@ -202,8 +192,7 @@ public class LangHelperUse {
                     if (debug) {
                         cs.sendMessage(b + " == " + name);
                     }
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     cs.sendMessage("Ошибка при получении биома " + b);
                 }
@@ -229,8 +218,7 @@ public class LangHelperUse {
         LangType type = null;
         try {
             type = LangType.valueOf(args[0].toUpperCase());
-        }
-        catch (Exception ignored) {
+        } catch (Exception ignored) {
         }
 
         if (type == null) {
@@ -258,8 +246,7 @@ public class LangHelperUse {
         LangType laType = null;
         try {
             laType = LangType.valueOf(args[0].toUpperCase());
-        }
-        catch (Exception ignored) {
+        } catch (Exception ignored) {
         }
 
         if (laType == null) {
@@ -270,8 +257,7 @@ public class LangHelperUse {
         EntityType enType = null;
         try {
             enType = EntityType.valueOf(args[1].toUpperCase());
-        }
-        catch (Exception ignored) {
+        } catch (Exception ignored) {
         }
         if (enType == null) {
             cs.sendMessage("Указанная сущность не найдена!");
@@ -291,8 +277,7 @@ public class LangHelperUse {
         LangType laType = null;
         try {
             laType = LangType.valueOf(args[0].toUpperCase());
-        }
-        catch (Exception ignored) {
+        } catch (Exception ignored) {
         }
 
         if (laType == null) {
@@ -303,8 +288,7 @@ public class LangHelperUse {
         Enchantment enType = null;
         try {
             enType = Enchantment.getByName(args[1].toUpperCase());
-        }
-        catch (Exception ignored) {
+        } catch (Exception ignored) {
         }
         if (enType == null) {
             cs.sendMessage("Указанное зачарование не найдено!");
@@ -324,8 +308,7 @@ public class LangHelperUse {
         LangType laType = null;
         try {
             laType = LangType.valueOf(args[0].toUpperCase());
-        }
-        catch (Exception ignored) {
+        } catch (Exception ignored) {
         }
 
         if (laType == null) {
@@ -336,8 +319,7 @@ public class LangHelperUse {
         Integer enType = null;
         try {
             enType = Integer.parseInt(args[1]);
-        }
-        catch (Exception ignored) {
+        } catch (Exception ignored) {
         }
         if (enType == null) {
             cs.sendMessage("Указанный уровень зачарования не найден!");
@@ -357,8 +339,7 @@ public class LangHelperUse {
         LangType laType = null;
         try {
             laType = LangType.valueOf(args[0].toUpperCase());
-        }
-        catch (Exception ignored) {
+        } catch (Exception ignored) {
         }
 
         if (laType == null) {
@@ -369,8 +350,7 @@ public class LangHelperUse {
         PotionEffectType efType = null;
         try {
             efType = PotionEffectType.getByName(args[1].toUpperCase());
-        }
-        catch (Exception ignored) {
+        } catch (Exception ignored) {
         }
         if (efType == null) {
             cs.sendMessage("Указанный тип зелья не найден!");
@@ -390,8 +370,7 @@ public class LangHelperUse {
         LangType laType = null;
         try {
             laType = LangType.valueOf(args[0].toUpperCase());
-        }
-        catch (Exception ignored) {
+        } catch (Exception ignored) {
         }
 
         if (laType == null) {
@@ -402,8 +381,7 @@ public class LangHelperUse {
         Biome biome = null;
         try {
             biome = Biome.valueOf(args[1].toUpperCase());
-        }
-        catch (Exception ignored) {
+        } catch (Exception ignored) {
         }
         if (biome == null) {
             cs.sendMessage("Указанный тип биома не найден!");

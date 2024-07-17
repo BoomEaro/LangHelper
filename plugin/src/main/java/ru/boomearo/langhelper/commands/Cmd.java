@@ -1,8 +1,8 @@
 package ru.boomearo.langhelper.commands;
 
-import java.lang.reflect.Method;
-
 import org.bukkit.command.CommandSender;
+
+import java.lang.reflect.Method;
 
 public class Cmd implements Comparable<Cmd> {
 
@@ -28,8 +28,7 @@ public class Cmd implements Comparable<Cmd> {
     public boolean execute(CommandSender cs, String[] args) {
         try {
             return (boolean) this.method.invoke(this.cmdMainObject, cs, args);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;

@@ -1,11 +1,11 @@
 package ru.boomearo.langhelper.commands;
 
+import org.bukkit.command.CommandSender;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-
-import org.bukkit.command.CommandSender;
 
 public class CmdList {
 

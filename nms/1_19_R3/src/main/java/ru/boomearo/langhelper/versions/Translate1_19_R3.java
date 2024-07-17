@@ -1,6 +1,11 @@
 package ru.boomearo.langhelper.versions;
 
 import com.google.common.base.Preconditions;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemLingeringPotion;
+import net.minecraft.world.item.ItemPotion;
+import net.minecraft.world.item.ItemSplashPotion;
+import net.minecraft.world.item.alchemy.PotionUtil;
 import org.bukkit.block.Biome;
 import org.bukkit.craftbukkit.v1_19_R3.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
@@ -8,12 +13,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
-
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemLingeringPotion;
-import net.minecraft.world.item.ItemPotion;
-import net.minecraft.world.item.ItemSplashPotion;
-import net.minecraft.world.item.alchemy.PotionUtil;
 
 public class Translate1_19_R3 extends JsonTranslateManager {
 
@@ -33,20 +32,16 @@ public class Translate1_19_R3 extends JsonTranslateManager {
             Item i = itemStack.c();
             if (i instanceof ItemSplashPotion) {
                 name = "item.minecraft." + PotionUtil.d(itemStack).b("splash_potion.effect.");
-            }
-            else if (i instanceof ItemLingeringPotion) {
+            } else if (i instanceof ItemLingeringPotion) {
                 name = "item.minecraft." + PotionUtil.d(itemStack).b("lingering_potion.effect.");
-            }
-            else if (i instanceof ItemPotion) {
+            } else if (i instanceof ItemPotion) {
                 name = "item.minecraft." + PotionUtil.d(itemStack).b("potion.effect.");
-            }
-            else {
+            } else {
                 name = i.a();
             }
 
             return getTranslate(name, langType);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

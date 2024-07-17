@@ -26,8 +26,7 @@ public class JsonUtils {
             connection.setRequestProperty("charset", "UTF-8");
 
             return connect(connection);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
@@ -60,11 +59,9 @@ public class JsonUtils {
 
             return (JSONObject) jsonObject;
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             if (connection != null) {
                 connection.disconnect();
             }

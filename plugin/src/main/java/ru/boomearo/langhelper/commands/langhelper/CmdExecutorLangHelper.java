@@ -1,13 +1,8 @@
 package ru.boomearo.langhelper.commands.langhelper;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.potion.PotionEffectType;
@@ -15,6 +10,10 @@ import ru.boomearo.langhelper.commands.AbstractExecutor;
 import ru.boomearo.langhelper.commands.CmdList;
 import ru.boomearo.langhelper.versions.DefaultTranslateManager;
 import ru.boomearo.langhelper.versions.LangType;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class CmdExecutorLangHelper extends AbstractExecutor {
 
@@ -46,8 +45,7 @@ public class CmdExecutorLangHelper extends AbstractExecutor {
                 }
             }
             return matches;
-        }
-        else if (args.length == 2) {
+        } else if (args.length == 2) {
             if (args[0].equalsIgnoreCase("testitem") ||
                     args[0].equalsIgnoreCase("testentity") ||
                     args[0].equalsIgnoreCase("testenchant") ||
@@ -65,8 +63,7 @@ public class CmdExecutorLangHelper extends AbstractExecutor {
                 }
                 return matches;
             }
-        }
-        else if (args.length == 3) {
+        } else if (args.length == 3) {
             if (args[0].equalsIgnoreCase("testentity")) {
                 if (!args[1].isEmpty()) {
                     List<String> matches = new ArrayList<>();
@@ -78,8 +75,7 @@ public class CmdExecutorLangHelper extends AbstractExecutor {
                     }
                     return matches;
                 }
-            }
-            else if (args[0].equalsIgnoreCase("testenchant")) {
+            } else if (args[0].equalsIgnoreCase("testenchant")) {
                 if (!args[1].isEmpty()) {
                     List<String> matches = new ArrayList<>();
                     String search = args[2].toLowerCase();
@@ -90,8 +86,7 @@ public class CmdExecutorLangHelper extends AbstractExecutor {
                     }
                     return matches;
                 }
-            }
-            else if (args[0].equalsIgnoreCase("testpotioneffect")) {
+            } else if (args[0].equalsIgnoreCase("testpotioneffect")) {
                 if (!args[1].isEmpty()) {
                     List<String> matches = new ArrayList<>();
                     String search = args[2].toLowerCase();
@@ -106,8 +101,7 @@ public class CmdExecutorLangHelper extends AbstractExecutor {
                     }
                     return matches;
                 }
-            }
-            else if (args[0].equalsIgnoreCase("testbiome")) {
+            } else if (args[0].equalsIgnoreCase("testbiome")) {
                 if (!args[1].isEmpty()) {
                     List<String> matches = new ArrayList<>();
                     String search = args[2].toLowerCase();

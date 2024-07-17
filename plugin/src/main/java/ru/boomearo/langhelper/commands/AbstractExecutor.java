@@ -1,11 +1,11 @@
 package ru.boomearo.langhelper.commands;
 
-import java.lang.reflect.Method;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+
+import java.lang.reflect.Method;
 
 public abstract class AbstractExecutor implements CommandExecutor, TabCompleter {
     private CmdList cmds = null;
