@@ -1,7 +1,7 @@
 plugins {
-    id 'java-library'
-    id 'maven-publish'
-    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id "java-library"
+    id "maven-publish"
+    id "com.github.johnrengelman.shadow" version "8.1.1"
 }
 
 allprojects {
@@ -11,8 +11,6 @@ allprojects {
 
 subprojects {
     apply plugin: "java"
-    apply plugin: "idea"
-    apply plugin: "eclipse"
 
     compileJava {
         options.encoding = "UTF-8"
@@ -25,12 +23,12 @@ subprojects {
 
     repositories {
         maven {
-            name = 'codemc-repo'
+            name = "codemc-repo"
             url "https://repo.codemc.org/repository/nms/"
         }
         maven {
-            name = 'minecraft-repo'
-            url = 'https://libraries.minecraft.net/'
+            name = "minecraft-repo"
+            url = "https://libraries.minecraft.net/"
         }
         mavenCentral()
     }
