@@ -2,6 +2,7 @@ package ru.boomearo.langhelper.versions;
 
 import com.google.common.base.Preconditions;
 import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
@@ -21,6 +22,110 @@ import java.util.logging.Level;
 
 public class Translate1_12_R1 extends DefaultTranslateManager {
 
+    private static final Map<Material, Material> BLOCK_ALIASES;
+    private static final Map<Material, String> MISSING_KEYS;
+
+    static {
+        Map<Material, Material> BLOCK_ALIASES_TMP = new HashMap<>();
+
+        BLOCK_ALIASES_TMP.put(Material.STATIONARY_WATER, Material.WATER);
+        BLOCK_ALIASES_TMP.put(Material.STATIONARY_LAVA, Material.LAVA);
+
+        BLOCK_ALIASES_TMP.put(Material.BED_BLOCK, Material.BED);
+
+        BLOCK_ALIASES_TMP.put(Material.PISTON_MOVING_PIECE, Material.PISTON_BASE);
+        BLOCK_ALIASES_TMP.put(Material.PISTON_EXTENSION, Material.PISTON_BASE);
+
+        BLOCK_ALIASES_TMP.put(Material.DOUBLE_STEP, Material.STEP);
+
+        BLOCK_ALIASES_TMP.put(Material.REDSTONE_WIRE, Material.REDSTONE);
+
+        BLOCK_ALIASES_TMP.put(Material.CROPS, Material.WHEAT);
+
+        BLOCK_ALIASES_TMP.put(Material.BURNING_FURNACE, Material.FURNACE);
+
+        BLOCK_ALIASES_TMP.put(Material.SIGN_POST, Material.SIGN);
+
+        BLOCK_ALIASES_TMP.put(Material.WOODEN_DOOR, Material.WOOD_DOOR);
+
+        BLOCK_ALIASES_TMP.put(Material.WALL_SIGN, Material.SIGN);
+
+        BLOCK_ALIASES_TMP.put(Material.IRON_DOOR_BLOCK, Material.IRON_DOOR);
+
+        BLOCK_ALIASES_TMP.put(Material.GLOWING_REDSTONE_ORE, Material.REDSTONE_ORE);
+
+        BLOCK_ALIASES_TMP.put(Material.REDSTONE_TORCH_OFF, Material.REDSTONE_TORCH_ON);
+
+        BLOCK_ALIASES_TMP.put(Material.SUGAR_CANE_BLOCK, Material.SUGAR_CANE);
+
+        BLOCK_ALIASES_TMP.put(Material.CAKE_BLOCK, Material.CAKE);
+
+        BLOCK_ALIASES_TMP.put(Material.DIODE_BLOCK_OFF, Material.DIODE);
+        BLOCK_ALIASES_TMP.put(Material.DIODE_BLOCK_ON, Material.DIODE);
+
+        BLOCK_ALIASES_TMP.put(Material.PUMPKIN_STEM, Material.PUMPKIN_SEEDS);
+
+        BLOCK_ALIASES_TMP.put(Material.MELON_STEM, Material.MELON_SEEDS);
+
+        BLOCK_ALIASES_TMP.put(Material.NETHER_WARTS, Material.NETHER_STALK);
+
+        BLOCK_ALIASES_TMP.put(Material.BREWING_STAND, Material.BREWING_STAND_ITEM);
+
+        BLOCK_ALIASES_TMP.put(Material.CAULDRON, Material.CAULDRON_ITEM);
+
+        BLOCK_ALIASES_TMP.put(Material.ENDER_PORTAL, Material.ENDER_PORTAL_FRAME);
+
+        BLOCK_ALIASES_TMP.put(Material.REDSTONE_LAMP_ON, Material.REDSTONE_LAMP_OFF);
+
+        BLOCK_ALIASES_TMP.put(Material.WOOD_DOUBLE_STEP, Material.WOOD_STEP);
+
+        BLOCK_ALIASES_TMP.put(Material.COCOA, Material.INK_SACK);
+
+        BLOCK_ALIASES_TMP.put(Material.TRIPWIRE, Material.TRIPWIRE_HOOK);
+
+        BLOCK_ALIASES_TMP.put(Material.FLOWER_POT, Material.FLOWER_POT_ITEM);
+
+        BLOCK_ALIASES_TMP.put(Material.CARROT, Material.CARROT_ITEM);
+
+        BLOCK_ALIASES_TMP.put(Material.POTATO, Material.POTATO_ITEM);
+
+        BLOCK_ALIASES_TMP.put(Material.SKULL, Material.SKULL_ITEM);
+
+        BLOCK_ALIASES_TMP.put(Material.REDSTONE_COMPARATOR_OFF, Material.REDSTONE_COMPARATOR);
+        BLOCK_ALIASES_TMP.put(Material.REDSTONE_COMPARATOR_ON, Material.REDSTONE_COMPARATOR);
+
+        BLOCK_ALIASES_TMP.put(Material.STANDING_BANNER, Material.BANNER);
+        BLOCK_ALIASES_TMP.put(Material.WALL_BANNER, Material.BANNER);
+
+        BLOCK_ALIASES_TMP.put(Material.DAYLIGHT_DETECTOR_INVERTED, Material.DAYLIGHT_DETECTOR);
+
+        BLOCK_ALIASES_TMP.put(Material.DOUBLE_STONE_SLAB2, Material.STONE_SLAB2);
+
+        BLOCK_ALIASES_TMP.put(Material.SPRUCE_DOOR, Material.SPRUCE_DOOR_ITEM);
+        BLOCK_ALIASES_TMP.put(Material.BIRCH_DOOR, Material.BIRCH_DOOR_ITEM);
+        BLOCK_ALIASES_TMP.put(Material.JUNGLE_DOOR, Material.JUNGLE_DOOR_ITEM);
+        BLOCK_ALIASES_TMP.put(Material.ACACIA_DOOR, Material.ACACIA_DOOR_ITEM);
+        BLOCK_ALIASES_TMP.put(Material.DARK_OAK_DOOR, Material.DARK_OAK_DOOR_ITEM);
+
+        BLOCK_ALIASES_TMP.put(Material.PURPUR_DOUBLE_SLAB, Material.PURPUR_SLAB);
+
+        BLOCK_ALIASES_TMP.put(Material.BEETROOT_BLOCK, Material.BEETROOT);
+
+        BLOCK_ALIASES_TMP.put(Material.FROSTED_ICE, Material.ICE);
+
+        BLOCK_ALIASES = BLOCK_ALIASES_TMP;
+
+        Map<Material, String> MISSING_KEYS_TMP = new HashMap<>();
+
+        MISSING_KEYS_TMP.put(Material.WATER, "tile.water.name");
+        MISSING_KEYS_TMP.put(Material.LAVA, "tile.lava.name");
+        MISSING_KEYS_TMP.put(Material.FIRE, "tile.fire.name");
+        MISSING_KEYS_TMP.put(Material.PORTAL, "tile.portal.name");
+
+        MISSING_KEYS = MISSING_KEYS_TMP;
+
+    }
+
     public Translate1_12_R1(Plugin plugin) {
         super("1.12.2", plugin);
     }
@@ -30,11 +135,18 @@ public class Translate1_12_R1 extends DefaultTranslateManager {
         Preconditions.checkArgument(item != null);
         Preconditions.checkArgument(langType != null);
 
+        Material newType = BLOCK_ALIASES.get(item.getType());
+        if (newType != null) {
+            item = item.clone();
+            item.setType(newType);
+        }
+
         try {
             net.minecraft.server.v1_12_R1.ItemStack itemStack = org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack.asNMSCopy(item);
 
             String name;
             Item i = itemStack.getItem();
+
             if (i instanceof ItemBanner) {
                 String str = "item.banner.";
                 EnumColor enumColor = EnumColor.fromInvColorIndex(itemStack.getData() & 0xF);
@@ -50,6 +162,18 @@ public class Translate1_12_R1 extends DefaultTranslateManager {
             } else {
                 name = i.a(itemStack) + ".name";
             }
+
+            if (item.getType() != Material.AIR) {
+                if (name.equals("tile.air.name")) {
+                    name = MISSING_KEYS.get(item.getType());
+                    if (name == null) {
+                        return null;
+                    }
+                }
+            }
+
+            // TODO Items without keys:
+            // END_GATEWAY
 
             return getTranslate(name, langType);
         } catch (Exception e) {
