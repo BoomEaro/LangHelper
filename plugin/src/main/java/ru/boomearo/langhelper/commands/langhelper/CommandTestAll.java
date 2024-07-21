@@ -70,6 +70,10 @@ public class CommandTestAll extends CommandNodeBukkit {
         {
             List<Material> failed = new ArrayList<>();
             for (Material mat : Material.values()) {
+                if (!mat.isItem()) {
+                    continue;
+                }
+
                 try {
                     String name = this.defaultTranslateManager.getItemName(new ItemStack(mat, 1), type);
                     if (name == null) {
