@@ -24,20 +24,17 @@ public class LangHelper extends JavaPlugin {
 
     private DefaultTranslateManager translateManager = null;
 
-    private final String serverVersion = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3].substring(1);
-
-    private static final List<Class<? extends DefaultTranslateManager>> VERSIONS = Arrays.asList(
-            Translate1_12_R1.class,
-            Translate1_13_R2.class,
-            Translate1_14_R1.class,
-            Translate1_15_R1.class,
-            Translate1_16_R3.class,
-            Translate1_17_R1.class,
-            Translate1_18_R2.class,
-            Translate1_19_R3.class,
-            // TODO Does not work due to mappings changes
-            Translate1_20_R4.class,
-            Translate1_21_R1.class
+    private static final List<TranslationVersionWrapper> VERSIONS = Arrays.asList(
+            new TranslationVersionWrapper("1.12.2", Translate1_12_R1.class),
+            new TranslationVersionWrapper("1.13.2", Translate1_13_R2.class),
+            new TranslationVersionWrapper("1.14.4", Translate1_14_R1.class),
+            new TranslationVersionWrapper("1.15.2", Translate1_15_R1.class),
+            new TranslationVersionWrapper("1.16.5", Translate1_16_R3.class),
+            new TranslationVersionWrapper("1.17.1", Translate1_17_R1.class),
+            new TranslationVersionWrapper("1.18.2", Translate1_18_R2.class),
+            new TranslationVersionWrapper("1.19.4", Translate1_19_R3.class),
+            new TranslationVersionWrapper("1.20.6", Translate1_20_R4.class),
+            new TranslationVersionWrapper("1.21", Translate1_21_R1.class)
     );
 
     @Override
@@ -65,19 +62,19 @@ public class LangHelper extends JavaPlugin {
                 }
                 this.getLogger().info("Language '" + tra.getLangType().getName() + " [" + languageName + "-" + languageRegion + "]' successfully loaded. Translation keys: " + tra.getAllTranslate().size());
             }
+
+            this.getCommand("langhelper").setExecutor(new LangHelperCommandExecutor(
+                    this,
+                    this.configManager,
+                    this.translateManager
+            ));
+
+            this.getLogger().info("Plugin successfully enabled!");
         } catch (LangVersionException e) {
             this.getLogger().warning("Failed to get server version: " + e.getMessage());
         } catch (Exception e) {
             this.getLogger().log(Level.SEVERE, "Failed to load translate manager", e);
         }
-
-        this.getCommand("langhelper").setExecutor(new LangHelperCommandExecutor(
-                this,
-                this.configManager,
-                this.translateManager
-        ));
-
-        this.getLogger().info("Plugin successfully enabled!");
     }
 
     @Override
@@ -87,10 +84,12 @@ public class LangHelper extends JavaPlugin {
 
     private DefaultTranslateManager matchVersion(Plugin plugin, ConfigManager configManager) throws LangVersionException {
         try {
+            String bukkitVersion = Bukkit.getServer().getBukkitVersion();
             return VERSIONS.stream()
-                    .filter(version -> version.getSimpleName().substring(9).equals(this.serverVersion))
-                    .findFirst().orElseThrow(() -> new LangException("LangHelper does not support this minecraft version!")).
-                    getConstructor(Plugin.class, ConfigManager.class).
+                    .filter(translationVersionWrapper -> bukkitVersion.startsWith(translationVersionWrapper.version()))
+                    .findFirst().orElseThrow(() -> new LangException("LangHelper does not support this minecraft version!"))
+                    .clazz()
+                    .getConstructor(Plugin.class, ConfigManager.class).
                     newInstance(plugin, configManager);
         } catch (Exception e) {
             throw new LangVersionException(e.getMessage());
