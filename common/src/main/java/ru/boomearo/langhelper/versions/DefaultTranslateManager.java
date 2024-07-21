@@ -75,7 +75,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
 
                             LangType lt = null;
                             try {
-                                lt = LangType.valueOf(t.getName().toUpperCase());
+                                lt = LangType.valueOf(t.getName().toUpperCase(Locale.ROOT));
                             } catch (Exception ignored) {
                             }
 
@@ -130,7 +130,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
             }
 
             // Пытаемся получить хэш для скачивания этого языка
-            String hash = this.urlManifestManager.getLanguageHash(this.version, lt.name().toLowerCase());
+            String hash = this.urlManifestManager.getLanguageHash(this.version, lt.name().toLowerCase(Locale.ROOT));
 
             try {
                 // Пытаемся скачать язык, используя хэш.
@@ -160,7 +160,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
             for (String t : configLangs) {
                 LangType parsedType = null;
                 try {
-                    parsedType = LangType.valueOf(t.toUpperCase());
+                    parsedType = LangType.valueOf(t.toUpperCase(Locale.ROOT));
                 } catch (Exception ignored) {
                 }
                 if (parsedType == null) {
@@ -189,7 +189,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
     public String getTranslate(String key, LangType langType) {
         TranslatedMessages tr = this.types.get(langType);
         if (tr != null) {
-            return tr.getTranslate(key.toLowerCase().replace("_", ""));
+            return tr.getTranslate(key.toLowerCase(Locale.ROOT).replace("_", ""));
         }
         return null;
     }
@@ -308,7 +308,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
     protected abstract Map<String, String> parseTranslate(InputStream stream);
 
     private static String capitalize(String name) {
-        String material = name.replace("_", " ").toLowerCase();
+        String material = name.replace("_", " ").toLowerCase(Locale.ROOT);
 
         StringBuilder sb = new StringBuilder();
         String[] arrayOfString;
@@ -317,7 +317,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
             String word = arrayOfString[i];
             sb.append(" ");
             if (i == 0) {
-                sb.append(word.toUpperCase().charAt(0));
+                sb.append(word.toUpperCase(Locale.ROOT).charAt(0));
                 sb.append(word.substring(1));
             } else {
                 sb.append(word);

@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.Locale;
 import java.util.logging.Level;
 
 public class Translate1_13_R2 extends JsonTranslateManager {
@@ -72,7 +73,7 @@ public class Translate1_13_R2 extends JsonTranslateManager {
         Preconditions.checkArgument(potionEffectType != null);
         Preconditions.checkArgument(langType != null);
 
-        String effectName = switch (potionEffectType.getName().toLowerCase()) {
+        String effectName = switch (potionEffectType.getName().toLowerCase(Locale.ROOT)) {
             case "fast_digging" -> "haste";
             case "harm" -> "instant_damage";
             case "heal" -> "instant_health";
@@ -82,7 +83,7 @@ public class Translate1_13_R2 extends JsonTranslateManager {
             case "damage_resistance" -> "resistance";
             case "slow" -> "slowness";
             case "increase_damage" -> "strength";
-            default -> potionEffectType.getName().toLowerCase();
+            default -> potionEffectType.getName().toLowerCase(Locale.ROOT);
         };
         return getTranslate("effect.minecraft." + effectName, langType);
     }
@@ -92,6 +93,6 @@ public class Translate1_13_R2 extends JsonTranslateManager {
         Preconditions.checkArgument(biome != null);
         Preconditions.checkArgument(langType != null);
 
-        return getTranslate("biome.minecraft." + biome.name().toLowerCase(), langType);
+        return getTranslate("biome.minecraft." + biome.name().toLowerCase(Locale.ROOT), langType);
     }
 }

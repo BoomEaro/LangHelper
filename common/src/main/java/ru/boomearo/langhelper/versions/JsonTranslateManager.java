@@ -13,10 +13,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
 
 /**
@@ -60,7 +57,7 @@ public abstract class JsonTranslateManager extends DefaultTranslateManager {
             if (obj instanceof JSONObject o) {
                 Set<Map.Entry<Object, Object>> s = (Set<Map.Entry<Object, Object>>) o.entrySet();
                 for (Map.Entry<Object, Object> f : s) {
-                    translates.put(f.getKey().toString().toLowerCase().replace("_", ""), f.getValue().toString());
+                    translates.put(f.getKey().toString().toLowerCase(Locale.ROOT).replace("_", ""), f.getValue().toString());
                 }
             }
 

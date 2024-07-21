@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -101,14 +102,14 @@ public class Translate1_12_R1 extends DefaultTranslateManager {
         Preconditions.checkArgument(potionEffectType != null);
         Preconditions.checkArgument(langType != null);
 
-        String effectName = switch (potionEffectType.getName().toLowerCase()) {
+        String effectName = switch (potionEffectType.getName().toLowerCase(Locale.ROOT)) {
             case "speed" -> "moveSpeed";
             case "fast_digging" -> "digSpeed";
             case "slow_digging" -> "digSlowDown";
             case "damage_resistance" -> "resistance";
             case "slow" -> "moveSlowdown";
             case "increase_damage" -> "damageBoost";
-            default -> potionEffectType.getName().toLowerCase();
+            default -> potionEffectType.getName().toLowerCase(Locale.ROOT);
         };
 
         String name = "effect." + effectName;
@@ -136,7 +137,7 @@ public class Translate1_12_R1 extends DefaultTranslateManager {
 
                 String[] args = line.split("=");
                 if (args.length >= 2) {
-                    translates.put(args[0].toLowerCase().replace("_", ""), args[1]);
+                    translates.put(args[0].toLowerCase(Locale.ROOT).replace("_", ""), args[1]);
                 }
             }
 

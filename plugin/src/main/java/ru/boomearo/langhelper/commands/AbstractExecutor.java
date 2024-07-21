@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
 import java.lang.reflect.Method;
+import java.util.Locale;
 
 public abstract class AbstractExecutor implements CommandExecutor, TabCompleter {
     private CmdList cmds = null;
@@ -30,7 +31,7 @@ public abstract class AbstractExecutor implements CommandExecutor, TabCompleter 
         }
         String[] argsCopy = new String[len - 1];
         System.arraycopy(args, 1, argsCopy, 0, len - 1);
-        if (!this.cmds.execute(args[0].toLowerCase(), sender, argsCopy)) {
+        if (!this.cmds.execute(args[0].toLowerCase(Locale.ROOT), sender, argsCopy)) {
             this.cmds.sendUsageCmds(sender);
         }
         return true;

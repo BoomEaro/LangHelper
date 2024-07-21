@@ -14,6 +14,7 @@ import ru.boomearo.langhelper.versions.LangType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class CmdExecutorLangHelper extends AbstractExecutor {
 
@@ -38,9 +39,9 @@ public class CmdExecutorLangHelper extends AbstractExecutor {
         }
         if (args.length == 1) {
             List<String> matches = new ArrayList<>();
-            String search = args[0].toLowerCase();
+            String search = args[0].toLowerCase(Locale.ROOT);
             for (String se : Arrays.asList("reload", "testitem", "testentity", "testenchant", "testenchantlevel", "testpotioneffect", "testbiome", "testall")) {
-                if (se.toLowerCase().startsWith(search)) {
+                if (se.toLowerCase(Locale.ROOT).startsWith(search)) {
                     matches.add(se);
                 }
             }
@@ -55,9 +56,9 @@ public class CmdExecutorLangHelper extends AbstractExecutor {
                     args[0].equalsIgnoreCase("testall")) {
 
                 List<String> matches = new ArrayList<>();
-                String search = args[1].toLowerCase();
+                String search = args[1].toLowerCase(Locale.ROOT);
                 for (LangType lt : this.defaultTranslateManager.getAllTranslateLang()) {
-                    if (lt.getName().toLowerCase().startsWith(search)) {
+                    if (lt.getName().toLowerCase(Locale.ROOT).startsWith(search)) {
                         matches.add(lt.getName());
                     }
                 }
@@ -67,9 +68,9 @@ public class CmdExecutorLangHelper extends AbstractExecutor {
             if (args[0].equalsIgnoreCase("testentity")) {
                 if (!args[1].isEmpty()) {
                     List<String> matches = new ArrayList<>();
-                    String search = args[2].toLowerCase();
+                    String search = args[2].toLowerCase(Locale.ROOT);
                     for (EntityType et : EntityType.values()) {
-                        if (et.name().toLowerCase().startsWith(search)) {
+                        if (et.name().toLowerCase(Locale.ROOT).startsWith(search)) {
                             matches.add(et.name());
                         }
                     }
@@ -78,9 +79,9 @@ public class CmdExecutorLangHelper extends AbstractExecutor {
             } else if (args[0].equalsIgnoreCase("testenchant")) {
                 if (!args[1].isEmpty()) {
                     List<String> matches = new ArrayList<>();
-                    String search = args[2].toLowerCase();
+                    String search = args[2].toLowerCase(Locale.ROOT);
                     for (Enchantment ench : Enchantment.values()) {
-                        if (ench.getName().toLowerCase().startsWith(search)) {
+                        if (ench.getName().toLowerCase(Locale.ROOT).startsWith(search)) {
                             matches.add(ench.getName());
                         }
                     }
@@ -89,13 +90,13 @@ public class CmdExecutorLangHelper extends AbstractExecutor {
             } else if (args[0].equalsIgnoreCase("testpotioneffect")) {
                 if (!args[1].isEmpty()) {
                     List<String> matches = new ArrayList<>();
-                    String search = args[2].toLowerCase();
+                    String search = args[2].toLowerCase(Locale.ROOT);
                     for (PotionEffectType pet : PotionEffectType.values()) {
                         //Опять же, это же бред.
                         if (pet == null) {
                             continue;
                         }
-                        if (pet.getName().toLowerCase().startsWith(search)) {
+                        if (pet.getName().toLowerCase(Locale.ROOT).startsWith(search)) {
                             matches.add(pet.getName());
                         }
                     }
@@ -104,9 +105,9 @@ public class CmdExecutorLangHelper extends AbstractExecutor {
             } else if (args[0].equalsIgnoreCase("testbiome")) {
                 if (!args[1].isEmpty()) {
                     List<String> matches = new ArrayList<>();
-                    String search = args[2].toLowerCase();
+                    String search = args[2].toLowerCase(Locale.ROOT);
                     for (Biome bi : Biome.values()) {
-                        if (bi.name().toLowerCase().startsWith(search)) {
+                        if (bi.name().toLowerCase(Locale.ROOT).startsWith(search)) {
                             matches.add(bi.name());
                         }
                     }

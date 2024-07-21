@@ -15,6 +15,7 @@ import ru.boomearo.langhelper.versions.exceptions.LangException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class LangHelperUse {
 
@@ -51,7 +52,7 @@ public class LangHelperUse {
 
         LangType type = null;
         try {
-            type = LangType.valueOf(args[0].toUpperCase());
+            type = LangType.valueOf(args[0].toUpperCase(Locale.ROOT));
         } catch (Exception ignored) {
         }
 
@@ -217,7 +218,7 @@ public class LangHelperUse {
 
         LangType type = null;
         try {
-            type = LangType.valueOf(args[0].toUpperCase());
+            type = LangType.valueOf(args[0].toUpperCase(Locale.ROOT));
         } catch (Exception ignored) {
         }
 
@@ -245,7 +246,7 @@ public class LangHelperUse {
 
         LangType laType = null;
         try {
-            laType = LangType.valueOf(args[0].toUpperCase());
+            laType = LangType.valueOf(args[0].toUpperCase(Locale.ROOT));
         } catch (Exception ignored) {
         }
 
@@ -256,7 +257,7 @@ public class LangHelperUse {
 
         EntityType enType = null;
         try {
-            enType = EntityType.valueOf(args[1].toUpperCase());
+            enType = EntityType.valueOf(args[1].toUpperCase(Locale.ROOT));
         } catch (Exception ignored) {
         }
         if (enType == null) {
@@ -276,7 +277,7 @@ public class LangHelperUse {
 
         LangType laType = null;
         try {
-            laType = LangType.valueOf(args[0].toUpperCase());
+            laType = LangType.valueOf(args[0].toUpperCase(Locale.ROOT));
         } catch (Exception ignored) {
         }
 
@@ -287,7 +288,7 @@ public class LangHelperUse {
 
         Enchantment enType = null;
         try {
-            enType = Enchantment.getByName(args[1].toUpperCase());
+            enType = Enchantment.getByName(args[1].toUpperCase(Locale.ROOT));
         } catch (Exception ignored) {
         }
         if (enType == null) {
@@ -307,7 +308,7 @@ public class LangHelperUse {
 
         LangType laType = null;
         try {
-            laType = LangType.valueOf(args[0].toUpperCase());
+            laType = LangType.valueOf(args[0].toUpperCase(Locale.ROOT));
         } catch (Exception ignored) {
         }
 
@@ -338,7 +339,7 @@ public class LangHelperUse {
 
         LangType laType = null;
         try {
-            laType = LangType.valueOf(args[0].toUpperCase());
+            laType = LangType.valueOf(args[0].toUpperCase(Locale.ROOT));
         } catch (Exception ignored) {
         }
 
@@ -349,7 +350,7 @@ public class LangHelperUse {
 
         PotionEffectType efType = null;
         try {
-            efType = PotionEffectType.getByName(args[1].toUpperCase());
+            efType = PotionEffectType.getByName(args[1].toUpperCase(Locale.ROOT));
         } catch (Exception ignored) {
         }
         if (efType == null) {
@@ -369,7 +370,7 @@ public class LangHelperUse {
 
         LangType laType = null;
         try {
-            laType = LangType.valueOf(args[0].toUpperCase());
+            laType = LangType.valueOf(args[0].toUpperCase(Locale.ROOT));
         } catch (Exception ignored) {
         }
 
@@ -380,7 +381,7 @@ public class LangHelperUse {
 
         Biome biome = null;
         try {
-            biome = Biome.valueOf(args[1].toUpperCase());
+            biome = Biome.valueOf(args[1].toUpperCase(Locale.ROOT));
         } catch (Exception ignored) {
         }
         if (biome == null) {
