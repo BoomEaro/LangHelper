@@ -63,17 +63,50 @@ public class Translate1_12_R1 extends DefaultTranslateManager {
         Preconditions.checkArgument(entityType != null);
         Preconditions.checkArgument(langType != null);
 
-        // TODO Нужно ли править?
+        try {
+            String originalName = entityType.getName();
+            if (originalName == null) {
+                originalName = entityType.name().toLowerCase(Locale.ROOT);
+            }
 
-        // Следующие ниже сущности имеют СОВСЕМ другой ключ перевода.. Похоже в 1.12.2 нет nms енумов и все типы сущностей это классы.
-        // К тому же, ключ перевода реализован у каждой реализации сущности свой, а это значит придется передавать сюда обьект entity что не очень удобно.
+            String name = EntityTypes.a(new MinecraftKey(originalName));
+            if (name == null) {
+                return null;
+            }
 
-        // AREA_EFFECT_CLOUD, EGG, LEASH_HITCH, ENDER_PEARL, ENDER_SIGNAL, SPLASH_POTION, THROWN_EXP_BOTTLE, ITEM_FRAME, WITHER_SKULL, PRIMED_TNT, FALLING_BLOCK, FIREWORK,
-        // SPECTRAL_ARROW, SHULKER_BULLET, EVOKER_FANGS, MINECART_COMMAND, MINECART_CHEST, MINECART_FURNACE, MINECART_TNT, MINECART_HOPPER, MINECART_MOB_SPAWNER, PIG_ZOMBIE,
-        // MAGMA_CUBE, WITHER, MUSHROOM_COW, OCELOT, LLAMA_SPIT, ENDER_CRYSTAL, LINGERING_POTION, FISHING_HOOK, LIGHTNING, WEATHER, PLAYER, COMPLEX_PART, TIPPED_ARROW
+            // TODO Entities without keys:
+            // AREA_EFFECT_CLOUD,
+            // EGG,
+            // LEASH_HITCH,
+            // ENDER_PEARL,
+            // ENDER_SIGNAL,
+            // THROWN_EXP_BOTTLE,
+            // ITEM_FRAME,
+            // WITHER_SKULL,
+            // FIREWORK,
+            // SPECTRAL_ARROW,
+            // SHULKER_BULLET,
+            // EVOKER_FANGS,
+            // MINECART_COMMAND,
+            // MINECART,
+            // MINECART_FURNACE,
+            // MINECART_TNT,
+            // MINECART_MOB_SPAWNER,
+            // LLAMA_SPIT,
+            // ENDER_CRYSTAL,
+            // LINGERING_POTION,
+            // FISHING_HOOK,
+            // LIGHTNING,
+            // WEATHER,
+            // PLAYER,
+            // COMPLEX_PART,
+            // TIPPED_ARROW
 
-        // Мне лень делать switch/case для каждого перевода, да и нужно ли оно?
-        return getTranslate("entity." + entityType.name() + ".name", langType);
+            return getTranslate("entity." + name + ".name", langType);
+        } catch (Exception e) {
+            this.plugin.getLogger().log(Level.SEVERE, "Failed to get entity name for " + entityType, e);
+            return null;
+        }
     }
 
     @Override
@@ -116,7 +149,7 @@ public class Translate1_12_R1 extends DefaultTranslateManager {
         return getTranslate(name, langType);
     }
 
-    //TODO К сожалению 1.12.2 не имеет строк для перевода биомов.
+    // TODO К сожалению 1.12.2 не имеет строк для перевода биомов.
     @Override
     public String getBiomeName(Biome biome, LangType langType) {
         return null;
