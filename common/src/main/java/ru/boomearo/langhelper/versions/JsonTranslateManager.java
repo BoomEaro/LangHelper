@@ -4,7 +4,7 @@ import org.bukkit.block.Biome;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffectType;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -13,18 +13,19 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+import java.util.logging.Level;
 
 /**
  * Более продвинутая абстракция менеджера перевода, использующая парсинг json
  */
 public abstract class JsonTranslateManager extends DefaultTranslateManager {
 
-    public JsonTranslateManager(String version, JavaPlugin javaPlugin) {
-        super(version, javaPlugin);
+    public JsonTranslateManager(String version, Plugin plugin) {
+        super(version, plugin);
     }
 
     @Override
@@ -46,8 +47,8 @@ public abstract class JsonTranslateManager extends DefaultTranslateManager {
     public abstract String getBiomeName(Biome biome, LangType langType);
 
     @Override
-    protected ConcurrentMap<String, String> parseTranslate(InputStream stream) {
-        ConcurrentMap<String, String> translates = new ConcurrentHashMap<>();
+    protected Map<String, String> parseTranslate(InputStream stream) {
+        Map<String, String> translates = new HashMap<>();
         JSONParser jsonParser = new JSONParser();
 
         try (InputStreamReader streamReader =
@@ -64,9 +65,9 @@ public abstract class JsonTranslateManager extends DefaultTranslateManager {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            this.plugin.getLogger().log(Level.SEVERE, "Failed to parse translation", e);
         }
 
-        return translates;
+        return Collections.unmodifiableMap(translates);
     }
 }

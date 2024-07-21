@@ -1,8 +1,13 @@
 package ru.boomearo.langhelper.versions;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 /**
  * Перечисление всех возможных поддерживаемых переводов игры Minecraft.
  */
+@Getter
+@RequiredArgsConstructor
 public enum LangType {
 
     //Только английский язык является не скачиваемым, поэтому переопределяем ему этот метод
@@ -136,14 +141,6 @@ public enum LangType {
     ZH_TW("zh_tw");
 
     private final String name;
-
-    LangType(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return this.name;
-    }
 
     /**
      * Обозначает, является ли язык скачиваемым.

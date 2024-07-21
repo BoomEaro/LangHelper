@@ -11,13 +11,15 @@ import org.bukkit.craftbukkit.v1_18_R2.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.logging.Level;
 
 public class Translate1_18_R2 extends JsonTranslateManager {
 
-    public Translate1_18_R2(JavaPlugin javaPlugin) {
-        super("1.18.2", javaPlugin);
+    public Translate1_18_R2(Plugin plugin) {
+        super("1.18.2", plugin);
     }
 
     @Override
@@ -42,7 +44,7 @@ public class Translate1_18_R2 extends JsonTranslateManager {
 
             return getTranslate(name, langType);
         } catch (Exception e) {
-            e.printStackTrace();
+            this.plugin.getLogger().log(Level.SEVERE, "Failed to get item name for " + item, e);
             return null;
         }
     }

@@ -1,12 +1,14 @@
 package ru.boomearo.langhelper.versions;
 
 import com.google.common.base.Preconditions;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Biome;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffectType;
 import ru.boomearo.langhelper.versions.cached.UrlManifestManager;
 import ru.boomearo.langhelper.versions.exceptions.LangParseException;
@@ -19,62 +21,42 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+import java.util.logging.Level;
 
 /**
  * Абстракция, представляет версию игры со всеми видами переводов
  */
+@RequiredArgsConstructor
 public abstract class DefaultTranslateManager implements TranslateManager {
-
-    private final UrlManifestManager urlManifestManager = new UrlManifestManager();
-    private final String version;
-    private final JavaPlugin javaPlugin;
-    private ConcurrentMap<LangType, TranslatedMessages> types;
-
-    private List<LangType> enabledLanguages = new ArrayList<>();
 
     private static final String TRANSLATION_FILE_URL = "https://resources.download.minecraft.net/%s/%s";
 
-    public DefaultTranslateManager(String version, JavaPlugin javaPlugin) {
-        this.version = version;
-        this.javaPlugin = javaPlugin;
-    }
+    private final UrlManifestManager urlManifestManager = new UrlManifestManager();
 
-    /**
-     * @return версия игры
-     */
-    public String getVersion() {
-        return this.version;
-    }
+    @Getter
+    protected final String version;
+    protected final Plugin plugin;
+    protected Map<LangType, TranslatedMessages> types;
+
+    protected Set<LangType> enabledLanguages = new HashSet<>();
 
     /**
      * Загружает языки из файла в менеджере, учитывая включенные языки.
      */
     public void loadLanguages() {
-        ConcurrentMap<LangType, TranslatedMessages> types = new ConcurrentHashMap<>();
+        Map<LangType, TranslatedMessages> types = new HashMap<>();
         try {
-            ClassLoader classLoader = Bukkit.getServer().getClass().getClassLoader();
+            InputStream stream = getFileInputStream();
 
-            String defaultEnPath = "assets/minecraft/lang/" + LangType.EN_US.getName();
-
-            InputStream stream = classLoader.getResourceAsStream(defaultEnPath + ".lang");
-            if (stream == null) {
-                stream = classLoader.getResourceAsStream(defaultEnPath + ".json");
-                if (stream == null) {
-                    throw new IllegalArgumentException("Не найден языковый файл по умолчанию!");
-                }
-            }
-
-            ConcurrentMap<String, String> translates = parseTranslate(stream);
+            Map<String, String> translates = parseTranslate(stream);
             if (translates != null) {
                 types.put(LangType.EN_US, new TranslatedMessages(LangType.EN_US, translates));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            this.plugin.getLogger().log(Level.SEVERE, "Failed to load default languages", e);
         }
 
-        File file = new File(this.javaPlugin.getDataFolder(), "languages" + File.separator);
+        File file = new File(this.plugin.getDataFolder(), "languages" + File.separator);
 
         try {
             if (!file.exists()) {
@@ -87,33 +69,45 @@ public abstract class DefaultTranslateManager implements TranslateManager {
                     File[] type = ver.listFiles();
                     if (type != null) {
                         for (File t : type) {
-                            if (t.isFile()) {
-                                LangType lt = null;
-                                try {
-                                    lt = LangType.valueOf(t.getName().toUpperCase());
-                                } catch (Exception ignored) {
-                                }
-                                if (lt != null) {
-                                    if (lt.isExternal()) {
-                                        if (this.enabledLanguages.contains(lt)) {
-                                            InputStream stream = new FileInputStream(t);
-                                            ConcurrentMap<String, String> translate = parseTranslate(stream);
-                                            if (translate != null) {
-                                                types.put(lt, new TranslatedMessages(lt, translate));
-                                            }
-                                        }
-                                    }
-                                }
+                            if (!t.isFile()) {
+                                continue;
                             }
+
+                            LangType lt = null;
+                            try {
+                                lt = LangType.valueOf(t.getName().toUpperCase());
+                            } catch (Exception ignored) {
+                            }
+
+                            if (lt == null) {
+                                continue;
+                            }
+
+                            if (!lt.isExternal()) {
+                                continue;
+                            }
+
+                            if (!this.enabledLanguages.contains(lt)) {
+                                continue;
+                            }
+
+                            InputStream stream = new FileInputStream(t);
+                            Map<String, String> translate = parseTranslate(stream);
+
+                            if (translate == null) {
+                                continue;
+                            }
+
+                            types.put(lt, new TranslatedMessages(lt, translate));
                         }
                     }
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            this.plugin.getLogger().log(Level.SEVERE, "Failed to load languages", e);
         }
 
-        this.types = types;
+        this.types = Collections.unmodifiableMap(types);
     }
 
     public Set<LangType> getAllTranslateLang() {
@@ -125,44 +119,43 @@ public abstract class DefaultTranslateManager implements TranslateManager {
      * Сам бы я не узнал как именно скачивать языки. Спасибо автору который реализовал утилиту: https://gist.github.com/Mystiflow/c2b8838688e3215bb5492041046e458e
      **/
     public void checkAndDownloadLanguages() throws LangParseException {
-        File currentTranFolder = new File(this.javaPlugin.getDataFolder(), "languages" + File.separator + this.version + File.separator);
+        File currentTranFolder = new File(this.plugin.getDataFolder(), "languages" + File.separator + this.version + File.separator);
 
         for (LangType lt : this.enabledLanguages) {
-            //Убеждаемся что файл языка существует.
-            //Нам на самом деле не важно, пустой или модифицирован, главное, что он есть.
+            // Убеждаемся что файл языка существует.
+            // Нам на самом деле не важно, пустой или модифицирован, главное, что он есть.
             File langFile = new File(currentTranFolder, lt.name());
             if (langFile.exists()) {
                 continue;
             }
 
-            //Пытаемся получить хэш для скачивания этого языка
+            // Пытаемся получить хэш для скачивания этого языка
             String hash = this.urlManifestManager.getLanguageHash(this.version, lt.name().toLowerCase());
 
             try {
-                //Пытаемся скачать язык, используя хэш.
+                // Пытаемся скачать язык, используя хэш.
                 URL url = new URL(String.format(TRANSLATION_FILE_URL, hash.substring(0, 2), hash));
                 try (InputStream stream = url.openStream()) {
                     String pat = currentTranFolder.getAbsolutePath() + File.separator + lt.name();
-                    //Странно что методу copy требуется чтобы директория существовала..
+                    // Странно что методу copy требуется чтобы директория существовала..
                     File tmp = new File(pat);
                     tmp.getParentFile().mkdirs();
 
                     Path outputPath = Paths.get(pat);
                     Files.copy(stream, outputPath);
-                    this.javaPlugin.getLogger().info("Скачан язык " + lt.getName() + " для версии " + this.version);
+                    this.plugin.getLogger().info("Скачан язык " + lt.getName() + " для версии " + this.version);
                 }
             } catch (Exception e) {
-                this.javaPlugin.getLogger().severe("Не удалось скачать язык " + lt.getName() + " для версии " + this.version);
-                e.printStackTrace();
+                this.plugin.getLogger().log(Level.SEVERE, "Failed to download language " + lt.name() + " for " + this.version, e);
             }
         }
     }
 
     public void loadConfigData() {
-        this.javaPlugin.reloadConfig();
+        this.plugin.reloadConfig();
 
-        List<LangType> tmpEnabledLanguages = new ArrayList<>();
-        List<String> configLangs = this.javaPlugin.getConfig().getStringList("enabledLanguages");
+        Set<LangType> tmpEnabledLanguages = new HashSet<>();
+        List<String> configLangs = this.plugin.getConfig().getStringList("enabledLanguages");
         if (configLangs != null) {
             for (String t : configLangs) {
                 LangType parsedType = null;
@@ -174,12 +167,12 @@ public abstract class DefaultTranslateManager implements TranslateManager {
                     continue;
                 }
 
-                this.javaPlugin.getLogger().info("Используем язык: " + parsedType.getName());
+                this.plugin.getLogger().info("Using language: " + parsedType.getName());
                 tmpEnabledLanguages.add(parsedType);
             }
         }
 
-        this.enabledLanguages = Collections.unmodifiableList(tmpEnabledLanguages);
+        this.enabledLanguages = Collections.unmodifiableSet(tmpEnabledLanguages);
     }
 
     @Override
@@ -312,7 +305,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
     /**
      * Парсер строк, использующий InputStream
      */
-    protected abstract ConcurrentMap<String, String> parseTranslate(InputStream stream);
+    protected abstract Map<String, String> parseTranslate(InputStream stream);
 
     private static String capitalize(String name) {
         String material = name.replace("_", " ").toLowerCase();
@@ -327,9 +320,24 @@ public abstract class DefaultTranslateManager implements TranslateManager {
                 sb.append(word.toUpperCase().charAt(0));
                 sb.append(word.substring(1));
             } else {
-                sb.append(word.substring(0));
+                sb.append(word);
             }
         }
-        return sb.toString().substring(1);
+        return sb.substring(1);
+    }
+
+    private static InputStream getFileInputStream() {
+        ClassLoader classLoader = Bukkit.getServer().getClass().getClassLoader();
+
+        String defaultEnPath = "assets/minecraft/lang/" + LangType.EN_US.getName();
+
+        InputStream stream = classLoader.getResourceAsStream(defaultEnPath + ".lang");
+        if (stream == null) {
+            stream = classLoader.getResourceAsStream(defaultEnPath + ".json");
+            if (stream == null) {
+                throw new IllegalArgumentException("Не найден языковый файл по умолчанию!");
+            }
+        }
+        return stream;
     }
 }

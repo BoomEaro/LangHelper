@@ -1,38 +1,34 @@
 package ru.boomearo.langhelper.utils;
 
+import lombok.experimental.UtilityClass;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
+@UtilityClass
 public class JsonUtils {
 
-    public static JSONObject connectNormal(String url) {
-        try {
-            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+    public static JSONObject connectNormal(URL url) throws IOException {
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-            connection.setDoOutput(true);
-            connection.setDoInput(true);
-            connection.setUseCaches(false);
+        connection.setDoOutput(true);
+        connection.setDoInput(true);
+        connection.setUseCaches(false);
 
-            connection.setRequestMethod("GET");
-            connection.setRequestProperty("charset", "UTF-8");
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("charset", "UTF-8");
 
-            return connect(connection);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return connect(connection);
     }
 
-    private static JSONObject connect(HttpURLConnection connection) {
+    private static JSONObject connect(HttpURLConnection connection) throws IOException {
         try {
             connection.connect();
 
@@ -40,34 +36,30 @@ public class JsonUtils {
                 return null;
             }
 
-            InputStream is = connection.getInputStream();
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-            String line;
-            StringBuilder response = new StringBuilder();
-            while ((line = rd.readLine()) != null) {
-                response.append(line);
-                response.append('\r');
+            try (BufferedReader rd = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
+                String line;
+                StringBuilder response = new StringBuilder();
+                while ((line = rd.readLine()) != null) {
+                    response.append(line);
+                    response.append('\r');
+                }
+
+                connection.disconnect();
+
+                Object jsonObject = JSONValue.parse(response.toString());
+
+                if (!(jsonObject instanceof JSONObject)) {
+                    return null;
+                }
+
+                return (JSONObject) jsonObject;
             }
-            rd.close();
-            connection.disconnect();
 
-            Object jsonObject = JSONValue.parse(response.toString());
-
-            if (!(jsonObject instanceof JSONObject)) {
-                return null;
-            }
-
-            return (JSONObject) jsonObject;
-
-        } catch (Exception e) {
-            e.printStackTrace();
         } finally {
             if (connection != null) {
                 connection.disconnect();
             }
         }
-        return null;
-
     }
 
     public static JSONObject getJsonObject(Object obj) {

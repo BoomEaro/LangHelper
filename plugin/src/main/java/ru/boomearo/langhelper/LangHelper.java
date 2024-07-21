@@ -1,6 +1,8 @@
 package ru.boomearo.langhelper;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import ru.boomearo.langhelper.commands.langhelper.CmdExecutorLangHelper;
 import ru.boomearo.langhelper.versions.*;
@@ -11,14 +13,18 @@ import ru.boomearo.langhelper.versions.exceptions.LangVersionException;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
 
+@Getter
 public class LangHelper extends JavaPlugin {
 
-    private DefaultTranslateManager defaultTranslateManager = null;
+    @Getter
+    private static LangHelper instance = null;
+
+    private DefaultTranslateManager translateManager = null;
 
     private final String serverVersion = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3].substring(1);
 
-    private static LangHelper instance = null;
     private static final List<Class<? extends DefaultTranslateManager>> VERSIONS = Arrays.asList(
             Translate1_12_R1.class,
             Translate1_13_R2.class,
@@ -28,6 +34,7 @@ public class LangHelper extends JavaPlugin {
             Translate1_17_R1.class,
             Translate1_18_R2.class,
             Translate1_19_R3.class,
+            // TODO Does not work due to mappings changes
             Translate1_20_R4.class,
             Translate1_21_R1.class
     );
@@ -37,26 +44,22 @@ public class LangHelper extends JavaPlugin {
         instance = this;
 
         try {
+            // TODO Move to own class
             File configFile = new File(getDataFolder() + File.separator + "config.yml");
             if (!configFile.exists()) {
-                getLogger().info("Конфиг не найден, создаю новый...");
+                getLogger().info("Config is not found, creating a new one...");
                 saveDefaultConfig();
             }
 
-            //Вычисляем версию сервера и создаем соответствующий экземпляр
-            this.defaultTranslateManager = matchVersion(this);
+            this.translateManager = matchVersion(this);
 
-            //Загружаем информацию из конфига
-            this.defaultTranslateManager.loadConfigData();
+            this.translateManager.loadConfigData();
 
-            //Проверяем, на месте ли включенные языки
-            this.defaultTranslateManager.checkAndDownloadLanguages();
+            this.translateManager.checkAndDownloadLanguages();
 
-            //Подгружаем языки с диска
-            this.defaultTranslateManager.loadLanguages();
+            this.translateManager.loadLanguages();
 
-            //Просто оповещаем о том, сколько строк и какие языки были загружены
-            for (TranslatedMessages tra : this.defaultTranslateManager.getAllTranslate()) {
+            for (TranslatedMessages tra : this.translateManager.getAllTranslate()) {
                 String languageName = tra.getTranslate("language.name");
                 if (languageName == null) {
                     languageName = "Unknown-name";
@@ -65,45 +68,36 @@ public class LangHelper extends JavaPlugin {
                 if (languageRegion == null) {
                     languageRegion = "Unknown-region";
                 }
-                this.getLogger().info("Язык '" + tra.getLangType().getName() + " [" + languageName + "-" + languageRegion + "]' успешно загружен. Количество строк: " + tra.getAllTranslate().size());
+                this.getLogger().info("Language '" + tra.getLangType().getName() + " [" + languageName + "-" + languageRegion + "]' successfully loaded. Translation keys: " + tra.getAllTranslate().size());
             }
         } catch (LangParseException e) {
-            this.getLogger().warning("Ошибка при получении языков от mojang: " + e.getMessage());
+            this.getLogger().warning("Failed to get translations from mojang: " + e.getMessage());
         } catch (LangVersionException e) {
-            this.getLogger().warning("Ошибка при получении версии сервера: " + e.getMessage());
+            this.getLogger().warning("Failed to get server version: " + e.getMessage());
         } catch (Exception e) {
-            e.printStackTrace();
+            this.getLogger().log(Level.SEVERE, "Failed to load translate manager", e);
         }
 
-        getCommand("langhelper").setExecutor(new CmdExecutorLangHelper(this.defaultTranslateManager));
+        getCommand("langhelper").setExecutor(new CmdExecutorLangHelper(this.translateManager));
 
-        this.getLogger().info("Плагин успешно запущен!");
+        this.getLogger().info("Plugin successfully enabled!");
     }
 
     @Override
     public void onDisable() {
-        this.getLogger().info("Плагин успешно выключен!");
+        this.getLogger().info("Plugin successfully disabled!");
     }
 
-    public TranslateManager getTranslateManager() {
-        return this.defaultTranslateManager;
-    }
-
-    private DefaultTranslateManager matchVersion(JavaPlugin javaPlugin) throws LangVersionException {
+    private DefaultTranslateManager matchVersion(Plugin plugin) throws LangVersionException {
         try {
             return VERSIONS.stream()
                     .filter(version -> version.getSimpleName().substring(9).equals(this.serverVersion))
-                    .findFirst().orElseThrow(() -> new LangException("Плагин не поддерживает данную версию сервера!")).
-                    getConstructor(JavaPlugin.class).
-                    newInstance(javaPlugin);
+                    .findFirst().orElseThrow(() -> new LangException("LangHelper does not support this minecraft version!")).
+                    getConstructor(Plugin.class).
+                    newInstance(plugin);
         } catch (Exception e) {
-            //Вызываем новое, но свое
             throw new LangVersionException(e.getMessage());
         }
-    }
-
-    public static LangHelper getInstance() {
-        return instance;
     }
 
 }
