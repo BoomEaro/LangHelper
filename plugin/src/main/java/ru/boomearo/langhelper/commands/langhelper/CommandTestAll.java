@@ -90,7 +90,7 @@ public class CommandTestAll extends CommandNodeBukkit {
                 }
             }
 
-            sender.sendMessage((failed.isEmpty() ? "Все предметы присутствует в переводе." : "Следующие предметы не переведены: " + failed));
+            sender.sendMessage((failed.isEmpty() ? "All items are present in translation." : "The following items are not translated: " + failed));
         }
         {
             List<EntityType> failed = new ArrayList<>();
@@ -114,7 +114,7 @@ public class CommandTestAll extends CommandNodeBukkit {
                 }
             }
 
-            sender.sendMessage((failed.isEmpty() ? "Все сущности присутствует в переводе." : "Следующие сущности не переведены: " + failed));
+            sender.sendMessage((failed.isEmpty() ? "All entities are present in the translation." : "The following entities are not translated: " + failed));
         }
         {
             List<Enchantment> failed = new ArrayList<>();
@@ -135,7 +135,7 @@ public class CommandTestAll extends CommandNodeBukkit {
                 }
             }
 
-            sender.sendMessage((failed.isEmpty() ? "Все зачарования присутствует в переводе." : "Следующие зачарования не переведены: " + failed));
+            sender.sendMessage((failed.isEmpty() ? "All the enchantments are present in the translation." : "The following enchantments are not translated: " + failed));
         }
         {
             List<Integer> failed = new ArrayList<>();
@@ -156,7 +156,7 @@ public class CommandTestAll extends CommandNodeBukkit {
                 }
             }
 
-            sender.sendMessage((failed.isEmpty() ? "Все уровни зачарования присутствует в переводе." : "Следующие уровни зачарования не переведены: " + failed));
+            sender.sendMessage((failed.isEmpty() ? "All levels of enchantment are present in the translation." : "The following enchantment levels are not translated: " + failed));
         }
         {
             List<PotionEffectType> failed = new ArrayList<>();
@@ -182,7 +182,7 @@ public class CommandTestAll extends CommandNodeBukkit {
                 }
             }
 
-            sender.sendMessage((failed.isEmpty() ? "Все эффекты зелий присутствует в переводе." : "Следующие эффекты зелий не переведены: " + failed));
+            sender.sendMessage((failed.isEmpty() ? "All potion effects are present in the translation." : "The following potion effects have not been translated: " + failed));
         }
         {
             List<Biome> failed = new ArrayList<>();
@@ -203,7 +203,7 @@ public class CommandTestAll extends CommandNodeBukkit {
                 }
             }
 
-            sender.sendMessage((failed.isEmpty() ? "Все биомы присутствует в переводе." : "Следующие биомы не переведены: " + failed));
+            sender.sendMessage((failed.isEmpty() ? "All biomes are present in the translation." : "The following biomes are not translated: " + failed));
         }
 
     }

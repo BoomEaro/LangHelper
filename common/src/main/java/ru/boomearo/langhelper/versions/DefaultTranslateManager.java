@@ -143,7 +143,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
 
                     Path outputPath = Paths.get(pat);
                     Files.copy(stream, outputPath);
-                    this.plugin.getLogger().info("Скачан язык " + lt.getName() + " для версии " + this.version);
+                    this.plugin.getLogger().info("Language " + lt.getName() + " successfully downloaded for version " + this.version);
                 }
             } catch (Exception e) {
                 this.plugin.getLogger().log(Level.SEVERE, "Failed to download language " + lt.name() + " for " + this.version, e);
@@ -311,7 +311,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
         if (stream == null) {
             stream = classLoader.getResourceAsStream(defaultEnPath + ".json");
             if (stream == null) {
-                throw new IllegalArgumentException("Не найден языковый файл по умолчанию!");
+                throw new IllegalArgumentException("Default language file is not found!");
             }
         }
         return stream;
