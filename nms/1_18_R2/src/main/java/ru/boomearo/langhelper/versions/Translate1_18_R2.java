@@ -6,6 +6,7 @@ import net.minecraft.world.item.ItemLingeringPotion;
 import net.minecraft.world.item.ItemPotion;
 import net.minecraft.world.item.ItemSplashPotion;
 import net.minecraft.world.item.alchemy.PotionUtil;
+import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.craftbukkit.v1_18_R2.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
@@ -40,7 +41,13 @@ public class Translate1_18_R2 extends JsonTranslateManager {
             } else if (i instanceof ItemPotion) {
                 name = "item.minecraft." + PotionUtil.d(itemStack).b("potion.effect.");
             } else {
-                name = i.a();
+                name = i.j(itemStack);
+            }
+
+            if (item.getType() != Material.AIR) {
+                if (name.equals("block.minecraft.air")) {
+                    return null;
+                }
             }
 
             return getTranslate(name, langType);

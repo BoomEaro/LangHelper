@@ -2,6 +2,7 @@ package ru.boomearo.langhelper.versions;
 
 import com.google.common.base.Preconditions;
 import net.minecraft.server.v1_15_R1.*;
+import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
@@ -35,7 +36,13 @@ public class Translate1_15_R1 extends JsonTranslateManager {
             } else if (i instanceof ItemPotion) {
                 name = "item.minecraft." + PotionUtil.d(itemStack).b("potion.effect.");
             } else {
-                name = i.getName();
+                name = i.f(itemStack);
+            }
+
+            if (item.getType() != Material.AIR) {
+                if (name.equals("block.minecraft.air")) {
+                    return null;
+                }
             }
 
             return getTranslate(name, langType);
