@@ -4,13 +4,12 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import ru.boomearo.langhelper.commands.langhelper.CmdExecutorLangHelper;
+import ru.boomearo.langhelper.commands.langhelper.LangHelperCommandExecutor;
+import ru.boomearo.langhelper.managers.ConfigManager;
 import ru.boomearo.langhelper.versions.*;
 import ru.boomearo.langhelper.versions.exceptions.LangException;
-import ru.boomearo.langhelper.versions.exceptions.LangParseException;
 import ru.boomearo.langhelper.versions.exceptions.LangVersionException;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
@@ -20,6 +19,8 @@ public class LangHelper extends JavaPlugin {
 
     @Getter
     private static LangHelper instance = null;
+
+    private ConfigManager configManager;
 
     private DefaultTranslateManager translateManager = null;
 
@@ -43,17 +44,11 @@ public class LangHelper extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
+        this.configManager = new ConfigManager(this);
+        this.configManager.load();
+
         try {
-            // TODO Move to own class
-            File configFile = new File(getDataFolder() + File.separator + "config.yml");
-            if (!configFile.exists()) {
-                getLogger().info("Config is not found, creating a new one...");
-                saveDefaultConfig();
-            }
-
-            this.translateManager = matchVersion(this);
-
-            this.translateManager.loadConfigData();
+            this.translateManager = matchVersion(this, this.configManager);
 
             this.translateManager.checkAndDownloadLanguages();
 
@@ -70,15 +65,17 @@ public class LangHelper extends JavaPlugin {
                 }
                 this.getLogger().info("Language '" + tra.getLangType().getName() + " [" + languageName + "-" + languageRegion + "]' successfully loaded. Translation keys: " + tra.getAllTranslate().size());
             }
-        } catch (LangParseException e) {
-            this.getLogger().warning("Failed to get translations from mojang: " + e.getMessage());
         } catch (LangVersionException e) {
             this.getLogger().warning("Failed to get server version: " + e.getMessage());
         } catch (Exception e) {
             this.getLogger().log(Level.SEVERE, "Failed to load translate manager", e);
         }
 
-        getCommand("langhelper").setExecutor(new CmdExecutorLangHelper(this.translateManager));
+        this.getCommand("langhelper").setExecutor(new LangHelperCommandExecutor(
+                this,
+                this.configManager,
+                this.translateManager
+        ));
 
         this.getLogger().info("Plugin successfully enabled!");
     }
@@ -88,13 +85,13 @@ public class LangHelper extends JavaPlugin {
         this.getLogger().info("Plugin successfully disabled!");
     }
 
-    private DefaultTranslateManager matchVersion(Plugin plugin) throws LangVersionException {
+    private DefaultTranslateManager matchVersion(Plugin plugin, ConfigManager configManager) throws LangVersionException {
         try {
             return VERSIONS.stream()
                     .filter(version -> version.getSimpleName().substring(9).equals(this.serverVersion))
                     .findFirst().orElseThrow(() -> new LangException("LangHelper does not support this minecraft version!")).
-                    getConstructor(Plugin.class).
-                    newInstance(plugin);
+                    getConstructor(Plugin.class, ConfigManager.class).
+                    newInstance(plugin, configManager);
         } catch (Exception e) {
             throw new LangVersionException(e.getMessage());
         }

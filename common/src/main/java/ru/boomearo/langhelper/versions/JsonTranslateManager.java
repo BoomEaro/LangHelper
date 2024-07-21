@@ -8,6 +8,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffectType;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import ru.boomearo.langhelper.managers.ConfigManager;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -21,8 +22,8 @@ import java.util.logging.Level;
  */
 public abstract class JsonTranslateManager extends DefaultTranslateManager {
 
-    public JsonTranslateManager(String version, Plugin plugin) {
-        super(version, plugin);
+    public JsonTranslateManager(String version, Plugin plugin, ConfigManager configManager) {
+        super(version, plugin, configManager);
     }
 
     @Override

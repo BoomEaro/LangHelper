@@ -10,14 +10,15 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffectType;
+import ru.boomearo.langhelper.managers.ConfigManager;
 
 import java.util.Locale;
 import java.util.logging.Level;
 
 public class Translate1_21_R1 extends JsonTranslateManager {
 
-    public Translate1_21_R1(Plugin plugin) {
-        super("1.21", plugin);
+    public Translate1_21_R1(Plugin plugin, ConfigManager configManager) {
+        super("1.21", plugin, configManager);
     }
 
     @Override

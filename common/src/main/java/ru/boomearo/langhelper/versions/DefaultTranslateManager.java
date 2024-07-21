@@ -10,8 +10,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffectType;
+import ru.boomearo.langhelper.managers.ConfigManager;
 import ru.boomearo.langhelper.versions.cached.UrlManifestManager;
-import ru.boomearo.langhelper.versions.exceptions.LangParseException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,9 +36,9 @@ public abstract class DefaultTranslateManager implements TranslateManager {
     @Getter
     protected final String version;
     protected final Plugin plugin;
-    protected Map<LangType, TranslatedMessages> types;
+    protected final ConfigManager configManager;
 
-    protected Set<LangType> enabledLanguages = new HashSet<>();
+    protected Map<LangType, TranslatedMessages> types;
 
     /**
      * Загружает языки из файла в менеджере, учитывая включенные языки.
@@ -87,7 +87,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
                                 continue;
                             }
 
-                            if (!this.enabledLanguages.contains(lt)) {
+                            if (!this.configManager.getEnabledLanguages().contains(lt)) {
                                 continue;
                             }
 
@@ -118,10 +118,10 @@ public abstract class DefaultTranslateManager implements TranslateManager {
      * Метод проверяет и скачивает с серверов mojang нужный язык для нужной версии.
      * Сам бы я не узнал как именно скачивать языки. Спасибо автору который реализовал утилиту: https://gist.github.com/Mystiflow/c2b8838688e3215bb5492041046e458e
      **/
-    public void checkAndDownloadLanguages() throws LangParseException {
+    public void checkAndDownloadLanguages() {
         File currentTranFolder = new File(this.plugin.getDataFolder(), "languages" + File.separator + this.version + File.separator);
 
-        for (LangType lt : this.enabledLanguages) {
+        for (LangType lt : this.configManager.getEnabledLanguages()) {
             // Убеждаемся что файл языка существует.
             // Нам на самом деле не важно, пустой или модифицирован, главное, что он есть.
             File langFile = new File(currentTranFolder, lt.name());
@@ -129,15 +129,15 @@ public abstract class DefaultTranslateManager implements TranslateManager {
                 continue;
             }
 
-            // Пытаемся получить хэш для скачивания этого языка
-            String hash = this.urlManifestManager.getLanguageHash(this.version, lt.name().toLowerCase(Locale.ROOT));
-
             try {
+                // Пытаемся получить хэш для скачивания этого языка
+                String hash = this.urlManifestManager.getLanguageHash(this.version, lt.name().toLowerCase(Locale.ROOT));
+
                 // Пытаемся скачать язык, используя хэш.
                 URL url = new URL(String.format(TRANSLATION_FILE_URL, hash.substring(0, 2), hash));
                 try (InputStream stream = url.openStream()) {
                     String pat = currentTranFolder.getAbsolutePath() + File.separator + lt.name();
-                    // Странно что методу copy требуется чтобы директория существовала..
+                    // Странно что методу copy требуется чтобы директория существовала...
                     File tmp = new File(pat);
                     tmp.getParentFile().mkdirs();
 
@@ -149,30 +149,6 @@ public abstract class DefaultTranslateManager implements TranslateManager {
                 this.plugin.getLogger().log(Level.SEVERE, "Failed to download language " + lt.name() + " for " + this.version, e);
             }
         }
-    }
-
-    public void loadConfigData() {
-        this.plugin.reloadConfig();
-
-        Set<LangType> tmpEnabledLanguages = new HashSet<>();
-        List<String> configLangs = this.plugin.getConfig().getStringList("enabledLanguages");
-        if (configLangs != null) {
-            for (String t : configLangs) {
-                LangType parsedType = null;
-                try {
-                    parsedType = LangType.valueOf(t.toUpperCase(Locale.ROOT));
-                } catch (Exception ignored) {
-                }
-                if (parsedType == null) {
-                    continue;
-                }
-
-                this.plugin.getLogger().info("Using language: " + parsedType.getName());
-                tmpEnabledLanguages.add(parsedType);
-            }
-        }
-
-        this.enabledLanguages = Collections.unmodifiableSet(tmpEnabledLanguages);
     }
 
     @Override

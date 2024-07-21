@@ -14,14 +14,15 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffectType;
+import ru.boomearo.langhelper.managers.ConfigManager;
 
 import java.util.Locale;
 import java.util.logging.Level;
 
 public class Translate1_19_R3 extends JsonTranslateManager {
 
-    public Translate1_19_R3(Plugin plugin) {
-        super("1.19.4", plugin);
+    public Translate1_19_R3(Plugin plugin, ConfigManager configManager) {
+        super("1.19.4", plugin, configManager);
     }
 
     @Override

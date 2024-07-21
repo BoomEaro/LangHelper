@@ -2,3 +2,6 @@ enabledLanguages:
   - "ru_ru"
   - "de_de"
   - "ja_jp"
+
+messages:
+  do_not_have_permissions: "&cYou don't have enough permissions!"
