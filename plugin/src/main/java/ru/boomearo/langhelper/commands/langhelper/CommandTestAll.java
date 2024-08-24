@@ -65,7 +65,7 @@ public class CommandTestAll extends CommandNodeBukkit {
             return;
         }
 
-        sender.sendMessage("Checking translation " + type.getName() + "..");
+        sender.sendMessage("Checking translation " + type.name() + "..");
 
         {
             List<Material> failed = new ArrayList<>();
@@ -214,8 +214,8 @@ public class CommandTestAll extends CommandNodeBukkit {
             List<String> matches = new ArrayList<>();
             String search = args[0].toLowerCase(Locale.ROOT);
             for (LangType lt : this.defaultTranslateManager.getAllTranslateLang()) {
-                if (lt.getName().toLowerCase(Locale.ROOT).startsWith(search)) {
-                    matches.add(lt.getName());
+                if (lt.name().toLowerCase(Locale.ROOT).startsWith(search)) {
+                    matches.add(lt.name().toLowerCase(Locale.ROOT));
                 }
             }
             return matches;

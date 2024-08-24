@@ -60,7 +60,7 @@ public class LangHelper extends JavaPlugin {
                 if (languageRegion == null) {
                     languageRegion = "Unknown-region";
                 }
-                this.getLogger().info("Language '" + tra.getLangType().getName() + " [" + languageName + "-" + languageRegion + "]' successfully loaded. Translation keys: " + tra.getAllTranslate().size());
+                this.getLogger().info("Language '" + tra.getLangType().name() + " [" + languageName + "-" + languageRegion + "]' successfully loaded. Translation keys: " + tra.getAllTranslate().size());
             }
 
             this.getCommand("langhelper").setExecutor(new LangHelperCommandExecutor(

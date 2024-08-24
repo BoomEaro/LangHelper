@@ -69,8 +69,8 @@ public class CommandTestItem extends CommandNodeBukkit {
             List<String> matches = new ArrayList<>();
             String search = args[0].toLowerCase(Locale.ROOT);
             for (LangType lt : this.defaultTranslateManager.getAllTranslateLang()) {
-                if (lt.getName().toLowerCase(Locale.ROOT).startsWith(search)) {
-                    matches.add(lt.getName());
+                if (lt.name().toLowerCase(Locale.ROOT).startsWith(search)) {
+                    matches.add(lt.name().toLowerCase(Locale.ROOT));
                 }
             }
             return matches;

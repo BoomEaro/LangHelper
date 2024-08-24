@@ -143,7 +143,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
 
                     Path outputPath = Paths.get(pat);
                     Files.copy(stream, outputPath);
-                    this.plugin.getLogger().info("Language " + lt.getName() + " successfully downloaded for version " + this.version);
+                    this.plugin.getLogger().info("Language " + lt.name() + " successfully downloaded for version " + this.version);
                 }
             } catch (Exception e) {
                 this.plugin.getLogger().log(Level.SEVERE, "Failed to download language " + lt.name() + " for " + this.version, e);
@@ -305,7 +305,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
     private static InputStream getFileInputStream() {
         ClassLoader classLoader = Bukkit.getServer().getClass().getClassLoader();
 
-        String defaultEnPath = "assets/minecraft/lang/" + LangType.EN_US.getName();
+        String defaultEnPath = "assets/minecraft/lang/" + LangType.EN_US.name().toLowerCase(Locale.ROOT);
 
         InputStream stream = classLoader.getResourceAsStream(defaultEnPath + ".lang");
         if (stream == null) {

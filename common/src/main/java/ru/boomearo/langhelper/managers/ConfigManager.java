@@ -45,7 +45,7 @@ public class ConfigManager {
                     continue;
                 }
 
-                this.plugin.getLogger().info("Using language: " + parsedType.getName());
+                this.plugin.getLogger().info("Using language: " + parsedType.name());
                 tmpEnabledLanguages.add(parsedType);
             }
         }
