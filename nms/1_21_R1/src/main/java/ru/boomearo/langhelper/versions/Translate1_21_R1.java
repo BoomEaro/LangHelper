@@ -18,7 +18,7 @@ import java.util.logging.Level;
 public class Translate1_21_R1 extends JsonTranslateManager {
 
     public Translate1_21_R1(Plugin plugin, ConfigManager configManager) {
-        super("1.21.1", plugin, configManager);
+        super("1.21", plugin, configManager);
     }
 
     @Override

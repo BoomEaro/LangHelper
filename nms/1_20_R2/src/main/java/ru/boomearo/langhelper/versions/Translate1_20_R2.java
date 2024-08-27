@@ -2,9 +2,13 @@ package ru.boomearo.langhelper.versions;
 
 import com.google.common.base.Preconditions;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemLingeringPotion;
+import net.minecraft.world.item.ItemPotion;
+import net.minecraft.world.item.ItemSplashPotion;
+import net.minecraft.world.item.alchemy.PotionUtil;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
-import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_20_R2.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
@@ -15,10 +19,10 @@ import ru.boomearo.langhelper.managers.ConfigManager;
 import java.util.Locale;
 import java.util.logging.Level;
 
-public class Translate1_20_R4 extends JsonTranslateManager {
+public class Translate1_20_R2 extends JsonTranslateManager {
 
-    public Translate1_20_R4(Plugin plugin, ConfigManager configManager) {
-        super("1.20.5", plugin, configManager);
+    public Translate1_20_R2(Plugin plugin, ConfigManager configManager) {
+        super("1.20.2", plugin, configManager);
     }
 
     @Override
@@ -30,10 +34,8 @@ public class Translate1_20_R4 extends JsonTranslateManager {
             net.minecraft.world.item.ItemStack itemStack = CraftItemStack.asNMSCopy(item);
 
             String name;
-            Item i = itemStack.g();
-
-            // TODO Deal with potions translations somehow
-            /*if (i instanceof ItemSplashPotion) {
+            Item i = itemStack.d();
+            if (i instanceof ItemSplashPotion) {
                 name = "item.minecraft." + PotionUtil.d(itemStack).b("splash_potion.effect.");
             } else if (i instanceof ItemLingeringPotion) {
                 name = "item.minecraft." + PotionUtil.d(itemStack).b("lingering_potion.effect.");
@@ -41,9 +43,7 @@ public class Translate1_20_R4 extends JsonTranslateManager {
                 name = "item.minecraft." + PotionUtil.d(itemStack).b("potion.effect.");
             } else {
                 name = i.a();
-            }*/
-
-            name = i.i(itemStack);
+            }
 
             if (item.getType() != Material.AIR) {
                 if (name.equals("block.minecraft.air")) {
