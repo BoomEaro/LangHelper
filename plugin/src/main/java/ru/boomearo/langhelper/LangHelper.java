@@ -13,16 +13,13 @@ import ru.boomearo.langhelper.versions.exceptions.LangVersionException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Getter
 public class LangHelper extends JavaPlugin {
 
-    @Getter
-    private static LangHelper instance = null;
-
-    private ConfigManager configManager;
-
-    private DefaultTranslateManager translateManager = null;
+    private static final Pattern VERSION_PATTERN = Pattern.compile("\\d+\\.\\d+(?:\\.\\d+)?");
 
     private static final List<TranslationVersionWrapper> VERSIONS = Arrays.asList(
             new TranslationVersionWrapper("1.12.2", Translate1_12_R1.class),
@@ -43,6 +40,13 @@ public class LangHelper extends JavaPlugin {
             new TranslationVersionWrapper("1.21", Translate1_21_R1.class),
             new TranslationVersionWrapper("1.21.1", Translate1_21_R1.class)
     );
+
+    @Getter
+    private static LangHelper instance = null;
+
+    private ConfigManager configManager;
+
+    private DefaultTranslateManager translateManager = null;
 
     @Override
     public void onEnable() {
@@ -90,9 +94,17 @@ public class LangHelper extends JavaPlugin {
     private DefaultTranslateManager matchVersion(Plugin plugin, ConfigManager configManager) throws LangVersionException {
         try {
             String bukkitVersion = Bukkit.getServer().getBukkitVersion();
+            this.getLogger().log(Level.INFO, "Detected bukkit version " + bukkitVersion);
+
             return VERSIONS.stream()
-                    .filter(translationVersionWrapper -> bukkitVersion.startsWith(translationVersionWrapper.version()))
-                    .findFirst().orElseThrow(() -> new LangException("LangHelper does not support this minecraft version!"))
+                    .filter(translationVersionWrapper -> {
+                        Matcher matcher = VERSION_PATTERN.matcher(bukkitVersion);
+                        if (matcher.find()) {
+                            return matcher.group().equals(translationVersionWrapper.version());
+                        }
+                        return false;
+                    })
+                    .findFirst().orElseThrow(() -> new LangException("Version " + bukkitVersion + " is not supported!"))
                     .clazz()
                     .getConstructor(Plugin.class, ConfigManager.class).
                     newInstance(plugin, configManager);
