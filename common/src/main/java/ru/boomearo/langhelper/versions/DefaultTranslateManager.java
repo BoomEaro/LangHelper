@@ -40,6 +40,8 @@ public abstract class DefaultTranslateManager implements TranslateManager {
 
     protected Map<LangType, TranslatedMessages> types;
 
+    private final Set<LangType> registeredLanguages = new HashSet<>();
+
     /**
      * Загружает языки из файла в менеджере, учитывая включенные языки.
      */
@@ -118,10 +120,14 @@ public abstract class DefaultTranslateManager implements TranslateManager {
      * Метод проверяет и скачивает с серверов mojang нужный язык для нужной версии.
      * Сам бы я не узнал как именно скачивать языки. Спасибо автору который реализовал утилиту: https://gist.github.com/Mystiflow/c2b8838688e3215bb5492041046e458e
      **/
+    @Override
     public void checkAndDownloadLanguages() {
         File currentTranFolder = new File(this.plugin.getDataFolder(), "languages" + File.separator + this.version + File.separator);
 
-        for (LangType lt : this.configManager.getEnabledLanguages()) {
+        Set<LangType> languages = new HashSet<>(this.configManager.getEnabledLanguages());
+        languages.addAll(this.registeredLanguages);
+
+        for (LangType lt : languages) {
             // Убеждаемся что файл языка существует.
             // Нам на самом деле не важно, пустой или модифицирован, главное, что он есть.
             File langFile = new File(currentTranFolder, lt.name());
@@ -149,6 +155,16 @@ public abstract class DefaultTranslateManager implements TranslateManager {
                 this.plugin.getLogger().log(Level.SEVERE, "Failed to download language " + lt.name() + " for " + this.version, e);
             }
         }
+    }
+
+    @Override
+    public void registerLanguageType(LangType langType) {
+        this.registeredLanguages.add(langType);
+    }
+
+    @Override
+    public void unregisterLanguageType(LangType langType) {
+        this.registeredLanguages.remove(langType);
     }
 
     @Override
