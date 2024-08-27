@@ -45,7 +45,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
     /**
      * Загружает языки из файла в менеджере, учитывая включенные языки.
      */
-    public void loadLanguages() {
+    private void loadLanguages() {
         Map<LangType, TranslatedMessages> types = new HashMap<>();
         try {
             InputStream stream = getFileInputStream();
@@ -64,6 +64,9 @@ public abstract class DefaultTranslateManager implements TranslateManager {
             if (!file.exists()) {
                 file.getParentFile().mkdirs();
             }
+
+            Set<LangType> languages = new HashSet<>(this.configManager.getEnabledLanguages());
+            languages.addAll(this.registeredLanguages);
 
             if (file.isDirectory()) {
                 File ver = new File(file, getVersion());
@@ -89,7 +92,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
                                 continue;
                             }
 
-                            if (!this.configManager.getEnabledLanguages().contains(lt)) {
+                            if (!languages.contains(lt)) {
                                 continue;
                             }
 
@@ -120,8 +123,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
      * Метод проверяет и скачивает с серверов mojang нужный язык для нужной версии.
      * Сам бы я не узнал как именно скачивать языки. Спасибо автору который реализовал утилиту: https://gist.github.com/Mystiflow/c2b8838688e3215bb5492041046e458e
      **/
-    @Override
-    public void checkAndDownloadLanguages() {
+    private void checkAndDownloadLanguages() {
         File currentTranFolder = new File(this.plugin.getDataFolder(), "languages" + File.separator + this.version + File.separator);
 
         Set<LangType> languages = new HashSet<>(this.configManager.getEnabledLanguages());
@@ -155,6 +157,12 @@ public abstract class DefaultTranslateManager implements TranslateManager {
                 this.plugin.getLogger().log(Level.SEVERE, "Failed to download language " + lt.name() + " for " + this.version, e);
             }
         }
+    }
+
+    @Override
+    public void reloadLanguages() {
+        checkAndDownloadLanguages();
+        loadLanguages();
     }
 
     @Override

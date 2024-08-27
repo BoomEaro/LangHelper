@@ -54,9 +54,7 @@ public class LangHelper extends JavaPlugin {
         try {
             this.translateManager = matchVersion(this, this.configManager);
 
-            this.translateManager.checkAndDownloadLanguages();
-
-            this.translateManager.loadLanguages();
+            this.translateManager.reloadLanguages();
 
             for (TranslatedMessages tra : this.translateManager.getAllTranslate()) {
                 String languageName = tra.getTranslate("language.name");

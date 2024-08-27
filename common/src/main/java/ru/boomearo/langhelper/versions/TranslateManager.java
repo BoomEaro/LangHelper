@@ -143,11 +143,12 @@ public interface TranslateManager {
      */
     String getBiomeName(Biome biome, LangType langType);
 
+
     /**
-     * Скачивает недостающие языки.
+     * Скачивает и загружает недостающие языки.
      * Полезно если вы зарегистрировали языки, которые не были указаны в конфиге.
      */
-    void checkAndDownloadLanguages();
+    void reloadLanguages();
 
     /**
      * Зарегистрировать язык

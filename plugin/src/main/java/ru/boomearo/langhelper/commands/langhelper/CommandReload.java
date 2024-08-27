@@ -34,8 +34,7 @@ public class CommandReload extends CommandNodeBukkit {
         }
 
         this.configManager.load();
-        this.defaultTranslateManager.checkAndDownloadLanguages();
-        this.defaultTranslateManager.loadLanguages();
+        this.defaultTranslateManager.reloadLanguages();
 
         sender.sendMessage("Configuration successfully reloaded!");
     }
