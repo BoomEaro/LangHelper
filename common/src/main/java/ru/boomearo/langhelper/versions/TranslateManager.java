@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Collection;
+import java.util.Set;
 
 public interface TranslateManager {
 
@@ -163,5 +164,11 @@ public interface TranslateManager {
      * @param langType тип языка
      */
     void unregisterLanguageType(LangType langType);
+
+    /**
+     * Получить все зарегистрированные языки
+     * @return зарегистрированные языки
+     */
+    Set<LangType> getRegisteredLanguages();
 
 }

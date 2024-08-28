@@ -182,6 +182,11 @@ public abstract class DefaultTranslateManager implements TranslateManager {
     }
 
     @Override
+    public Set<LangType> getRegisteredLanguages() {
+        return Collections.unmodifiableSet(this.registeredLanguages);
+    }
+
+    @Override
     public Collection<TranslatedMessages> getAllTranslate() {
         return this.types.values();
     }
