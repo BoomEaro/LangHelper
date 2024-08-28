@@ -52,7 +52,6 @@ public class ConfigManager {
 
         this.enabledLanguages = Collections.unmodifiableSet(tmpEnabledLanguages);
 
-
         Map<String, String> tmp = new HashMap<>();
         ConfigurationSection messagesSection = configuration.getConfigurationSection("messages");
         if (messagesSection != null) {

@@ -130,6 +130,10 @@ public abstract class DefaultTranslateManager implements TranslateManager {
         languages.addAll(this.registeredLanguages);
 
         for (LangType lt : languages) {
+            if (!lt.isExternal()) {
+                continue;
+            }
+
             // Убеждаемся что файл языка существует.
             // Нам на самом деле не важно, пустой или модифицирован, главное, что он есть.
             File langFile = new File(currentTranFolder, lt.name());
@@ -168,11 +172,13 @@ public abstract class DefaultTranslateManager implements TranslateManager {
     @Override
     public void registerLanguageType(LangType langType) {
         this.registeredLanguages.add(langType);
+        this.plugin.getLogger().log(Level.INFO, "Registering language " + langType.name());
     }
 
     @Override
     public void unregisterLanguageType(LangType langType) {
         this.registeredLanguages.remove(langType);
+        this.plugin.getLogger().log(Level.INFO, "Unregistering language " + langType.name());
     }
 
     @Override
