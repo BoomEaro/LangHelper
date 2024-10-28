@@ -69,7 +69,6 @@ public class CachedVersionData {
         }
 
         String languagePattern = "minecraft/lang/";
-
         for (Object o : langObjects.entrySet()) {
             Map.Entry<String, JSONObject> entry = (Map.Entry<String, JSONObject>) o;
 
