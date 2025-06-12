@@ -41,7 +41,8 @@ public class LangHelper extends JavaPlugin {
             new TranslationVersionWrapper("1.21.1", Translate1_21_R1.class),
             new TranslationVersionWrapper("1.21.2", Translate1_21_R2.class),
             new TranslationVersionWrapper("1.21.3", Translate1_21_R2.class),
-            new TranslationVersionWrapper("1.21.4", Translate1_21_R3.class)
+            new TranslationVersionWrapper("1.21.4", Translate1_21_R3.class),
+            new TranslationVersionWrapper("1.21.5", Translate1_21_R4.class)
     );
 
     @Getter

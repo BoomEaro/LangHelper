@@ -16,4 +16,5 @@ include ":common",
         ":nms:1_20_R4",
         ":nms:1_21_R1",
         ":nms:1_21_R2",
-        ":nms:1_21_R3"
+        ":nms:1_21_R3",
+        ":nms:1_21_R4"

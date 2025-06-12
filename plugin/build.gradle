@@ -18,6 +18,7 @@ dependencies {
     compileOnly project(":nms:1_21_R1")
     compileOnly project(":nms:1_21_R2")
     compileOnly project(":nms:1_21_R3")
+    compileOnly project(":nms:1_21_R4")
 }
 
 processResources {
