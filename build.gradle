@@ -1,7 +1,7 @@
 plugins {
     id "java-library"
     id "maven-publish"
-    id "com.gradleup.shadow" version "8.3.3"
+    id "com.gradleup.shadow" version "8.3.6"
 }
 
 allprojects {
@@ -34,8 +34,8 @@ subprojects {
     }
 
     dependencies {
-        compileOnly("org.projectlombok:lombok:1.18.34")
-        annotationProcessor("org.projectlombok:lombok:1.18.34")
+        compileOnly("org.projectlombok:lombok:1.18.38")
+        annotationProcessor("org.projectlombok:lombok:1.18.38")
     }
 
 }
