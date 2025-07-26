@@ -1,6 +1,6 @@
 name: LangHelper
 main: ru.boomearo.langhelper.LangHelper
-version: @version@
+version: "${version}"
 author: BoomEaro
 description: LangHelper
 api-version: 1.13
