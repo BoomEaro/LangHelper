@@ -19,6 +19,7 @@ dependencies {
     compileOnly(project(":nms:1_21_R4"))
     compileOnly(project(":nms:1_21_R5"))
     compileOnly(project(":nms:1_21_R6"))
+    compileOnly(project(":nms:1_21_R7"))
 }
 
 tasks.processResources {
