@@ -1,0 +1,33 @@
+dependencies {
+    compileOnly("org.spigotmc:spigot:1.12.2-R0.1-SNAPSHOT")
+    compileOnly(project(":common"))
+    compileOnly(project(":nms:1_12_R1"))
+    compileOnly(project(":nms:1_13_R2"))
+    compileOnly(project(":nms:1_14_R1"))
+    compileOnly(project(":nms:1_15_R1"))
+    compileOnly(project(":nms:1_16_R3"))
+    compileOnly(project(":nms:1_17_R1"))
+    compileOnly(project(":nms:1_18_R2"))
+    compileOnly(project(":nms:1_19_R3"))
+    compileOnly(project(":nms:1_20_R1"))
+    compileOnly(project(":nms:1_20_R2"))
+    compileOnly(project(":nms:1_20_R3"))
+    compileOnly(project(":nms:1_20_R4"))
+    compileOnly(project(":nms:1_21_R1"))
+    compileOnly(project(":nms:1_21_R2"))
+    compileOnly(project(":nms:1_21_R3"))
+    compileOnly(project(":nms:1_21_R4"))
+    compileOnly(project(":nms:1_21_R5"))
+    compileOnly(project(":nms:1_21_R6"))
+}
+
+tasks.processResources {
+    val props = mapOf("version" to version)
+
+    inputs.properties(props)
+    filteringCharset = "UTF-8"
+
+    filesMatching("plugin.yml") {
+        expand(props)
+    }
+}
