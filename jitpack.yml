@@ -1,6 +1,5 @@
 jdk:
   - openjdk17
-  - openjdk21
 install:
   - chmod +x gradlew
-  - ./gradlew clean build -Pgroup=com.github.BoomEaro publishToMavenLocal
+  - ./gradlew clean api:build -Pgroup=com.github.BoomEaro publishToMavenLocal
