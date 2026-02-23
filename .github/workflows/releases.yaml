@@ -19,17 +19,12 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
       - name: Build with Gradle
         run: gradle build
-      - name: Find correct JAR
-        id: find-jar
-        run: |
-          output="$(find plugin/build/libs/ ! -name "*-javadoc.jar" ! -name "*-sources.jar" -type f -printf "%f\n")"
-          echo "::set-output name=jarname::$output"
       - name: Upload to the GitHub release
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: plugin/build/libs/${{ steps.find-jar.outputs.jarname }}
+          asset_path: plugin/build/libs/LangHelper.jar
           asset_name: ${{ steps.find-jar.outputs.jarname }}
           asset_content_type: application/java-archive
