@@ -1,7 +1,7 @@
 package ru.boomearo.langhelper.versions;
 
-import com.google.common.base.Preconditions;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Biome;
@@ -10,9 +10,13 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffectType;
+import ru.boomearo.langhelper.api.LangType;
+import ru.boomearo.langhelper.api.TranslateManager;
+import ru.boomearo.langhelper.api.TranslatedMessages;
 import ru.boomearo.langhelper.managers.ConfigManager;
 import ru.boomearo.langhelper.versions.cached.UrlManifestManager;
 
+import javax.annotation.Nullable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -40,19 +44,19 @@ public abstract class DefaultTranslateManager implements TranslateManager {
 
     protected Map<LangType, TranslatedMessages> types;
 
-    private final Set<LangType> registeredLanguages = new HashSet<>();
+    private final Set<LangType> registeredLanguages = EnumSet.noneOf(LangType.class);
 
     /**
      * Загружает языки из файла в менеджере, учитывая включенные языки.
      */
     private void loadLanguages() {
-        Map<LangType, TranslatedMessages> types = new HashMap<>();
+        Map<LangType, TranslatedMessages> types = new EnumMap<>(LangType.class);
         try {
             InputStream stream = getFileInputStream();
 
             Map<String, String> translates = parseTranslate(stream);
             if (translates != null) {
-                types.put(LangType.EN_US, new TranslatedMessages(LangType.EN_US, translates));
+                types.put(LangType.EN_US, new TranslatedMessagesImpl(LangType.EN_US, translates));
             }
         } catch (Exception e) {
             this.plugin.getLogger().log(Level.SEVERE, "Failed to load default languages", e);
@@ -103,7 +107,7 @@ public abstract class DefaultTranslateManager implements TranslateManager {
                                 continue;
                             }
 
-                            types.put(lt, new TranslatedMessages(lt, translate));
+                            types.put(lt, new TranslatedMessagesImpl(lt, translate));
                         }
                     }
                 }
@@ -170,34 +174,38 @@ public abstract class DefaultTranslateManager implements TranslateManager {
     }
 
     @Override
-    public void registerLanguageType(LangType langType) {
+    public void registerLanguageType(@NonNull LangType langType) {
         this.registeredLanguages.add(langType);
         this.plugin.getLogger().log(Level.INFO, "Registering language " + langType.name());
     }
 
     @Override
-    public void unregisterLanguageType(LangType langType) {
+    public void unregisterLanguageType(@NonNull LangType langType) {
         this.registeredLanguages.remove(langType);
         this.plugin.getLogger().log(Level.INFO, "Unregistering language " + langType.name());
     }
 
+    @NonNull
     @Override
     public Set<LangType> getRegisteredLanguages() {
         return Collections.unmodifiableSet(this.registeredLanguages);
     }
 
+    @NonNull
     @Override
     public Collection<TranslatedMessages> getAllTranslate() {
         return this.types.values();
     }
 
+    @Nullable
     @Override
-    public TranslatedMessages getTranslate(LangType type) {
+    public TranslatedMessages getTranslate(@NonNull LangType type) {
         return this.types.get(type);
     }
 
+    @Nullable
     @Override
-    public String getTranslate(String key, LangType langType) {
+    public String getTranslate(@NonNull String key, @NonNull LangType langType) {
         TranslatedMessages tr = this.types.get(langType);
         if (tr != null) {
             return tr.getTranslate(key.toLowerCase(Locale.ROOT).replace("_", ""));
@@ -205,11 +213,9 @@ public abstract class DefaultTranslateManager implements TranslateManager {
         return null;
     }
 
+    @NonNull
     @Override
-    public String getItemNameSafe(ItemStack itemStack, LangType langType) {
-        Preconditions.checkArgument(itemStack != null);
-        Preconditions.checkArgument(langType != null);
-
+    public String getItemNameSafe(@NonNull ItemStack itemStack, @NonNull LangType langType) {
         String name = getItemName(itemStack, langType);
         if (name == null) {
             name = getItemName(itemStack, LangType.EN_US);
@@ -221,11 +227,9 @@ public abstract class DefaultTranslateManager implements TranslateManager {
         return name;
     }
 
+    @NonNull
     @Override
-    public String getEntityNameSafe(EntityType entityType, LangType langType) {
-        Preconditions.checkArgument(entityType != null);
-        Preconditions.checkArgument(langType != null);
-
+    public String getEntityNameSafe(@NonNull EntityType entityType, @NonNull LangType langType) {
         String name = getEntityName(entityType, langType);
         if (name == null) {
             name = getEntityName(entityType, LangType.EN_US);
@@ -236,11 +240,9 @@ public abstract class DefaultTranslateManager implements TranslateManager {
         return name;
     }
 
+    @NonNull
     @Override
-    public String getEnchantmentNameSafe(Enchantment enchant, LangType langType) {
-        Preconditions.checkArgument(enchant != null);
-        Preconditions.checkArgument(langType != null);
-
+    public String getEnchantmentNameSafe(@NonNull Enchantment enchant, @NonNull LangType langType) {
         String name = getEnchantmentName(enchant, langType);
         if (name == null) {
             name = getEnchantmentName(enchant, LangType.EN_US);
@@ -251,10 +253,9 @@ public abstract class DefaultTranslateManager implements TranslateManager {
         return name;
     }
 
+    @NonNull
     @Override
-    public String getEnchantmentLevelNameSafe(int level, LangType langType) {
-        Preconditions.checkArgument(langType != null);
-
+    public String getEnchantmentLevelNameSafe(int level, @NonNull LangType langType) {
         String name = getEnchantmentLevelName(level, langType);
         if (name == null) {
             name = getEnchantmentLevelName(level, LangType.EN_US);
@@ -265,11 +266,9 @@ public abstract class DefaultTranslateManager implements TranslateManager {
         return name;
     }
 
+    @NonNull
     @Override
-    public String getPotionEffectNameSafe(PotionEffectType potionEffectType, LangType langType) {
-        Preconditions.checkArgument(potionEffectType != null);
-        Preconditions.checkArgument(langType != null);
-
+    public String getPotionEffectNameSafe(@NonNull PotionEffectType potionEffectType, @NonNull LangType langType) {
         String name = getPotionEffectName(potionEffectType, langType);
         if (name == null) {
             name = getPotionEffectName(potionEffectType, LangType.EN_US);
@@ -280,11 +279,9 @@ public abstract class DefaultTranslateManager implements TranslateManager {
         return name;
     }
 
+    @NonNull
     @Override
-    public String getBiomeNameSafe(Biome biome, LangType langType) {
-        Preconditions.checkArgument(biome != null);
-        Preconditions.checkArgument(langType != null);
-
+    public String getBiomeNameSafe(@NonNull Biome biome, @NonNull LangType langType) {
         String name = getBiomeName(biome, langType);
         if (name == null) {
             name = getBiomeName(biome, LangType.EN_US);
@@ -295,23 +292,29 @@ public abstract class DefaultTranslateManager implements TranslateManager {
         return name;
     }
 
+    @Nullable
     @Override
-    public abstract String getItemName(ItemStack itemStack, LangType langType);
+    public abstract String getItemName(@NonNull ItemStack itemStack, @NonNull LangType langType);
 
+    @Nullable
     @Override
-    public abstract String getEntityName(EntityType entityType, LangType langType);
+    public abstract String getEntityName(@NonNull EntityType entityType, @NonNull LangType langType);
 
+    @Nullable
     @Override
-    public abstract String getEnchantmentName(Enchantment enchant, LangType langType);
+    public abstract String getEnchantmentName(@NonNull Enchantment enchant, @NonNull LangType langType);
 
+    @Nullable
     @Override
-    public abstract String getEnchantmentLevelName(int level, LangType langType);
+    public abstract String getEnchantmentLevelName(int level, @NonNull LangType langType);
 
+    @Nullable
     @Override
-    public abstract String getPotionEffectName(PotionEffectType potionEffectType, LangType langType);
+    public abstract String getPotionEffectName(@NonNull PotionEffectType potionEffectType, @NonNull LangType langType);
 
+    @Nullable
     @Override
-    public abstract String getBiomeName(Biome biome, LangType langType);
+    public abstract String getBiomeName(@NonNull Biome biome, @NonNull LangType langType);
 
     /**
      * Парсер строк, использующий InputStream

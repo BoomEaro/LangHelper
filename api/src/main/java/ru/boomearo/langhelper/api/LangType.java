@@ -1,4 +1,4 @@
-package ru.boomearo.langhelper.versions;
+package ru.boomearo.langhelper.api;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,6 @@ public enum LangType {
         public boolean isExternal() {
             return false;
         }
-
     },
     AF_ZA,
     AR_SA,

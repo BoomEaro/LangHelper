@@ -4,3 +4,13 @@ dependencies {
         exclude(group = "com.mojang", module = "*")
     }
 }
+
+val javaVersion = 21
+
+java {
+    sourceCompatibility = JavaVersion.toVersion(javaVersion)
+    targetCompatibility = JavaVersion.toVersion(javaVersion)
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(javaVersion))
+    }
+}

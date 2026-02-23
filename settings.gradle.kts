@@ -1,6 +1,7 @@
 rootProject.name = "LangHelper"
 
 include(
+    ":api",
     ":common",
     ":plugin",
     ":nms:1_12_R1",

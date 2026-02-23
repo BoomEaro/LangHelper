@@ -9,6 +9,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffectType;
+import ru.boomearo.langhelper.api.LangType;
 import ru.boomearo.langhelper.managers.ConfigManager;
 
 import java.io.BufferedReader;

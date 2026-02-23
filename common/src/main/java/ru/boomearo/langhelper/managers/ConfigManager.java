@@ -6,7 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
-import ru.boomearo.langhelper.versions.LangType;
+import ru.boomearo.langhelper.api.LangType;
 
 import java.io.File;
 import java.util.*;

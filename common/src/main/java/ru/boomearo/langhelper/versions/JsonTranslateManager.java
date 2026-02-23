@@ -1,5 +1,6 @@
 package ru.boomearo.langhelper.versions;
 
+import lombok.NonNull;
 import org.bukkit.block.Biome;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
@@ -8,8 +9,10 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffectType;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import ru.boomearo.langhelper.api.LangType;
 import ru.boomearo.langhelper.managers.ConfigManager;
 
+import javax.annotation.Nullable;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -26,23 +29,29 @@ public abstract class JsonTranslateManager extends DefaultTranslateManager {
         super(version, plugin, configManager);
     }
 
+    @Nullable
     @Override
-    public abstract String getItemName(ItemStack itemStack, LangType langType);
+    public abstract String getItemName(@NonNull ItemStack itemStack, @NonNull LangType langType);
 
+    @Nullable
     @Override
-    public abstract String getEntityName(EntityType entityType, LangType langType);
+    public abstract String getEntityName(@NonNull EntityType entityType, @NonNull LangType langType);
 
+    @Nullable
     @Override
-    public abstract String getEnchantmentName(Enchantment enchant, LangType langType);
+    public abstract String getEnchantmentName(@NonNull Enchantment enchant, @NonNull LangType langType);
 
+    @Nullable
     @Override
-    public abstract String getEnchantmentLevelName(int level, LangType langType);
+    public abstract String getEnchantmentLevelName(int level, @NonNull LangType langType);
 
+    @Nullable
     @Override
-    public abstract String getPotionEffectName(PotionEffectType potionEffectType, LangType langType);
+    public abstract String getPotionEffectName(@NonNull PotionEffectType potionEffectType, @NonNull LangType langType);
 
+    @Nullable
     @Override
-    public abstract String getBiomeName(Biome biome, LangType langType);
+    public abstract String getBiomeName(@NonNull Biome biome, @NonNull LangType langType);
 
     @Override
     protected Map<String, String> parseTranslate(InputStream stream) {

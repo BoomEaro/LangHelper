@@ -1,5 +1,8 @@
 package ru.boomearo.langhelper.versions;
 
-public record TranslationVersionWrapper(String version, Class<? extends DefaultTranslateManager> clazz) {
+import lombok.NonNull;
+
+public record TranslationVersionWrapper(@NonNull String version,
+                                        @NonNull String className) {
 
 }

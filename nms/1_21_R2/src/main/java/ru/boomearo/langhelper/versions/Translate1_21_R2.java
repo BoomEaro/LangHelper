@@ -10,6 +10,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffectType;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import ru.boomearo.langhelper.api.LangType;
 import ru.boomearo.langhelper.managers.ConfigManager;
 
 import java.util.Locale;
@@ -75,7 +77,7 @@ public class Translate1_21_R2 extends JsonTranslateManager {
     }
 
     @Override
-    public String getEnchantmentLevelName(int level, LangType langType) {
+    public String getEnchantmentLevelName(int level, @NonNull LangType langType) {
         Preconditions.checkArgument(langType != null);
 
         return getTranslate("enchantment.level." + level, langType);

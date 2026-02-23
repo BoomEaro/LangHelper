@@ -8,10 +8,10 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import ru.boomearo.langhelper.LangHelper;
+import ru.boomearo.langhelper.api.LangType;
 import ru.boomearo.langhelper.commands.CommandNodeBukkit;
 import ru.boomearo.langhelper.managers.ConfigManager;
 import ru.boomearo.langhelper.versions.DefaultTranslateManager;
-import ru.boomearo.langhelper.versions.LangType;
 
 import java.util.ArrayList;
 import java.util.List;
