@@ -41,7 +41,7 @@ API достаточно простой, все что нужно сделать
 Пример использования:
 
 ```
-TranslateManager translateManager = LangHelper.getInstance().getTranslateManager();
+TranslateManager translateManager = LangHelperApi.getTranslateManager();
 String translateItem = translateManager.getItemNameSafe(new ItemStack(Material.STONE), LangType.RU_RU); // Получить русский перевод каменного блока
 String translateEnchant = translateManager.getEnchantmentNameSafe(Enchantment.LUCK, LangType.RU_RU); // Получить русский перевод зачарования на удачу
 String translateEntity = translateManager.getEntityNameSafe(EntityType.CREEPER, LangType.RU_RU); // Получить русский перевод сущности крипера
@@ -65,9 +65,9 @@ System.out.println("Биом: " + translateBiome);
 Для компиляции достаточно использовать команду:
 
 ```
-gradle build
+gradlew build
 ```
 
-Скомпилированный плагин будет находится в директории 'Корневая_директория_проекта'/build/libs/LangHelper.jar
+Скомпилированный плагин будет находиться в директории LangHelper/plugin/build/libs/LangHelper.jar
 
 
