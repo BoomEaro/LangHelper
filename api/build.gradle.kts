@@ -18,6 +18,16 @@ tasks.javadoc {
 }
 
 publishing {
+    repositories {
+        maven {
+            name = "BoomEaroRepo"
+            url = uri("https://repo.boomearo.net/repository/langhelper-release/")
+            credentials {
+                username = project.findProperty("boomearoMavenRepoUser") as String?
+                password = project.findProperty("boomearoMavenRepoPass") as String?
+            }
+        }
+    }
     publications {
         register<MavenPublication>("maven") {
             groupId = "ru.boomearo"
