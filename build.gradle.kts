@@ -4,7 +4,7 @@ plugins {
 
 allprojects {
     group = "ru.boomearo"
-    version = "1.5.19"
+    version = "1.6.0"
 
     apply(plugin = "java")
     apply(plugin = "java-library")
