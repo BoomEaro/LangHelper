@@ -6,6 +6,17 @@ dependencies {
     compileOnlyApi("org.spigotmc:spigot:1.12.2-R0.1-SNAPSHOT")
 }
 
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+tasks.javadoc {
+    options.apply {
+        encoding = "UTF-8"
+    }
+}
+
 publishing {
     publications {
         register<MavenPublication>("maven") {
