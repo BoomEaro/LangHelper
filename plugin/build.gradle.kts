@@ -1,3 +1,7 @@
+import org.gradle.kotlin.dsl.build
+import org.gradle.kotlin.dsl.invoke
+import org.gradle.kotlin.dsl.shadowJar
+
 plugins {
     id("com.gradleup.shadow") version "9.5.1"
 }
@@ -5,17 +9,6 @@ plugins {
 dependencies {
     compileOnly("org.spigotmc:spigot:1.12.2-R0.1-SNAPSHOT")
     implementation(project(":common"))
-}
-
-tasks.processResources {
-    val props = mapOf("version" to version)
-
-    inputs.properties(props)
-    filteringCharset = "UTF-8"
-
-    filesMatching("plugin.yml") {
-        expand(props)
-    }
 }
 
 val shadedModules = listOf(
@@ -40,20 +33,33 @@ val shadedModules = listOf(
     ":nms:1_21_R7"
 )
 
-tasks.shadowJar {
-    shadedModules.forEach { path ->
-        val jarTaskProvider = project(path).tasks.jar
+tasks {
+    processResources {
+        val props = mapOf("version" to version)
 
-        dependsOn(jarTaskProvider)
+        inputs.properties(props)
+        filteringCharset = "UTF-8"
 
-        from(jarTaskProvider.flatMap { jarTask -> jarTask.archiveFile.map { zipTree(it) } })
+        filesMatching("plugin.yml") {
+            expand(props)
+        }
     }
 
-    archiveBaseName.set("LangHelper")
-    archiveVersion.set("")
-    archiveClassifier.set("")
-}
+    shadowJar {
+        shadedModules.forEach { path ->
+            val jarTaskProvider = project(path).tasks.jar
 
-tasks.build {
-    dependsOn("shadowJar")
+            dependsOn(jarTaskProvider)
+
+            from(jarTaskProvider.flatMap { jarTask -> jarTask.archiveFile.map { zipTree(it) } })
+        }
+
+        archiveBaseName.set("LangHelper")
+        archiveVersion.set("")
+        archiveClassifier.set("")
+    }
+
+    build {
+        dependsOn(shadowJar)
+    }
 }
