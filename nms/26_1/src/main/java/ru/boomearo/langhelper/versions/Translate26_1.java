@@ -4,7 +4,7 @@ import lombok.NonNull;
 import net.minecraft.world.item.Item;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
-import org.bukkit.craftbukkit.v1_21_R2.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
@@ -16,10 +16,10 @@ import ru.boomearo.langhelper.managers.ConfigManager;
 import java.util.Locale;
 import java.util.logging.Level;
 
-public class Translate1_21_R2 extends JsonTranslateManager {
+public class Translate26_1 extends JsonTranslateManager {
 
-    public Translate1_21_R2(Plugin plugin, ConfigManager configManager) {
-        super("1.21.2", plugin, configManager);
+    public Translate26_1(Plugin plugin, ConfigManager configManager) {
+        super("26.1", plugin, configManager);
     }
 
     @Override
@@ -28,9 +28,9 @@ public class Translate1_21_R2 extends JsonTranslateManager {
             net.minecraft.world.item.ItemStack itemStack = CraftItemStack.asNMSCopy(item);
 
             String name;
-            Item i = itemStack.h();
+            Item i = itemStack.getItem();
 
-            name = i.l();
+            name = i.getDescriptionId();
 
             if (item.getType() != Material.AIR) {
                 if (name.equals("block.minecraft.air")) {

@@ -1,6 +1,5 @@
 package ru.boomearo.langhelper.versions;
 
-import com.google.common.base.Preconditions;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemLingeringPotion;
 import net.minecraft.world.item.ItemPotion;
@@ -28,10 +27,7 @@ public class Translate1_19_R3 extends JsonTranslateManager {
     }
 
     @Override
-    public String getItemName(ItemStack item, LangType langType) {
-        Preconditions.checkArgument(item != null);
-        Preconditions.checkArgument(langType != null);
-
+    public String getItemName(@NonNull ItemStack item, @NonNull LangType langType) {
         try {
             net.minecraft.world.item.ItemStack itemStack = CraftItemStack.asNMSCopy(item);
 
@@ -61,33 +57,22 @@ public class Translate1_19_R3 extends JsonTranslateManager {
     }
 
     @Override
-    public String getEntityName(EntityType entityType, LangType langType) {
-        Preconditions.checkArgument(entityType != null);
-        Preconditions.checkArgument(langType != null);
-
+    public String getEntityName(@NonNull EntityType entityType, @NonNull LangType langType) {
         return getTranslate("entity.minecraft." + entityType.getKey().getKey(), langType);
     }
 
     @Override
-    public String getEnchantmentName(Enchantment enchant, LangType langType) {
-        Preconditions.checkArgument(enchant != null);
-        Preconditions.checkArgument(langType != null);
-
+    public String getEnchantmentName(@NonNull Enchantment enchant, @NonNull LangType langType) {
         return getTranslate("enchantment.minecraft." + enchant.getKey().getKey(), langType);
     }
 
     @Override
     public String getEnchantmentLevelName(int level, @NonNull LangType langType) {
-        Preconditions.checkArgument(langType != null);
-
         return getTranslate("enchantment.level." + level, langType);
     }
 
     @Override
-    public String getPotionEffectName(PotionEffectType potionEffectType, LangType langType) {
-        Preconditions.checkArgument(potionEffectType != null);
-        Preconditions.checkArgument(langType != null);
-
+    public String getPotionEffectName(@NonNull PotionEffectType potionEffectType, @NonNull LangType langType) {
         String effectName = switch (potionEffectType.getName().toLowerCase(Locale.ROOT)) {
             case "fast_digging" -> "haste";
             case "harm" -> "instant_damage";
@@ -105,10 +90,7 @@ public class Translate1_19_R3 extends JsonTranslateManager {
     }
 
     @Override
-    public String getBiomeName(Biome biome, LangType langType) {
-        Preconditions.checkArgument(biome != null);
-        Preconditions.checkArgument(langType != null);
-
+    public String getBiomeName(@NonNull Biome biome, @NonNull LangType langType) {
         return getTranslate("biome.minecraft." + biome.name().toLowerCase(Locale.ROOT), langType);
     }
 }

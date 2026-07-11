@@ -30,7 +30,8 @@ val shadedModules = listOf(
     ":nms:1_21_R4",
     ":nms:1_21_R5",
     ":nms:1_21_R6",
-    ":nms:1_21_R7"
+    ":nms:1_21_R7",
+    ":nms:26_1"
 )
 
 tasks {

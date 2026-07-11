@@ -1,6 +1,6 @@
 package ru.boomearo.langhelper.versions;
 
-import com.google.common.base.Preconditions;
+import lombok.NonNull;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
@@ -133,10 +133,7 @@ public class Translate1_12_R1 extends DefaultTranslateManager {
     }
 
     @Override
-    public String getItemName(ItemStack item, LangType langType) {
-        Preconditions.checkArgument(item != null);
-        Preconditions.checkArgument(langType != null);
-
+    public String getItemName(@NonNull ItemStack item, @NonNull LangType langType) {
         Material newType = BLOCK_ALIASES.get(item.getType());
         if (newType != null) {
             item = item.clone();
@@ -185,10 +182,7 @@ public class Translate1_12_R1 extends DefaultTranslateManager {
     }
 
     @Override
-    public String getEntityName(EntityType entityType, LangType langType) {
-        Preconditions.checkArgument(entityType != null);
-        Preconditions.checkArgument(langType != null);
-
+    public String getEntityName(@NonNull EntityType entityType, @NonNull LangType langType) {
         try {
             String originalName = entityType.getName();
             if (originalName == null) {
@@ -236,10 +230,7 @@ public class Translate1_12_R1 extends DefaultTranslateManager {
     }
 
     @Override
-    public String getEnchantmentName(Enchantment enchant, LangType langType) {
-        Preconditions.checkArgument(enchant != null);
-        Preconditions.checkArgument(langType != null);
-
+    public String getEnchantmentName(@NonNull Enchantment enchant, @NonNull LangType langType) {
         try {
             String name = org.bukkit.craftbukkit.v1_12_R1.enchantments.CraftEnchantment.getRaw(enchant).a();
             return getTranslate(name, langType);
@@ -250,17 +241,12 @@ public class Translate1_12_R1 extends DefaultTranslateManager {
     }
 
     @Override
-    public String getEnchantmentLevelName(int level, LangType langType) {
-        Preconditions.checkArgument(langType != null);
-
+    public String getEnchantmentLevelName(int level, @NonNull LangType langType) {
         return getTranslate("enchantment.level." + level, langType);
     }
 
     @Override
-    public String getPotionEffectName(PotionEffectType potionEffectType, LangType langType) {
-        Preconditions.checkArgument(potionEffectType != null);
-        Preconditions.checkArgument(langType != null);
-
+    public String getPotionEffectName(@NonNull PotionEffectType potionEffectType, @NonNull LangType langType) {
         String effectName = switch (potionEffectType.getName().toLowerCase(Locale.ROOT)) {
             case "speed" -> "moveSpeed";
             case "fast_digging" -> "digSpeed";
@@ -276,7 +262,7 @@ public class Translate1_12_R1 extends DefaultTranslateManager {
     }
 
     @Override
-    public String getBiomeName(Biome biome, LangType langType) {
+    public String getBiomeName(@NonNull Biome biome, @NonNull LangType langType) {
         // TODO Biomes without keys:
         // OCEAN,
         // PLAINS,
@@ -344,7 +330,7 @@ public class Translate1_12_R1 extends DefaultTranslateManager {
     }
 
     @Override
-    protected Map<String, String> parseTranslate(InputStream stream) {
+    protected Map<String, String> parseTranslate(@NonNull InputStream stream) {
         Map<String, String> translates = new HashMap<>();
         try (InputStreamReader streamReader =
                      new InputStreamReader(stream, StandardCharsets.UTF_8);

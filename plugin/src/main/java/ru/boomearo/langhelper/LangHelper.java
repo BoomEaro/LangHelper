@@ -25,33 +25,37 @@ public class LangHelper extends JavaPlugin {
     private static final Pattern VERSION_PATTERN = Pattern.compile("\\d+\\.\\d+(?:\\.\\d+)?");
 
     private static final List<TranslationVersionWrapper> VERSIONS = List.of(
-            new TranslationVersionWrapper("1.12.2", "Translate1_12_R1"),
-            new TranslationVersionWrapper("1.13.2", "Translate1_13_R2"),
-            new TranslationVersionWrapper("1.14.4", "Translate1_14_R1"),
-            new TranslationVersionWrapper("1.15.2", "Translate1_15_R1"),
-            new TranslationVersionWrapper("1.16.5", "Translate1_16_R3"),
-            new TranslationVersionWrapper("1.17.1", "Translate1_17_R1"),
-            new TranslationVersionWrapper("1.18.2", "Translate1_18_R2"),
-            new TranslationVersionWrapper("1.19.4", "Translate1_19_R3"),
-            new TranslationVersionWrapper("1.20", "Translate1_20_R1"),
-            new TranslationVersionWrapper("1.20.1", "Translate1_20_R1"),
-            new TranslationVersionWrapper("1.20.2", "Translate1_20_R2"),
-            new TranslationVersionWrapper("1.20.3", "Translate1_20_R3"),
-            new TranslationVersionWrapper("1.20.4", "Translate1_20_R3"),
-            new TranslationVersionWrapper("1.20.5", "Translate1_20_R4"),
-            new TranslationVersionWrapper("1.20.6", "Translate1_20_R4"),
-            new TranslationVersionWrapper("1.21", "Translate1_21_R1"),
-            new TranslationVersionWrapper("1.21.1", "Translate1_21_R1"),
-            new TranslationVersionWrapper("1.21.2", "Translate1_21_R2"),
-            new TranslationVersionWrapper("1.21.3", "Translate1_21_R2"),
-            new TranslationVersionWrapper("1.21.4", "Translate1_21_R3"),
-            new TranslationVersionWrapper("1.21.5", "Translate1_21_R4"),
-            new TranslationVersionWrapper("1.21.6", "Translate1_21_R5"),
-            new TranslationVersionWrapper("1.21.7", "Translate1_21_R5"),
-            new TranslationVersionWrapper("1.21.8", "Translate1_21_R5"),
-            new TranslationVersionWrapper("1.21.9", "Translate1_21_R6"),
-            new TranslationVersionWrapper("1.21.10", "Translate1_21_R6"),
-            new TranslationVersionWrapper("1.21.11", "Translate1_21_R7")
+            version("1.12.2", "Translate1_12_R1"),
+            version("1.13.2", "Translate1_13_R2"),
+            version("1.14.4", "Translate1_14_R1"),
+            version("1.15.2", "Translate1_15_R1"),
+            version("1.16.5", "Translate1_16_R3"),
+            version("1.17.1", "Translate1_17_R1"),
+            version("1.18.2", "Translate1_18_R2"),
+            version("1.19.4", "Translate1_19_R3"),
+            version("1.20", "Translate1_20_R1"),
+            version("1.20.1", "Translate1_20_R1"),
+            version("1.20.2", "Translate1_20_R2"),
+            version("1.20.3", "Translate1_20_R3"),
+            version("1.20.4", "Translate1_20_R3"),
+            version("1.20.5", "Translate1_20_R4"),
+            version("1.20.6", "Translate1_20_R4"),
+            version("1.21", "Translate1_21_R1"),
+            version("1.21.1", "Translate1_21_R1"),
+            version("1.21.2", "Translate1_21_R2"),
+            version("1.21.3", "Translate1_21_R2"),
+            version("1.21.4", "Translate1_21_R3"),
+            version("1.21.5", "Translate1_21_R4"),
+            version("1.21.6", "Translate1_21_R5"),
+            version("1.21.7", "Translate1_21_R5"),
+            version("1.21.8", "Translate1_21_R5"),
+            version("1.21.9", "Translate1_21_R6"),
+            version("1.21.10", "Translate1_21_R6"),
+            version("1.21.11", "Translate1_21_R7"),
+            version("26.1", "Translate26_1"),
+            version("26.1.1", "Translate26_1"),
+            version("26.1.2", "Translate26_1"),
+            version("26.2", "Translate26_1")
     );
 
     @Getter
@@ -110,7 +114,7 @@ public class LangHelper extends JavaPlugin {
     @NonNull
     private DefaultTranslateManager matchVersion(Plugin plugin, ConfigManager configManager) throws LangVersionException {
         try {
-            String bukkitVersion = Bukkit.getServer().getBukkitVersion();
+            String bukkitVersion = Bukkit.getBukkitVersion();
             this.getLogger().log(Level.INFO, "Detected bukkit version " + bukkitVersion);
 
             String foundClass = VERSIONS.stream()
@@ -132,4 +136,8 @@ public class LangHelper extends JavaPlugin {
         }
     }
 
+    @NonNull
+    private static TranslationVersionWrapper version(@NonNull String version, @NonNull String className) {
+        return new TranslationVersionWrapper(version, className);
+    }
 }
